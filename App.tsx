@@ -5,7 +5,7 @@ import {Provider} from 'react-redux';
 import theme from '@theme/index';
 
 import store from '@store/index';
-import Routes from '@routes/index';
+import RootRoutes from '@routes/LayoutRoute';
 
 export default function App() {
   return (
@@ -13,7 +13,7 @@ export default function App() {
       <Provider store={store}>
         <NavigationContainer>
           <NativeBaseProvider theme={theme}>
-            <Routes />
+            <RootRoutes />
           </NativeBaseProvider>
         </NavigationContainer>
       </Provider>

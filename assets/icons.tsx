@@ -3,6 +3,7 @@ import VectorImage from 'react-native-vector-image';
 
 type TIconProps = typeof VectorImage.defaultProps;
 
+// social media icon
 export function PhoneHelpIcon({...rest}: TIconProps) {
   return (
     <VectorImage
@@ -58,7 +59,6 @@ export function FacebookIcon({...rest}: TIconProps) {
     />
   );
 }
-
 export function GoogleIcon({...rest}: TIconProps) {
   return (
     <VectorImage
@@ -81,18 +81,8 @@ export function AppleIcon({...rest}: TIconProps) {
     />
   );
 }
-export function PlayIcon({...rest}: TIconProps) {
-  return (
-    <VectorImage
-      source={require('@assets/svg/play-button.svg')}
-      height={24}
-      width={24}
-      resizeMode="contain"
-      {...rest}
-    />
-  );
-}
 
+// eay and email icons
 export function EmailIcon({...rest}: TIconProps) {
   return (
     <VectorImage
@@ -126,7 +116,6 @@ export function EyeOpenIcon({...rest}: TIconProps) {
     />
   );
 }
-
 export function LockIcon({...rest}: TIconProps) {
   return (
     <VectorImage
@@ -149,6 +138,8 @@ export function SearchIcon({...rest}: TIconProps) {
     />
   );
 }
+
+// arrow
 export function ArrowDownIcon({...rest}: TIconProps) {
   return (
     <VectorImage
@@ -160,7 +151,6 @@ export function ArrowDownIcon({...rest}: TIconProps) {
     />
   );
 }
-
 export function ArrowUpIcon({...rest}: TIconProps) {
   return (
     <VectorImage
@@ -184,6 +174,26 @@ export function AddIcon({...rest}: TIconProps) {
   );
 }
 
+export function CloseIcon({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/close-icon.svg')}
+      resizeMode="contain"
+      {...rest}
+    />
+  );
+}
+export function FileUploadIcon({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/file-upload.svg')}
+      resizeMode="contain"
+      {...rest}
+    />
+  );
+}
+
+// bottom tab
 export function MealIcon({...rest}: TIconProps) {
   return (
     <VectorImage
@@ -211,29 +221,10 @@ export function ExerciseIcon({...rest}: TIconProps) {
     />
   );
 }
-
 export function ExerciseFillIcon({...rest}: TIconProps) {
   return (
     <VectorImage
       source={require('@assets/svg/bootom-tab/exercise-fill.svg')}
-      resizeMode="contain"
-      {...rest}
-    />
-  );
-}
-export function CloseIcon({...rest}: TIconProps) {
-  return (
-    <VectorImage
-      source={require('@assets/svg/close-icon.svg')}
-      resizeMode="contain"
-      {...rest}
-    />
-  );
-}
-export function FileUploadIcon({...rest}: TIconProps) {
-  return (
-    <VectorImage
-      source={require('@assets/svg/file-upload.svg')}
       resizeMode="contain"
       {...rest}
     />
@@ -248,7 +239,6 @@ export function ChartIcon({...rest}: TIconProps) {
     />
   );
 }
-
 export function ChartFillIcon({...rest}: TIconProps) {
   return (
     <VectorImage
@@ -267,7 +257,6 @@ export function HistoryIcon({...rest}: TIconProps) {
     />
   );
 }
-
 export function HistoryFillIcon({...rest}: TIconProps) {
   return (
     <VectorImage
@@ -277,7 +266,6 @@ export function HistoryFillIcon({...rest}: TIconProps) {
     />
   );
 }
-
 export function PhoneIcon({...rest}: TIconProps) {
   return (
     <VectorImage
@@ -287,7 +275,6 @@ export function PhoneIcon({...rest}: TIconProps) {
     />
   );
 }
-
 export function PhoneFillIcon({...rest}: TIconProps) {
   return (
     <VectorImage
@@ -306,7 +293,6 @@ export function ProfileIcon({...rest}: TIconProps) {
     />
   );
 }
-
 export function ProfileFillIcon({...rest}: TIconProps) {
   return (
     <VectorImage
@@ -316,6 +302,8 @@ export function ProfileFillIcon({...rest}: TIconProps) {
     />
   );
 }
+
+// icons
 export function ClockIcon({...rest}: TIconProps) {
   return (
     <VectorImage
@@ -325,37 +313,6 @@ export function ClockIcon({...rest}: TIconProps) {
     />
   );
 }
-
-export function LbsIcon({...rest}: TIconProps) {
-  return (
-    <VectorImage
-      source={require('@assets/svg/lbs.svg')}
-      resizeMode="contain"
-      {...rest}
-    />
-  );
-}
-
-export function TrophyIcon({...rest}: TIconProps) {
-  return (
-    <VectorImage
-      source={require('@assets/svg/trophy.svg')}
-      resizeMode="contain"
-      {...rest}
-    />
-  );
-}
-
-export function NoteIcon({...rest}: TIconProps) {
-  return (
-    <VectorImage
-      source={require('@assets/svg/note.svg')}
-      resizeMode="contain"
-      {...rest}
-    />
-  );
-}
-
 export function ProfileRound({...rest}: TIconProps) {
   return (
     <VectorImage
@@ -392,17 +349,6 @@ export function Settings({...rest}: TIconProps) {
     />
   );
 }
-
-export function Sheild({...rest}: TIconProps) {
-  return (
-    <VectorImage
-      source={require('@assets/svg/sheild.svg')}
-      resizeMode="contain"
-      {...rest}
-    />
-  );
-}
-
 export function Support({...rest}: TIconProps) {
   return (
     <VectorImage
@@ -412,38 +358,10 @@ export function Support({...rest}: TIconProps) {
     />
   );
 }
-export function ChevronRight({...rest}: TIconProps) {
-  return (
-    <VectorImage
-      source={require('@assets/svg/chevron-right.svg')}
-      resizeMode="contain"
-      {...rest}
-    />
-  );
-}
 export function Edit({...rest}: TIconProps) {
   return (
     <VectorImage
       source={require('@assets/svg/edit.svg')}
-      resizeMode="contain"
-      {...rest}
-    />
-  );
-}
-export function WeightLoss({...rest}: TIconProps) {
-  return (
-    <VectorImage
-      source={require('@assets/svg/weight-loss.svg')}
-      resizeMode="contain"
-      {...rest}
-    />
-  );
-}
-
-export function TotalWorkouts({...rest}: TIconProps) {
-  return (
-    <VectorImage
-      source={require('@assets/svg/totalworkouts.svg')}
       resizeMode="contain"
       {...rest}
     />

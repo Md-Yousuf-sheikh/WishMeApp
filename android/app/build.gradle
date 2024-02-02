@@ -73,9 +73,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.ppfitness"
+    namespace "com.wish.me.app"
     defaultConfig {
-        applicationId "com.ppfitness"
+        applicationId "com.wish.me.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

@@ -10,11 +10,11 @@ const persistConfig = {
   storage: AsyncStorage,
 };
 
-const persistadeAuthReducer = persistReducer(persistConfig, authReducer);
+const persistedAuthReducer = persistReducer(persistConfig, authReducer);
 
 const rootReducer = combineReducers({
   ui: uiReducer,
-  auth: persistadeAuthReducer,
+  auth: persistedAuthReducer,
   [authApiSlice.reducerPath]: authApiSlice.reducer,
 });
 
@@ -31,6 +31,6 @@ export type RootState = ReturnType<typeof store.getState>;
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch;
 
-export const persistor = persistStore(store);
+export const persister = persistStore(store);
 
 export default store;

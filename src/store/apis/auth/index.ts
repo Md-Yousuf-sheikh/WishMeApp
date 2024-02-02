@@ -1,26 +1,9 @@
-import {
-  PostV1AuthLoginRequestBody,
-  PostV1AuthLoginSuccessfulResponse,
-  PostV1AuthPasswordForgetRequestBody,
-  PostV1AuthPasswordForgetSuccessfulResponse,
-  PostV1AuthPasswordResetRequestBody,
-  PostV1AuthPasswordResetSuccessfulResponse,
-  PostV1AuthRegisterRequestBody,
-  PostV1AuthRegisterSuccessfulResponse,
-  PostV1AuthVerifyOtpRequestBody,
-  PostV1AuthVerifyOtpSuccessfulResponse,
-  PutV1AuthPasswordChangeRequestBody,
-  PutV1AuthPasswordChangeSuccessfulResponse,
-} from '@store/schema';
 import {apiSlice} from '../index';
 import {login} from '@store/features/authSlice';
 
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
-    login: builder.mutation<
-      PostV1AuthLoginSuccessfulResponse,
-      PostV1AuthLoginRequestBody
-    >({
+    login: builder.mutation({
       query: body => ({
         url: 'auth/login',
         method: 'POST',
@@ -45,52 +28,36 @@ export const authApiSlice = apiSlice.injectEndpoints({
           return error;
         }
       },
-      // invalidatesTags: ['blogs', 'contacts', 'messages', 'singleBlog'],
     }),
-    register: builder.mutation<
-      PostV1AuthRegisterSuccessfulResponse,
-      PostV1AuthRegisterRequestBody
-    >({
+    register: builder.mutation({
       query: body => ({
         url: 'auth/register',
         method: 'POST',
         body,
       }),
     }),
-    passwordChange: builder.mutation<
-      PutV1AuthPasswordChangeSuccessfulResponse,
-      PutV1AuthPasswordChangeRequestBody
-    >({
+    passwordChange: builder.mutation({
       query: body => ({
         url: 'auth/password/change',
         method: 'PUT',
         body,
       }),
     }),
-    forgetPassword: builder.mutation<
-      PostV1AuthPasswordForgetSuccessfulResponse,
-      PostV1AuthPasswordForgetRequestBody
-    >({
+    forgetPassword: builder.mutation({
       query: body => ({
         url: 'auth/password/forget',
         method: 'POST',
         body,
       }),
     }),
-    passwordReset: builder.mutation<
-      PostV1AuthPasswordResetSuccessfulResponse,
-      PostV1AuthPasswordResetRequestBody
-    >({
+    passwordReset: builder.mutation({
       query: body => ({
         url: 'auth/password/reset',
         method: 'POST',
         body,
       }),
     }),
-    verifyOtp: builder.mutation<
-      PostV1AuthVerifyOtpSuccessfulResponse,
-      PostV1AuthVerifyOtpRequestBody
-    >({
+    verifyOtp: builder.mutation({
       query: body => ({
         url: 'auth/verify-otp',
         method: 'POST',
