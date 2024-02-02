@@ -11,7 +11,7 @@ const WelcomeScreen = () => {
 
   return (
     <FBgImage
-      source={require('@assets/images/screen2.png')}
+      source={require('@assets/images/screen1.png')}
       flex={1}
       resizeMode="cover"
       alignItems="center">
