@@ -1,6 +1,5 @@
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import React from 'react';
-import {LockIcon, Settings} from '@assets/icons';
 import {HStack, Image, Text} from 'native-base';
 
 export default function Header({
@@ -29,10 +28,8 @@ export default function Header({
       </Text>
       {}
       <TouchableOpacity onPress={onPress}>
-        {onPress && <Settings />}
+        {/* {onPress && <Settings />} */}
       </TouchableOpacity>
     </HStack>
   );
 }
-
-const styles = StyleSheet.create({});

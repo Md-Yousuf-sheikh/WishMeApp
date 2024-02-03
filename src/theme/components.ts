@@ -1,5 +1,3 @@
-import {fontSizes} from './typography';
-
 const components = {
   Button: {},
   Input: {

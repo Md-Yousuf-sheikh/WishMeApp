@@ -28,10 +28,17 @@ export const fontConfig = {
       normal: 'Outfit-Black',
     },
   },
+  Abel: {
+    400: {
+      normal: 'Abel-Regular',
+      italic: 'Abel-Regular',
+    },
+  },
 };
 
 export const fonts = {
-  heading: 'Outfit',
-  body: 'Outfit',
-  mono: 'Outfit',
+  heading: 'Abel',
+  body: 'Abel',
+  mono: 'Abel',
+  abel: 'Abel',
 };
