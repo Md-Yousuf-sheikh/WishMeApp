@@ -8,7 +8,7 @@ const LoginScreen = () => {
   return <ScrollView>{/* <VStack></VStack>; */}</ScrollView>;
 };
 
-const loginScreen = asRoute(LoginScreen, 'LoginScreen', {
+const loginScreen = asRoute(LoginScreen, 'loginScreen', {
   title: 'LoginScreen',
   animation: 'slide_from_right',
 });

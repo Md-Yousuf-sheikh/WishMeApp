@@ -1,25 +1,13 @@
-import {
-  welcomeScreen,
-  forgotPassword,
-  numberOtpVerificationCode,
-  resetPassword,
-  signInWithNumber,
-  signUpScreen,
-} from '@screens/auth-screens';
+import bottomTabs from '../BottomTabs/index';
 import {IStackNavigationConfig} from 'src/typedef/navigation.types';
 
 export const userScreens = {
-  welcomeScreen,
-  forgotPassword,
-  numberOtpVerificationCode,
-  resetPassword,
-  signInWithNumber,
-  signUpScreen,
+  bottomTabs,
 };
 
 //  ren
 const userRoutes: IStackNavigationConfig = {
-  initialRouteName: userScreens.welcomeScreen.name,
+  initialRouteName: userScreens.bottomTabs.name,
   routes: Object?.values(userScreens),
   screenOptions: {
     headerShown: false,

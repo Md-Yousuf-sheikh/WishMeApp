@@ -29,7 +29,7 @@ const WelcomeScreen = () => {
             px={4}
             py={2}
             borderRadius={'full'}
-            onPress={() => navigate('signUpScreen')}
+            onPress={() => navigate('registerScreen')}
             _text={{fontSize: 'md', color: Colors.primaryLighter3}}
             background={'white'}>
             Create Account
@@ -37,7 +37,7 @@ const WelcomeScreen = () => {
           <Button
             px={4}
             py={4}
-            onPress={() => navigate('signInNumberScreen')}
+            onPress={() => navigate('signInWithNumber')}
             variant={'unstyled'}
             flexDir={'row'}>
             <HStack alignItems={'center'} space={2}>

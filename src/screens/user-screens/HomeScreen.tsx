@@ -1,11 +1,16 @@
-import {ScrollView} from 'native-base';
 import React from 'react';
+import MainHeader from 'src/components/common/Headers/MainHeader';
+import Background from 'src/components/shared/Background';
 import asRoute from 'src/utils/withRoute';
 
 const HomeScreen = () => {
   // const navigation = useNavigation();
 
-  return <ScrollView>{/* <VStack></VStack>; */}</ScrollView>;
+  return (
+    <Background type="scroll">
+      <MainHeader />
+    </Background>
+  );
 };
 
 const homeScreen = asRoute(HomeScreen, 'HomeScreen', {

@@ -28,7 +28,7 @@ const validationSchema = Yup.object().shape({
     .required('Phone number is required'),
 });
 
-const RegisterScreen = () => {
+const NumberRegister = () => {
   // hooks
   const navigate = useNavigate();
   const {handleImagePicker} = useImageUploader();
@@ -285,9 +285,9 @@ const RegisterScreen = () => {
   );
 };
 
-const registerScreen = asRoute(RegisterScreen, 'registerScreen', {
-  title: 'RegisterScreen',
+const numberRegister = asRoute(NumberRegister, 'numberRegister', {
+  title: 'Number Register',
   animation: 'slide_from_right',
 });
 
-export default registerScreen;
+export default numberRegister;

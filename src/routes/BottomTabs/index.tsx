@@ -4,22 +4,18 @@ import {
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
 import asRoute from 'src/utils/withRoute';
-import {welcomeScreen} from '@screens/auth-screens';
-// import {
-//   ChartFillIcon,
-//   ChartIcon,
-//   ExerciseFillIcon,
-//   ExerciseIcon,
-//   HistoryFillIcon,
-//   HistoryIcon,
-//   MealFillIcon,
-//   MealIcon,
-//   PhoneFillIcon,
-//   PhoneIcon,
-//   ProfileFillIcon,
-//   ProfileIcon,
-// } from '@assets/icons';
-
+import {homeScreen} from '@screens/user-screens';
+import createWishes from '@screens/user-screens/CreateWishes';
+import scheduledWishes from '@screens/user-screens/ScheduledWishes';
+import Colors from '@theme/colors';
+import {
+  TabMessageActiveIcon,
+  WishBoxActiveIcon,
+  WishBoxIcon,
+  TabMessageIcon,
+  TabBirthCakeIcon,
+  TabBirthCakeActiveIcon,
+} from 'src/NativeBaseIcon';
 // tab
 const Tab = createBottomTabNavigator();
 
@@ -31,53 +27,41 @@ type TBottomTabNavigationOptions = (options: {
 }) => BottomTabNavigationOptions;
 
 const taborOptions: TBottomTabNavigationOptions = ({route}) => ({
-  // tabBarIcon: ({focused, size}) => {
-  //   switch (route.name) {
-  //     case 'MealPlan':
-  //       return focused ? (
-  //         <MealFillIcon height={size} width={size} />
-  //       ) : (
-  //         <MealIcon height={size} width={size} />
-  //       );
-  //     case 'Exercise':
-  //       return focused ? (
-  //         <ExerciseFillIcon height={size} width={size} />
-  //       ) : (
-  //         <ExerciseIcon height={size} width={size} />
-  //       );
-  //     case 'Program':
-  //       return focused ? (
-  //         <ChartFillIcon height={size} width={size} />
-  //       ) : (
-  //         <ChartIcon height={size} width={size} />
-  //       );
-  //     case 'History':
-  //       return focused ? (
-  //         <HistoryFillIcon height={size} width={size} />
-  //       ) : (
-  //         <HistoryIcon height={size} width={size} />
-  //       );
-  //     case 'Call':
-  //       return focused ? (
-  //         <PhoneFillIcon height={size} width={size} />
-  //       ) : (
-  //         <PhoneIcon height={size} width={size} />
-  //       );
-  //     case 'Profile':
-  //       return focused ? (
-  //         <ProfileFillIcon height={size} width={size} />
-  //       ) : (
-  //         <ProfileIcon height={size} width={size} />
-  //       );
-  //     default:
-  //       return null;
-  //   }
-  // },
-  title: '',
+  tabBarIcon: ({focused}) => {
+    switch (route.name) {
+      case 'home':
+        return focused ? (
+          <WishBoxActiveIcon size={6} />
+        ) : (
+          <WishBoxIcon size={6} />
+        );
+      case 'createWishes':
+        return focused ? (
+          <WishBoxActiveIcon size={6} />
+        ) : (
+          <WishBoxIcon size={6} />
+        );
+      case 'birthWishes':
+        return focused ? (
+          <TabBirthCakeActiveIcon size={6} />
+        ) : (
+          <TabBirthCakeIcon size={6} />
+        );
+      case 'scheduledWishes':
+        return focused ? (
+          <TabMessageActiveIcon size={7} />
+        ) : (
+          <TabMessageIcon size={7} />
+        );
+      default:
+        return null;
+    }
+  },
   headerShown: false,
+  tabBarShowLabel: false,
   tabBarStyle: {
-    backgroundColor: '#F0118B',
-    height: 65,
+    backgroundColor: Colors.primaryMain,
+    height: 60,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   },
@@ -87,22 +71,27 @@ function BottomRoutes() {
   return (
     <Tab.Navigator
       screenOptions={taborOptions as any}
-      initialRouteName={'Home'}
+      initialRouteName={'scheduledWishes'}
       backBehavior="initialRoute">
       <Tab.Screen
-        name="Order"
-        options={welcomeScreen?.options as any}
-        component={welcomeScreen?.component}
+        name="scheduledWishes"
+        options={scheduledWishes?.options as any}
+        component={scheduledWishes?.component}
       />
       <Tab.Screen
-        name="Home"
-        options={welcomeScreen.options as any}
-        component={welcomeScreen?.component}
+        name="home"
+        options={homeScreen.options as any}
+        component={homeScreen?.component}
       />
       <Tab.Screen
-        name="Account"
-        options={welcomeScreen?.options as any}
-        component={welcomeScreen?.component}
+        name="birthWishes"
+        options={homeScreen.options as any}
+        component={homeScreen?.component}
+      />
+      <Tab.Screen
+        name="createWishes"
+        options={createWishes?.options as any}
+        component={createWishes?.component}
       />
     </Tab.Navigator>
   );

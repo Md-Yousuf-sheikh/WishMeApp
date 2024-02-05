@@ -8,7 +8,7 @@ const ResetPassword = () => {
   return <ScrollView>{/* <VStack></VStack>; */}</ScrollView>;
 };
 
-const resetPassword = asRoute(ResetPassword, 'ResetPassword', {
+const resetPassword = asRoute(ResetPassword, 'resetPassword', {
   title: 'ResetPassword',
   animation: 'slide_from_right',
 });

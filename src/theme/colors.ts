@@ -13,7 +13,7 @@ const Colors = {
   primaryDarker01: 'rgba(125, 86, 28, 1)',
   primaryDarker50: '#45301E',
   primaryDarker: 'rgba(82, 71, 57, 1)',
-  primaryMain: 'rgb(240, 17, 139), 88%, 50%)',
+  primaryMain: '#CB5E98',
   primaryLighter: 'rgba(188, 149, 90, 1)',
   primaryLighter50: '#BC955A',
   primaryLighter2: 'rgba(188, 149, 90, 0.623)',

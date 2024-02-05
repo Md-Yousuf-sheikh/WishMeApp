@@ -8,7 +8,7 @@ const ForgetPassword = () => {
   return <ScrollView>{/* <VStack></VStack>; */}</ScrollView>;
 };
 
-const forgetPassword = asRoute(ForgetPassword, 'ForgetPassword', {
+const forgetPassword = asRoute(ForgetPassword, 'forgetPassword', {
   title: 'ForgetPassword',
   animation: 'slide_from_right',
 });
