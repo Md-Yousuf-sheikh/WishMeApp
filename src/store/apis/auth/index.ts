@@ -12,13 +12,16 @@ export const authApiSlice = apiSlice.injectEndpoints({
       async onQueryStarted(args, {dispatch, queryFulfilled}) {
         try {
           const {data: result} = await queryFulfilled;
+          const {access_token, ...userInfo} = result?.data;
+          console.log('result', userInfo);
 
-          if (result.data.data) {
+    
+          if (result.data) {
             dispatch(
               login({
-                user: result.data.data?.user,
-                accessToken: result.data.data?.accessToken,
-                refreshToken: result.data.data?.refreshToken,
+                user: userInfo,
+                accessToken: access_token,
+                refreshToken: access_token,
               }),
             );
           }
@@ -83,5 +86,5 @@ export const {
   usePasswordResetMutation,
   useSendOtpNumberMutation,
   useVerifyNumberOtpMutation,
-  useLoginWithPasswordMutation
+  useLoginWithPasswordMutation,
 } = authApiSlice;

@@ -40,7 +40,7 @@ const LoginScreen = () => {
           password: values?.password,
           mobileNumber: values?.mobile,
         }).unwrap();
-        console.log('res', res);
+        // console.log('res', res);
 
         toast(res?.message);
       } catch (error: any) {
@@ -57,7 +57,7 @@ const LoginScreen = () => {
       <VStack px={4} flexGrow={1} justifyContent={'space-between'} pb={5}>
         {/* top */}
         <VStack>
-          <AuthTopSection title="Sign In" />
+          <AuthTopSection title="Sign In with password" />
 
           {/* form input */}
           <VStack space={4} pt={4}>
