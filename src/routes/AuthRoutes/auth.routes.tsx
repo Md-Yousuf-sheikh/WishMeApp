@@ -10,7 +10,7 @@ import {
 } from '@screens/auth-screens';
 import {IStackNavigationConfig} from 'src/typedef/navigation.types';
 
-export const authScreens = {
+const authScreens = {
   welcomeScreen,
   forgotPassword,
   numberOtpVerificationCode,
@@ -22,7 +22,7 @@ export const authScreens = {
 };
 
 //  ren
-const authRoute: IStackNavigationConfig = {
+export const authRoute: IStackNavigationConfig = {
   initialRouteName: authScreens.welcomeScreen.name,
   routes: Object?.values(authScreens),
   screenOptions: {
@@ -34,5 +34,3 @@ const authRoute: IStackNavigationConfig = {
 };
 
 export type TAuthRoutes = keyof typeof authScreens;
-
-export default authRoute;

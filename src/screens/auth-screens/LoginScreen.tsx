@@ -41,7 +41,7 @@ const LoginScreen = () => {
           mobileNumber: values?.mobile,
         }).unwrap();
         // console.log('res', res);
-
+        formik.resetForm();
         toast(res?.message);
       } catch (error: any) {
         toast(error?.data?.message || 'Something on the wrong ', 'error');

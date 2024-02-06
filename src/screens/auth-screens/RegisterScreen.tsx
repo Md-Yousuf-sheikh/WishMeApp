@@ -35,7 +35,7 @@ const validationSchema = Yup.object().shape({
 
 const RegisterScreen = () => {
   // hooks
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const {handleImagePicker} = useImageUploader();
   const toast = useShowToastMessage();
 
@@ -68,7 +68,9 @@ const RegisterScreen = () => {
       });
       try {
         const res = await handelSignUp(formData).unwrap();
+        navigate('loginScreen');
         toast(res?.message);
+        formik.resetForm();
       } catch (error: any) {
         toast(error?.data?.message || 'Something on the wrong ', 'error');
       }
@@ -152,11 +154,10 @@ const RegisterScreen = () => {
                     background: '#ffffff',
                     borderColor: Colors.primaryMain,
                   }}
-                  w={'70%'}
+                  w={'68%'}
                 />
                 <Button
-                  minW={'27%'}
-                  px={4}
+                  w={'30%'}
                   py={2}
                   isLoading={isLoadingSendOtp}
                   borderRadius={'md'}
@@ -193,10 +194,10 @@ const RegisterScreen = () => {
                       background: '#ffffff',
                       borderColor: Colors.primaryMain,
                     }}
-                    w={'70%'}
+                    w={'68%'}
                   />
                   <Button
-                    minW={'27%'}
+                    w={'30%'}
                     px={4}
                     py={2}
                     isLoading={isOtpVerifying}

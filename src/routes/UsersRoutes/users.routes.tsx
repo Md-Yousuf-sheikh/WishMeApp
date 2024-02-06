@@ -1,14 +1,15 @@
 import bottomTabs from '../BottomTabs/index';
 import {IStackNavigationConfig} from 'src/typedef/navigation.types';
 import {updateWishes, profileScreen} from '@screens/user-screens';
-export const userScreens = {
+
+const userScreens = {
   bottomTabs,
   updateWishes,
   profileScreen,
 };
 
 //  ren
-const userRoutes: IStackNavigationConfig = {
+export const userRoutes: IStackNavigationConfig = {
   initialRouteName: userScreens.bottomTabs.name,
   routes: Object?.values(userScreens),
   screenOptions: {
@@ -19,6 +20,4 @@ const userRoutes: IStackNavigationConfig = {
   },
 };
 
-export type TAuthRoutes = keyof typeof userScreens;
-
-export default userRoutes;
+export type TUserRoutes = keyof typeof userScreens;

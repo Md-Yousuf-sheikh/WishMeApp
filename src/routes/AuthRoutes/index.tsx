@@ -1,12 +1,12 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
-import authRoutes from './auth.routes';
+import {authRoute} from './auth.routes';
 
 export default function AuthRoutes() {
   const Stack = createNativeStackNavigator();
   // const showWelComeScreen = useSelector(selectShowWelcome);
 
-  const routes = authRoutes?.routes.map(screen => {
+  const routes = authRoute?.routes.map(screen => {
     return (
       <Stack.Screen
         key={screen.name}
@@ -19,8 +19,8 @@ export default function AuthRoutes() {
 
   return (
     <Stack.Navigator
-      screenOptions={authRoutes.screenOptions}
-      initialRouteName={authRoutes.initialRouteName}>
+      screenOptions={authRoute.screenOptions}
+      initialRouteName={authRoute.initialRouteName}>
       {/* {showWelComeScreen ? (
         <Stack.Screen
           name={welcomeScreens.name}

@@ -7,3 +7,7 @@ MYAPP_UPLOAD_STORE_FILE=wish-me-appkey.keystore
 MYAPP_UPLOAD_KEY_ALIAS=wish-me-app-alias
 MYAPP_UPLOAD_STORE_PASSWORD=*****
 MYAPP_UPLOAD_KEY_PASSWORD=*****
+
+
+
+sudo keytool -genkey -v -keystore my-upload-key.keystore -alias my-key-alias -keyalg RSA -keysize 2048 -validity 10000

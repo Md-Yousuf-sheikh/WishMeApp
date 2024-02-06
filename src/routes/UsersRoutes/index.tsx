@@ -1,6 +1,6 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
-import userRoutes from './users.routes';
+import {userRoutes} from './users.routes';
 
 export default function UserRoutes() {
   const Stack = createNativeStackNavigator();
