@@ -5,3 +5,4 @@ export {default as signUpScreen} from './RegisterScreen';
 export {default as resetPassword} from './ResetPassword';
 export {default as welcomeScreen} from './WelcomeScreen';
 export {default as numberRegister} from './NumberRegister';
+export {default as loginScreen} from './LoginScreen';

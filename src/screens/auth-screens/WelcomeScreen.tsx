@@ -37,7 +37,7 @@ const WelcomeScreen = () => {
           <Button
             px={4}
             py={4}
-            onPress={() => navigate('signInWithNumber')}
+            onPress={() => navigate('loginScreen')}
             variant={'unstyled'}
             flexDir={'row'}>
             <HStack alignItems={'center'} space={2}>

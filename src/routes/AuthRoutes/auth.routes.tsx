@@ -6,6 +6,7 @@ import {
   signInWithNumber,
   signUpScreen,
   numberRegister,
+  loginScreen,
 } from '@screens/auth-screens';
 import {IStackNavigationConfig} from 'src/typedef/navigation.types';
 
@@ -17,6 +18,7 @@ export const authScreens = {
   signInWithNumber,
   signUpScreen,
   numberRegister,
+  loginScreen,
 };
 
 //  ren

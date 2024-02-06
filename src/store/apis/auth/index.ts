@@ -3,9 +3,9 @@ import {login} from '@store/features/authSlice';
 
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
-    login: builder.mutation({
+    loginWithPassword: builder.mutation({
       query: body => ({
-        url: 'auth/sign-in',
+        url: 'auth/sign-in-with-password',
         method: 'POST',
         body,
       }),
@@ -58,9 +58,16 @@ export const authApiSlice = apiSlice.injectEndpoints({
         body,
       }),
     }),
-    verifyOtp: builder.mutation({
+    verifyNumberOtp: builder.mutation({
       query: body => ({
-        url: 'auth/verify-otp',
+        url: 'otp/verify',
+        method: 'POST',
+        body,
+      }),
+    }),
+    sendOtpNumber: builder.mutation({
+      query: body => ({
+        url: 'otp/send',
         method: 'POST',
         body,
       }),
@@ -70,10 +77,11 @@ export const authApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
-  useLoginMutation,
   useRegisterMutation,
   useForgetPasswordMutation,
   usePasswordChangeMutation,
   usePasswordResetMutation,
-  useVerifyOtpMutation,
+  useSendOtpNumberMutation,
+  useVerifyNumberOtpMutation,
+  useLoginWithPasswordMutation
 } = authApiSlice;
