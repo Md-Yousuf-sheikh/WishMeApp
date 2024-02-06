@@ -1,8 +1,10 @@
 import {Avatar, CircleIcon, HStack, Text, VStack, Pressable} from 'native-base';
 import React from 'react';
+import {EditPanIcon} from 'src/NativeBaseIcon';
 
 interface PropsType {
   onPress?: () => void;
+  onEditPress?: () => void;
   type?: 'app' | 'mobile';
   image?: string;
   data?: any;
@@ -12,9 +14,9 @@ interface PropsType {
   sendType?: string;
 }
 
-export default function ScheduledCard({type}: PropsType) {
+export default function ScheduledCard({type, onPress, onEditPress}: PropsType) {
   return (
-    <Pressable>
+    <Pressable onPress={onPress}>
       <HStack
         space={2}
         p={2}
@@ -25,10 +27,13 @@ export default function ScheduledCard({type}: PropsType) {
             DD
           </Avatar>
           <VStack maxW={'50%'}>
-            <HStack>
+            <HStack alignItems={'center'} space={2}>
               <Text fontWeight={'800'} color={'gray.800'}>
                 Foysal Mahmud Khan
               </Text>
+              <Pressable onPress={onEditPress}>
+                <EditPanIcon />
+              </Pressable>
             </HStack>
             <Text color={'gray.400'} numberOfLines={1}>
               Happy Birthday, Wising kas kajs dakjsd ak sdka skda sd k

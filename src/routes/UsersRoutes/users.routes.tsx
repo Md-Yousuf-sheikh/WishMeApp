@@ -1,8 +1,9 @@
 import bottomTabs from '../BottomTabs/index';
 import {IStackNavigationConfig} from 'src/typedef/navigation.types';
-
+import {updateWishes} from '@screens/user-screens';
 export const userScreens = {
   bottomTabs,
+  updateWishes,
 };
 
 //  ren

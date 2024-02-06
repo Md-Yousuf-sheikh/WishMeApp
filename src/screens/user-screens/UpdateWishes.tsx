@@ -33,7 +33,7 @@ const validationSchema = Yup.object().shape({
   schedule_date: Yup.string().required('Schedule date is required'),
   sms_type: Yup.string().required('Sms type is required'),
 });
-const CreateWishes = () => {
+const UpdateWishes = () => {
   // hooks
   const navigate = useNavigate();
 
@@ -64,8 +64,8 @@ const CreateWishes = () => {
 
   return (
     <Background type="scroll">
-      <Header title="Create wishes" />
-      <VStack space={4} px={4}>
+      <Header title="Update wishes" />
+      <VStack space={4} px={4} pt={5} >
         {/* Type */}
         <FormControl
           isInvalid={Boolean(errors.sms_type) && Boolean(touched.sms_type)}>
@@ -271,9 +271,8 @@ const CreateWishes = () => {
     </Background>
   );
 };
-
-const createWishes = asRoute(CreateWishes, 'createWishes', {
+const updateWishes = asRoute(UpdateWishes, 'updateWishes', {
   animation: 'slide_from_right',
 });
 
-export default createWishes;
+export default updateWishes;

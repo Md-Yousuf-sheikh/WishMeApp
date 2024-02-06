@@ -1,5 +1,7 @@
 import useImageUploader from '@hooks/useImageUploader';
 import useNavigate from '@hooks/useNavigate';
+import useShowToastMessage from '@hooks/useShowToastMessage';
+import {useRegisterMutation} from '@store/apis/auth';
 import Colors from '@theme/colors';
 import {useFormik} from 'formik';
 import {
@@ -32,8 +34,11 @@ const RegisterScreen = () => {
   // hooks
   const navigate = useNavigate();
   const {handleImagePicker} = useImageUploader();
-  // form hooks
+  const toast = useShowToastMessage();
 
+  // APIS
+  const [handelSignUp, {isLoading}] = useRegisterMutation();
+  // form hooks
   const formik = useFormik({
     initialValues: {
       full_name: '',
@@ -47,6 +52,17 @@ const RegisterScreen = () => {
     onSubmit: async values => {
       console.log('values', values);
       navigate('numberOtpVerify', values, undefined);
+      const props = {
+        full_name: values?.full_name,
+        password: values?.password,
+        contact_number: values?.mobile,
+      };
+      try {
+        const res = await handelSignUp(props).unwrap();
+        console.log('res', res);
+      } catch (error) {
+        toast(error?.data?.message, 'error');
+      }
     },
   });
 
@@ -193,6 +209,7 @@ const RegisterScreen = () => {
                       background: '#ffffff',
                       borderColor: Colors.primaryMain,
                     }}
+                    
                   />
 
                   <FormControl.ErrorMessage
@@ -268,6 +285,7 @@ const RegisterScreen = () => {
                   <Button
                     px={4}
                     py={4}
+                    isLoading={isLoading}
                     borderRadius={'full'}
                     onPress={() => handleSubmit()}
                     _text={{fontSize: 'md', color: 'white'}}

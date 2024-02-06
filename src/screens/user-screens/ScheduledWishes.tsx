@@ -1,3 +1,4 @@
+import useNavigate from '@hooks/useNavigate';
 import React from 'react';
 import ScheduledCard from 'src/components/cards/ScheduledCard';
 import MainHeader from 'src/components/common/Headers/MainHeader';
@@ -6,14 +7,19 @@ import InfiniteFlatList from 'src/components/shared/InfiniteFlatList';
 import asRoute from 'src/utils/withRoute';
 
 const ScheduledWishes = () => {
-  // const navigate =useNavigate()
+  const navigate = useNavigate();
 
   return (
     <Background type="normal">
       <MainHeader title="Scheduled Wishes" />
       <InfiniteFlatList
         data={[{}, {}, {}, {}, {}, {}, {}, {}, {}]}
-        renderItem={({item}) => <ScheduledCard data={item} />}
+        renderItem={({item}) => (
+          <ScheduledCard
+            onEditPress={() => navigate('updateWishes')}
+            data={item}
+          />
+        )}
         showsVerticalScrollIndicator={false}
         inverted
         onLoadMore={() => {

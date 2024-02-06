@@ -59,6 +59,7 @@ const taborOptions: TBottomTabNavigationOptions = ({route}) => ({
   },
   headerShown: false,
   tabBarShowLabel: false,
+  tabBarHideOnKeyboard: true,
   tabBarStyle: {
     backgroundColor: Colors.primaryMain,
     height: 60,
