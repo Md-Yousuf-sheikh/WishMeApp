@@ -1,0 +1,9 @@
+wishme123
+CN=Wish, OU=Wish Me, O=BTL, L=DK, ST=dk, C=bd
+[Storing wish-me-app-key.keystore]
+
+
+MYAPP_UPLOAD_STORE_FILE=wish-me-appkey.keystore
+MYAPP_UPLOAD_KEY_ALIAS=wish-me-app-alias
+MYAPP_UPLOAD_STORE_PASSWORD=*****
+MYAPP_UPLOAD_KEY_PASSWORD=*****
