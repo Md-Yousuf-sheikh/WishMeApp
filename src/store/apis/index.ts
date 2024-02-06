@@ -9,6 +9,10 @@ const baseQuery = fetchBaseQuery({
     if (auth.accessToken) {
       headers.set('authorization', `Bearer ${auth.accessToken}`);
     }
+    if (!headers.get('file')) {
+      headers.set('Content-Type', 'application/json');
+    }
+    headers.set('Accept', 'application/json');
     return headers;
   },
 });

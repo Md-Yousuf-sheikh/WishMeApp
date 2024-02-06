@@ -17,7 +17,7 @@ const useShowToastMessage = () => {
     toast.show({
       title: message,
       placement: placement,
-      backgroundColor: status == 'success' ? 'green.600' : 'red.600',
+      backgroundColor: status === 'success' ? '#008000' : '#ff0000',
     });
   };
 

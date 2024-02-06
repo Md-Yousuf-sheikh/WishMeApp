@@ -34,6 +34,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
         url: 'auth/sign-up',
         method: 'POST',
         body,
+        headers: {file: true},
       }),
     }),
     passwordChange: builder.mutation({

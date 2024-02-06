@@ -32,7 +32,7 @@ const validationSchema = Yup.object().shape({
 
 const RegisterScreen = () => {
   // hooks
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const {handleImagePicker} = useImageUploader();
   const toast = useShowToastMessage();
 
@@ -41,27 +41,37 @@ const RegisterScreen = () => {
   // form hooks
   const formik = useFormik({
     initialValues: {
-      full_name: '',
+      fullName: '',
       mobile: '',
       password: '',
       otp: '',
       otpVerifySuccess: false,
-      profile_image: {},
+      profileImage: {} as any,
     },
     validationSchema,
     onSubmit: async values => {
-      console.log('values', values);
-      navigate('numberOtpVerify', values, undefined);
-      const props = {
-        full_name: values?.full_name,
-        password: values?.password,
-        contact_number: values?.mobile,
-      };
+      const formData = new FormData();
+
+      formData.append('fullName', values?.fullName);
+      formData.append('password', values?.password);
+      formData.append('mobileNumber', values?.mobile);
+      formData.append('avatar', {
+        name: values?.profileImage?.fileName,
+        type: 'image/*',
+        uri: values?.profileImage?.uri,
+      });
+      console.log('formData', formData);
+
       try {
-        const res = await handelSignUp(props).unwrap();
-        console.log('res', res);
-      } catch (error) {
-        toast(error?.data?.message, 'error');
+        const res = await handelSignUp(formData).unwrap();
+        console.log('res ----->>>', res);
+        toast(res?.data?.message);
+      } catch (error: any) {
+        console.log('error------>>>>>', error?.data?.errors);
+        toast(
+          error?.data?.errors?.message || 'Something on the wrong ',
+          'error',
+        );
       }
     },
   });
@@ -84,17 +94,9 @@ const RegisterScreen = () => {
   const handleImage = async () => {
     try {
       const file = await handleImagePicker();
-      const formData = new FormData();
-      if (file?.fileName && file?.uri) {
-        formData.append(
-          'files',
-          createFormFile(file?.uri, 'image', file?.fileName),
-        );
-      }
-      setFieldValue('profile_image', formData);
+      setFieldValue('profileImage', file);
     } catch (error) {}
   };
-
   return (
     <Background type="scroll">
       <VStack px={4} flexGrow={1} justifyContent={'space-between'} pb={5}>
@@ -190,7 +192,7 @@ const RegisterScreen = () => {
                 </Text>
                 <FormControl
                   isInvalid={
-                    Boolean(errors.full_name) && Boolean(touched.full_name)
+                    Boolean(errors.fullName) && Boolean(touched.fullName)
                   }>
                   <Input
                     borderColor={Colors.primaryMain}
@@ -199,23 +201,22 @@ const RegisterScreen = () => {
                     placeholderTextColor={'gray.2'}
                     color={'gray.700'}
                     _focus={{bg: 'white', borderColor: Colors.primaryMain}}
-                    onChangeText={handleChange('full_name')}
+                    onChangeText={handleChange('fullName')}
                     fontWeight={'400'}
-                    onBlur={handleBlur('full_name')}
-                    value={values.full_name}
+                    onBlur={handleBlur('fullName')}
+                    value={values.fullName}
                     fontSize={'lg'}
                     keyboardType="number-pad"
                     _input={{
                       background: '#ffffff',
                       borderColor: Colors.primaryMain,
                     }}
-                    
                   />
 
                   <FormControl.ErrorMessage
                     color="white"
                     _text={{fontSize: 'xs', fontWeight: 500, color: 'white'}}>
-                    {errors.full_name}
+                    {errors.fullName}
                   </FormControl.ErrorMessage>
                 </FormControl>
                 <FormControl
@@ -249,8 +250,8 @@ const RegisterScreen = () => {
                 </FormControl>
                 <FormControl
                   isInvalid={
-                    Boolean(errors.profile_image) &&
-                    Boolean(touched.profile_image)
+                    Boolean(errors.profileImage) &&
+                    Boolean(touched.profileImage)
                   }>
                   <Pressable
                     w={130}
@@ -261,14 +262,15 @@ const RegisterScreen = () => {
                     onPress={handleImage}
                     justifyContent={'center'}
                     alignItems={'center'}>
-                    {values?.profile_image?._parts?.[0]?.[1]?.uri ? (
+                    {values?.profileImage?.uri ? (
                       <Image
                         source={{
-                          uri: values?.profile_image?._parts?.[0]?.[1]?.uri,
+                          uri: values?.profileImage?.uri,
                         }}
                         w={130}
                         h={130}
                         resizeMode="cover"
+                        alt="profile"
                       />
                     ) : (
                       <Text color={'gray.500'}>ADD IMAGE</Text>
@@ -277,7 +279,7 @@ const RegisterScreen = () => {
                   <FormControl.ErrorMessage
                     color="white"
                     _text={{fontSize: 'xs', fontWeight: 500, color: 'white'}}>
-                    {errors.profile_image}
+                    {errors.profileImage}
                   </FormControl.ErrorMessage>
                 </FormControl>
                 {/*  */}
