@@ -4,7 +4,6 @@ import {
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
 import asRoute from 'src/utils/withRoute';
-import {homeScreen} from '@screens/user-screens';
 import createWishes from '@screens/user-screens/CreateWishes';
 import scheduledWishes from '@screens/user-screens/ScheduledWishes';
 import Colors from '@theme/colors';
@@ -16,6 +15,7 @@ import {
   TabBirthCakeIcon,
   TabBirthCakeActiveIcon,
 } from 'src/NativeBaseIcon';
+import {giftShop} from '@screens/user-screens';
 // tab
 const Tab = createBottomTabNavigator();
 
@@ -29,7 +29,7 @@ type TBottomTabNavigationOptions = (options: {
 const taborOptions: TBottomTabNavigationOptions = ({route}) => ({
   tabBarIcon: ({focused}) => {
     switch (route.name) {
-      case 'home':
+      case 'giftShop':
         return focused ? (
           <WishBoxActiveIcon size={6} />
         ) : (
@@ -80,14 +80,14 @@ function BottomRoutes() {
         component={scheduledWishes?.component}
       />
       <Tab.Screen
-        name="home"
-        options={homeScreen.options as any}
-        component={homeScreen?.component}
+        name="giftShop"
+        options={giftShop.options as any}
+        component={giftShop?.component}
       />
       <Tab.Screen
         name="birthWishes"
-        options={homeScreen.options as any}
-        component={homeScreen?.component}
+        options={giftShop.options as any}
+        component={giftShop?.component}
       />
       <Tab.Screen
         name="createWishes"

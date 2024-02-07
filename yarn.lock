@@ -7874,6 +7874,11 @@ react-native-screens@^3.25.0:
     react-freeze "^1.0.0"
     warn-once "^0.1.0"
 
+react-native-send-direct-sms@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-send-direct-sms/-/react-native-send-direct-sms-0.2.0.tgz#2c228064766b78565bcd70cf40aaa41a49352724"
+  integrity sha512-nK2Lp7HAt08gcvJs/xXXJhwCALVPdM0axwWJ4t7fOsFGliuhhTrcSSdA06mDwdVJd9WKUSIPCx1RwEgwyEhQ2A==
+
 react-native-size-matters@^0.4.2:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/react-native-size-matters/-/react-native-size-matters-0.4.2.tgz#4348bdd6fc47383f60326d58ad69870c998a5f9a"

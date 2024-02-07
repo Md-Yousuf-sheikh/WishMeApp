@@ -44,6 +44,7 @@
     "react-native-ruler-picker": "^0.2.1",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "^3.25.0",
+    "react-native-send-direct-sms": "^0.2.0",
     "react-native-size-matters": "^0.4.2",
     "react-native-splash-screen": "^3.3.0",
     "react-native-svg": "12.1.1",

@@ -1,5 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import useNavigate from '@hooks/useNavigate';
+import useShowToastMessage from '@hooks/useShowToastMessage';
+import useSmsSender from '@hooks/useSmsSender';
 import Colors from '@theme/colors';
 import {useFormik} from 'formik';
 import {
@@ -37,6 +39,8 @@ const validationSchema = Yup.object().shape({
 const CreateWishes = () => {
   // hooks
   const navigate = useNavigate();
+  const {handelSendMessage} = useSmsSender();
+  const toast = useShowToastMessage();
 
   const formik = useFormik({
     initialValues: {
@@ -51,6 +55,11 @@ const CreateWishes = () => {
     onSubmit: async values => {
       console.log('values', values);
       // navigate('numberOtpVerify', values, undefined);
+      if (values?.sms_type === 'mobile') {
+        const smsRes = await handelSendMessage(values?.mobile, values?.message);
+        console.log('smsRes', smsRes);
+        toast('Send sms successfully');
+      }
     },
   });
   const {
@@ -79,7 +88,7 @@ const CreateWishes = () => {
             }}>
             <HStack justifyContent={'space-between'} space={3}>
               <Radio
-                value="one"
+                value="mobile"
                 my="1"
                 size={5}
                 color={Colors.primaryMain}
@@ -90,7 +99,7 @@ const CreateWishes = () => {
                 From mobile
               </Radio>
               <Radio
-                value="two"
+                value="app"
                 my="1"
                 size={5}
                 _checked={{
