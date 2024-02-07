@@ -16,14 +16,10 @@ interface PropsType {
 
 export default function ScheduledCard({type, onPress, onEditPress}: PropsType) {
   return (
-    <Pressable onPress={onPress}>
-      <HStack
-        space={2}
-        p={2}
-        justifyContent={'space-between'}
-        alignItems={'center'}>
-        <HStack width={'80%'} space={2}>
-          <Avatar bg={'amber.800'} size={'md'}>
+    <Pressable mb={3} onPress={onPress}>
+      <HStack justifyContent={'space-between'} alignItems={'center'}>
+        <HStack width={'80%'}>
+          <Avatar bg={'amber.800'} mr={2} size={'md'}>
             DD
           </Avatar>
           <VStack maxW={'70%'}>

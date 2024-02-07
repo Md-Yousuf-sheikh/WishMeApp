@@ -2,7 +2,7 @@ import useNavigate from '@hooks/useNavigate';
 import {VStack} from 'native-base';
 import React from 'react';
 import ScheduledCard from 'src/components/cards/ScheduledCard';
-import MainHeader from 'src/components/common/Headers/MainHeader';
+import Header from 'src/components/headers/Header';
 import Background from 'src/components/shared/Background';
 import InfiniteFlatList from 'src/components/shared/InfiniteFlatList';
 import asRoute from 'src/utils/withRoute';
@@ -12,29 +12,10 @@ const ScheduledWishes = () => {
 
   return (
     <Background type="normal">
-      <MainHeader title="Scheduled Wishes" />
-      <VStack px={1}>
+      <Header title="Scheduled Wishes" arrowLeft={false} />
+      <VStack px={3} pt={3}>
         <InfiniteFlatList
-          data={[
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-          ]}
+          data={[{}, {}, {}, {}, {}, {}]}
           renderItem={({item}) => (
             <ScheduledCard
               onEditPress={() => navigate('updateWishes')}

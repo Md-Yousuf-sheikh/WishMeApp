@@ -4,6 +4,7 @@ import MainHeader from '../common/Headers/MainHeader';
 interface PropsType {
   title?: string;
   type?: string;
+  arrowLeft?: boolean;
   onPressLeft1?: () => void;
   onPressLeft2?: () => void;
 }
@@ -13,6 +14,7 @@ export default function Header({
   type,
   onPressLeft1,
   onPressLeft2,
+  arrowLeft,
 }: PropsType) {
   const navigation = useNavigation();
   useLayoutEffect(() => {
@@ -25,6 +27,7 @@ export default function Header({
           type={type}
           onPressLeft1={onPressLeft1}
           onPressLeft2={onPressLeft2}
+          arrowLeft={arrowLeft}
         />
       ),
     });

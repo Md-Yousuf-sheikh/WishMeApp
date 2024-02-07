@@ -163,7 +163,7 @@ const RegisterScreen = () => {
                   borderRadius={'md'}
                   onPress={() => handleSendOtp()}
                   _text={{fontSize: 'md', color: 'white'}}
-                  background={Colors.primaryMain}>
+                  background={Colors.buttonColor}>
                   Send OTP
                 </Button>
               </HStack>
@@ -204,7 +204,7 @@ const RegisterScreen = () => {
                     borderRadius={'md'}
                     onPress={() => handelVerify()}
                     _text={{fontSize: 'md', color: 'white'}}
-                    background={Colors.primaryMain}>
+                    background={Colors.buttonColor}>
                     Verify
                   </Button>
                 </HStack>
@@ -330,7 +330,7 @@ const RegisterScreen = () => {
                     borderRadius={'full'}
                     onPress={() => handleSubmit()}
                     _text={{fontSize: 'md', color: 'white'}}
-                    background={Colors.primaryMain}>
+                    background={Colors.buttonColor}>
                     Register
                   </Button>
                 </HStack>

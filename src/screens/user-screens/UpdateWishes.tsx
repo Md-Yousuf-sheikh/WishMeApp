@@ -1,8 +1,10 @@
-/* eslint-disable react-native/no-inline-styles */
 import useNavigate from '@hooks/useNavigate';
+import useShowToastMessage from '@hooks/useShowToastMessage';
+import useSmsSender from '@hooks/useSmsSender';
 import Colors from '@theme/colors';
 import {useFormik} from 'formik';
 import {
+  Box,
   Button,
   CheckIcon,
   FormControl,
@@ -11,13 +13,15 @@ import {
   Link,
   Radio,
   Select,
+  Text,
   VStack,
 } from 'native-base';
 import React from 'react';
+import {BDFlagIcon, ContactIcon} from 'src/NativeBaseIcon';
 import CustomDatePickerInput from 'src/components/InputFiled/CustomDatePickerInput';
 import Header from 'src/components/headers/Header';
 import Background from 'src/components/shared/Background';
-import { wishTypeList } from 'src/data';
+import {wishTypeList} from 'src/data';
 import asRoute from 'src/utils/withRoute';
 import * as Yup from 'yup';
 
@@ -29,14 +33,20 @@ const validationSchema = Yup.object().shape({
     )
     .required('Phone number is required'),
   receiver_name: Yup.string().required('Receiver name is required'),
-  message: Yup.string().required('Message is required'),
+  message: Yup.string()
+    .required('Message is required')
+    .min(10, 'Message must be at least 10 characters')
+    .max(160, 'Message must be at most 160 characters'),
   wishes_type: Yup.string().required('Wish type is required'),
   schedule_date: Yup.string().required('Schedule date is required'),
   sms_type: Yup.string().required('Sms type is required'),
 });
+// UpdateWishes
 const UpdateWishes = () => {
   // hooks
   const navigate = useNavigate();
+  const {handelSendMessage} = useSmsSender();
+  const toast = useShowToastMessage();
 
   const formik = useFormik({
     initialValues: {
@@ -51,6 +61,11 @@ const UpdateWishes = () => {
     onSubmit: async values => {
       console.log('values', values);
       // navigate('numberOtpVerify', values, undefined);
+      if (values?.sms_type === 'mobile') {
+        const smsRes = await handelSendMessage(values?.mobile, values?.message);
+        console.log('smsRes', smsRes);
+        toast('Send sms successfully');
+      }
     },
   });
   const {
@@ -65,8 +80,8 @@ const UpdateWishes = () => {
 
   return (
     <Background type="scroll">
-      <Header title="Update wishes" />
-      <VStack space={4} px={4} pt={5} >
+      <Header title="Update Wishes" />
+      <VStack space={4} px={4}>
         {/* Type */}
         <FormControl
           isInvalid={Boolean(errors.sms_type) && Boolean(touched.sms_type)}>
@@ -79,7 +94,7 @@ const UpdateWishes = () => {
             }}>
             <HStack justifyContent={'space-between'} space={3}>
               <Radio
-                value="one"
+                value="mobile"
                 my="1"
                 size={5}
                 color={Colors.primaryMain}
@@ -90,7 +105,7 @@ const UpdateWishes = () => {
                 From mobile
               </Radio>
               <Radio
-                value="two"
+                value="app"
                 my="1"
                 size={5}
                 _checked={{
@@ -159,6 +174,16 @@ const UpdateWishes = () => {
               background: 'gray.50',
               borderColor: Colors.primaryMain,
             }}
+            leftElement={
+              <Box pl={3}>
+                <BDFlagIcon size={6} />
+              </Box>
+            }
+            rightElement={
+              <Box pr={3}>
+                <ContactIcon size={6} />
+              </Box>
+            }
           />
           <FormControl.ErrorMessage
             _text={{fontSize: 'xs', fontWeight: 500, color: Colors.red}}>
@@ -187,6 +212,11 @@ const UpdateWishes = () => {
               borderColor: Colors.primaryMain,
             }}
           />
+          <HStack justifyContent={'flex-end'}>
+            <Text color={'gray.400'}>
+              Please limit your message to 10-160 characters.
+            </Text>
+          </HStack>
           <FormControl.ErrorMessage
             color="white"
             _text={{fontSize: 'xs', fontWeight: 500, color: Colors.red}}>
@@ -252,7 +282,7 @@ const UpdateWishes = () => {
             borderRadius={'full'}
             onPress={() => handleSubmit()}
             _text={{fontSize: 'md', color: 'white'}}
-            background={Colors.primaryMain}>
+            background={Colors.buttonColor}>
             Submit
           </Button>
           <Button

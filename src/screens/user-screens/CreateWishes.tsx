@@ -1,10 +1,10 @@
-/* eslint-disable react-native/no-inline-styles */
 import useNavigate from '@hooks/useNavigate';
 import useShowToastMessage from '@hooks/useShowToastMessage';
 import useSmsSender from '@hooks/useSmsSender';
 import Colors from '@theme/colors';
 import {useFormik} from 'formik';
 import {
+  Box,
   Button,
   CheckIcon,
   FormControl,
@@ -13,9 +13,11 @@ import {
   Link,
   Radio,
   Select,
+  Text,
   VStack,
 } from 'native-base';
 import React from 'react';
+import {BDFlagIcon, ContactIcon} from 'src/NativeBaseIcon';
 import CustomDatePickerInput from 'src/components/InputFiled/CustomDatePickerInput';
 import Header from 'src/components/headers/Header';
 import Background from 'src/components/shared/Background';
@@ -31,7 +33,10 @@ const validationSchema = Yup.object().shape({
     )
     .required('Phone number is required'),
   receiver_name: Yup.string().required('Receiver name is required'),
-  message: Yup.string().required('Message is required'),
+  message: Yup.string()
+    .required('Message is required')
+    .min(10, 'Message must be at least 10 characters')
+    .max(160, 'Message must be at most 160 characters'),
   wishes_type: Yup.string().required('Wish type is required'),
   schedule_date: Yup.string().required('Schedule date is required'),
   sms_type: Yup.string().required('Sms type is required'),
@@ -74,8 +79,8 @@ const CreateWishes = () => {
 
   return (
     <Background type="scroll">
-      <Header title="Create wishes" />
-      <VStack space={4} px={4}>
+      <Header title="Create wishes" arrowLeft={false} />
+      <VStack space={4} pt={2} px={4}>
         {/* Type */}
         <FormControl
           isInvalid={Boolean(errors.sms_type) && Boolean(touched.sms_type)}>
@@ -168,6 +173,16 @@ const CreateWishes = () => {
               background: 'gray.50',
               borderColor: Colors.primaryMain,
             }}
+            leftElement={
+              <Box pl={3}>
+                <BDFlagIcon size={6} />
+              </Box>
+            }
+            rightElement={
+              <Box pr={3}>
+                <ContactIcon size={6} />
+              </Box>
+            }
           />
           <FormControl.ErrorMessage
             _text={{fontSize: 'xs', fontWeight: 500, color: Colors.red}}>
@@ -196,6 +211,11 @@ const CreateWishes = () => {
               borderColor: Colors.primaryMain,
             }}
           />
+          <HStack justifyContent={'flex-end'}>
+            <Text color={'gray.400'}>
+              Please limit your message to 10-160 characters.
+            </Text>
+          </HStack>
           <FormControl.ErrorMessage
             color="white"
             _text={{fontSize: 'xs', fontWeight: 500, color: Colors.red}}>
@@ -261,10 +281,10 @@ const CreateWishes = () => {
             borderRadius={'full'}
             onPress={() => handleSubmit()}
             _text={{fontSize: 'md', color: 'white'}}
-            background={Colors.primaryMain}>
+            background={Colors.buttonColor}>
             Submit
           </Button>
-          <Button
+          {/* <Button
             px={4}
             py={3}
             variant={'unstyled'}
@@ -273,7 +293,7 @@ const CreateWishes = () => {
             // onPress={() => handleSubmit()}
             _text={{fontSize: 'md', color: '#e62020'}}>
             Delete
-          </Button>
+          </Button> */}
         </HStack>
       </VStack>
     </Background>

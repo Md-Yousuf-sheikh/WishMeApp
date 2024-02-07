@@ -14,7 +14,7 @@ const SmsPlanScreen = () => {
   return (
     <Background type="normal">
       <MainHeader title="Buy SMS plan" />
-      <VStack px={2}>
+      <VStack px={2} pt={4} >
         <InfiniteFlatList
           data={[{}, {}, {}, {}, {}, {}, {}, {}, {}, {}]}
           renderItem={({item}) => (

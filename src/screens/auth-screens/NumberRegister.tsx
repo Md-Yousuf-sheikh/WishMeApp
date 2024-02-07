@@ -117,7 +117,7 @@ const NumberRegister = () => {
                   borderRadius={'md'}
                   onPress={() => handleSendOtp()}
                   _text={{fontSize: 'md', color: 'white'}}
-                  background={Colors.primaryMain}>
+                  background={Colors.buttonColor}>
                   Send OTP
                 </Button>
               </HStack>
@@ -156,7 +156,7 @@ const NumberRegister = () => {
                   borderRadius={'md'}
                   onPress={() => handleSendOtp()}
                   _text={{fontSize: 'md', color: 'white'}}
-                  background={Colors.primaryMain}>
+                  background={Colors.buttonColor}>
                   Verify
                 </Button>
               </HStack>
@@ -271,7 +271,7 @@ const NumberRegister = () => {
                     borderRadius={'full'}
                     onPress={() => handleSubmit()}
                     _text={{fontSize: 'md', color: 'white'}}
-                    background={Colors.primaryMain}>
+                    background={Colors.buttonColor}>
                     Start Wishing
                   </Button>
                 </HStack>

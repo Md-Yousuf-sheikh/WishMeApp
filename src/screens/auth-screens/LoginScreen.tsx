@@ -122,7 +122,7 @@ const LoginScreen = () => {
                 borderRadius={'full'}
                 onPress={() => handleSubmit()}
                 _text={{fontSize: 'md', color: 'white'}}
-                background={Colors.primaryMain}>
+                background={Colors.buttonColor}>
                 Submit
               </Button>
             </HStack>

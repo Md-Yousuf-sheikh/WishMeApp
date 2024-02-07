@@ -1,7 +1,16 @@
 import useNavigate from '@hooks/useNavigate';
 import {selectUser} from '@store/features/authSlice';
 import Colors from '@theme/colors';
-import {Avatar, Button, HStack, Image, Text, VStack} from 'native-base';
+import {
+  ArrowBackIcon,
+  Avatar,
+  Button,
+  HStack,
+  Image,
+  Pressable,
+  Text,
+  VStack,
+} from 'native-base';
 import React from 'react';
 import {Platform, StatusBar} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -11,6 +20,7 @@ import {BellIcon} from 'src/NativeBaseIcon';
 interface PropsType {
   title?: string;
   type?: string;
+  arrowLeft?: boolean;
   onPressLeft1?: () => void;
   onPressLeft2?: () => void;
 }
@@ -20,6 +30,7 @@ export default function MainHeader({
   type,
   onPressLeft1,
   onPressLeft2,
+  arrowLeft = true,
 }: PropsType) {
   // Hooks
   const navigate = useNavigate();
@@ -37,15 +48,25 @@ export default function MainHeader({
         paddingX={4}
         height={'60px'}
         bg={'#ffffff'}
+        borderBottomWidth={1}
+        borderColor={'gray.100'}
         pt={Platform.OS === 'ios' ? insets.top + 'px' : 0}>
         <VStack>
           {title ? (
-            <Text
-              fontSize={'2xl'}
-              fontWeight={'700'}
-              color={Colors.primaryMain}>
-              {title}
-            </Text>
+            <Pressable
+              onPress={() =>
+                arrowLeft ? navigate(undefined, undefined, 'goBack') : null
+              }>
+              <HStack alignItems={'center'} space={2}>
+                {arrowLeft && <ArrowBackIcon color={Colors.primaryMain} />}
+                <Text
+                  fontSize={'md'}
+                  fontWeight={'700'}
+                  color={Colors.primaryMain}>
+                  {title}
+                </Text>
+              </HStack>
+            </Pressable>
           ) : (
             <Image
               source={require('@assets/images/logo.png')}

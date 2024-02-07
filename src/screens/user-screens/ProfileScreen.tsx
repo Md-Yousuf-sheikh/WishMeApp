@@ -2,7 +2,6 @@ import useNavigate from '@hooks/useNavigate';
 import {logout, selectUser} from '@store/features/authSlice';
 import Colors from '@theme/colors';
 import {
-  ArrowForwardIcon,
   Avatar,
   Button,
   HStack,
@@ -28,6 +27,9 @@ const ProfileScreen = () => {
   const handleSubmit = () => {
     dispatch(logout());
   };
+  //
+  console.log('authUser', authUser);
+
   return (
     <Background type="scroll">
       <Header />
@@ -60,7 +62,7 @@ const ProfileScreen = () => {
             pb={1}
             mb={1}
             borderColor={'gray.300'}>
-            <Text fontSize={'lg'}>01916546547</Text>
+            <Text fontSize={'lg'}>{authUser?.contact_number}</Text>
             <Text fontSize={'lg'} color={'#19B74E'}>
               Verified <VerifiedIcon />
             </Text>
@@ -70,6 +72,7 @@ const ProfileScreen = () => {
               Want to update
             </Text>
             <Link
+              onPress={() => navigate('numberUpdate')}
               _text={{
                 color: '#004ca2a5',
                 fontSize: 'md',
@@ -109,7 +112,7 @@ const ProfileScreen = () => {
         <VStack my={5}>
           {navList?.map(item => (
             <Pressable
-              // bg={'#d71818'}
+              onPress={() => item?.nav === 'logout' && handleSubmit()}
               my={5}
               variant={'unstyled'}
               width={'auto'}
