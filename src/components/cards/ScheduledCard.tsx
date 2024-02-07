@@ -22,13 +22,13 @@ export default function ScheduledCard({type, onPress, onEditPress}: PropsType) {
         p={2}
         justifyContent={'space-between'}
         alignItems={'center'}>
-        <HStack width={'75%'} space={2}>
+        <HStack width={'80%'} space={2}>
           <Avatar bg={'amber.800'} size={'md'}>
             DD
           </Avatar>
-          <VStack maxW={'50%'}>
+          <VStack maxW={'70%'}>
             <HStack alignItems={'center'} space={2}>
-              <Text fontWeight={'800'} color={'gray.800'}>
+              <Text fontWeight={'800'} color={'gray.800'} numberOfLines={1}>
                 Foysal Mahmud Khan
               </Text>
               <Pressable onPress={onEditPress}>
@@ -36,7 +36,7 @@ export default function ScheduledCard({type, onPress, onEditPress}: PropsType) {
               </Pressable>
             </HStack>
             <Text color={'gray.400'} numberOfLines={1}>
-              Happy Birthday, Wising kas kajs dakjsd ak sdka skda sd k
+              Happy Birthday, Wising kas kajs dakjsd ak sdka skda sd k kjs dj
             </Text>
           </VStack>
         </HStack>

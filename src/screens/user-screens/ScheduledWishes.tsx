@@ -1,4 +1,5 @@
 import useNavigate from '@hooks/useNavigate';
+import {VStack} from 'native-base';
 import React from 'react';
 import ScheduledCard from 'src/components/cards/ScheduledCard';
 import MainHeader from 'src/components/common/Headers/MainHeader';
@@ -12,27 +13,48 @@ const ScheduledWishes = () => {
   return (
     <Background type="normal">
       <MainHeader title="Scheduled Wishes" />
-      <InfiniteFlatList
-        data={[{}, {}, {}, {}, {}, {}, {}, {}, {}]}
-        renderItem={({item}) => (
-          <ScheduledCard
-            onEditPress={() => navigate('updateWishes')}
-            data={item}
-          />
-        )}
-        showsVerticalScrollIndicator={false}
-        inverted
-        onLoadMore={() => {
-          // Implement your logic to load more data
-        }}
-        isFetching={false} // Set this to true when you are fetching data to prevent multiple requests
-        // eslint-disable-next-line react-native/no-inline-styles
-        contentContainerStyle={{
-          justifyContent: 'flex-end',
-          rowGap: 2,
-          paddingBottom: 100,
-        }}
-      />
+      <VStack>
+        <InfiniteFlatList
+          data={[
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+          ]}
+          renderItem={({item}) => (
+            <ScheduledCard
+              onEditPress={() => navigate('updateWishes')}
+              data={item}
+            />
+          )}
+          showsVerticalScrollIndicator={false}
+          // inverted
+          onLoadMore={() => {
+            // Implement your logic to load more data
+          }}
+          isFetching={false} // Set this to true when you are fetching data to prevent multiple requests
+          // eslint-disable-next-line react-native/no-inline-styles
+          contentContainerStyle={{
+            justifyContent: 'flex-end',
+            rowGap: 2,
+            paddingBottom: 100,
+          }}
+        />
+      </VStack>
     </Background>
   );
 };
