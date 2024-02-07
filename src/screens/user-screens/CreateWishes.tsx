@@ -17,6 +17,7 @@ import React from 'react';
 import CustomDatePickerInput from 'src/components/InputFiled/CustomDatePickerInput';
 import Header from 'src/components/headers/Header';
 import Background from 'src/components/shared/Background';
+import {wishTypeList} from 'src/data';
 import asRoute from 'src/utils/withRoute';
 import * as Yup from 'yup';
 
@@ -211,11 +212,9 @@ const CreateWishes = () => {
             onValueChange={itemValue =>
               setFieldValue?.('wishes_type', itemValue)
             }>
-            <Select.Item label="UX Research" value="ux" />
-            <Select.Item label="Web Development" value="web" />
-            <Select.Item label="Cross Platform Development" value="cross" />
-            <Select.Item label="UI Designing" value="ui" />
-            <Select.Item label="Backend Development" value="backend" />
+            {wishTypeList?.map(item => (
+              <Select.Item label={item.label} value={item.label} />
+            ))}
           </Select>
           <FormControl.ErrorMessage
             _text={{fontSize: 'xs', fontWeight: 500, color: Colors.red}}>

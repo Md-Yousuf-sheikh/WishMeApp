@@ -13,7 +13,7 @@ const ScheduledWishes = () => {
   return (
     <Background type="normal">
       <MainHeader title="Scheduled Wishes" />
-      <VStack>
+      <VStack px={1}>
         <InfiniteFlatList
           data={[
             {},
