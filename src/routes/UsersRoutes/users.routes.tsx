@@ -1,11 +1,16 @@
 import bottomTabs from '../BottomTabs/index';
 import {IStackNavigationConfig} from 'src/typedef/navigation.types';
-import {updateWishes, profileScreen} from '@screens/user-screens';
+import {
+  updateWishes,
+  profileScreen,
+  smsPlanScreen,
+} from '@screens/user-screens';
 
 const userScreens = {
   bottomTabs,
   updateWishes,
   profileScreen,
+  smsPlanScreen,
 };
 
 //  ren

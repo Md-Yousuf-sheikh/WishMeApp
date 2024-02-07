@@ -1,3 +1,4 @@
+import useNavigate from '@hooks/useNavigate';
 import {logout, selectUser} from '@store/features/authSlice';
 import Colors from '@theme/colors';
 import {
@@ -21,7 +22,7 @@ const ProfileScreen = () => {
   // hooks
   const dispatch = useDispatch();
   const authUser = useSelector(selectUser);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   // form hooks
 
   const handleSubmit = () => {
@@ -95,6 +96,7 @@ const ProfileScreen = () => {
               Want to update
             </Text>
             <Link
+              onPress={() => navigate('smsPlanScreen')}
               _text={{
                 color: '#004ca2a5',
                 fontSize: 'md',
