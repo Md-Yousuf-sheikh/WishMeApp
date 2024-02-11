@@ -18,7 +18,7 @@ const Colors = {
   primaryLighter50: '#BC955A',
   primaryLighter2: 'rgba(188, 149, 90, 0.623)',
   primaryLighter3: 'rgba(102, 93, 92, 1)',
-  buttonColor: '#8C51A5',
+  buttonColor: '#CB5E98',
 
   green: 'rgba(32, 176, 56, 1)',
 

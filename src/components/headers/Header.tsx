@@ -31,7 +31,7 @@ export default function Header({
         />
       ),
     });
-  }, [navigation, onPressLeft1, onPressLeft2, title, type]);
+  }, [arrowLeft, navigation, onPressLeft1, onPressLeft2, title, type]);
 
   return <></>;
 }

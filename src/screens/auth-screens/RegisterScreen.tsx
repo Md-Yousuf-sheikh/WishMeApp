@@ -20,6 +20,7 @@ import {
 } from 'native-base';
 import React from 'react';
 import AuthTopSection from 'src/components/common/AuthTopSection';
+import Header from 'src/components/headers/Header';
 import Background from 'src/components/shared/Background';
 import asRoute from 'src/utils/withRoute';
 import * as Yup from 'yup';
@@ -127,10 +128,20 @@ const RegisterScreen = () => {
   //
   return (
     <Background type="scroll">
-      <VStack px={4} flexGrow={1} justifyContent={'space-between'} pb={5}>
+      <VStack
+        px={4}
+        flexGrow={1}
+        justifyContent={'space-between'}
+        // pt={10}
+        pb={5}>
         {/* top */}
         <VStack>
-          <AuthTopSection title="Sign Up" />
+          <AuthTopSection
+            navLabel={'Profile'}
+            logo={false}
+            title="Register For Access"
+            subTitle="We have sent you an SMS with the code to +62 1309 - 1710 - 1920"
+          />
           {/* form input */}
           <VStack space={4} pt={4}>
             <FormControl

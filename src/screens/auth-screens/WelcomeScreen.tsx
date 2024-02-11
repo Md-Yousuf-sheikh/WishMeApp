@@ -1,55 +1,93 @@
-import {ImageBackground, StatusBar} from 'react-native';
+import {FlatList, StatusBar} from 'react-native';
 import React from 'react';
-import {Button, Factory, HStack, Text, VStack} from 'native-base';
+import {Button, HStack, Text, VStack} from 'native-base';
 import asRoute from 'src/utils/withRoute';
 import useNavigate from '@hooks/useNavigate';
 import Colors from '@theme/colors';
-// import {ArrowUpIcon} from '@assets/icons';
-
-const FBgImage = Factory(ImageBackground);
-//
+import AuthTopSection from 'src/components/common/AuthTopSection';
+import {WelcomeImage1, WelcomeImage2, WelcomeImage3} from 'src/NativeBaseIcon';
+import {hp, wp} from '@theme/ScreenDimensions';
 
 const WelcomeScreen = () => {
   const navigate = useNavigate();
-
+  const data = [
+    {
+      title:
+        'Schedule your greetings, and Wishme will send them on the scheduled date for you.',
+      icon: <WelcomeImage1 size={'100%'} />,
+    },
+    {
+      title:
+        'Effortlessly purchase gift items for your loved ones to commemorate their special day!',
+      icon: <WelcomeImage2 size={'100%'} />,
+    },
+    {
+      title:
+        'Easily connect with your family and friends across borders and share greetings!',
+      icon: <WelcomeImage3 size={'100%'} />,
+    },
+  ];
   return (
-    <FBgImage
-      source={require('@assets/images/welcome1.png')}
+    <VStack
       flex={1}
-      resizeMode="cover"
-      alignItems="center">
+      w={'100%'}
+      px={4}
+      bg={'white'}
+      justifyContent={'space-between'}
+      pb={7}>
       <StatusBar
         translucent={true}
         backgroundColor={'transparent'}
-        barStyle={'light-content'}
+        barStyle={'dark-content'}
       />
-      <VStack flex={1} w={'100%'} px={4} pb={5} justifyContent={'flex-end'}>
-        <HStack justifyContent={'space-between'}>
+      <AuthTopSection />
+      <VStack justifyContent={'flex-end'} space={10}>
+        <HStack width={wp(100)}>
+          <FlatList
+            data={data}
+            horizontal
+            renderItem={({item, index}) => {
+              return (
+                <VStack key={index} space={5} width={wp(100)}>
+                  <HStack
+                    h={hp(35)}
+                    // bg={'#8f1e1e'}
+                    justifyContent={'center'}
+                    overflowY={'hidden'}>
+                    {item?.icon}
+                  </HStack>
+                  <Text fontSize={'2xl'} textAlign={'center'} w={'90%'}>
+                    {item?.title}
+                  </Text>
+                </VStack>
+              );
+            }}
+            pagingEnabled
+            showsHorizontalScrollIndicator={false}
+          />
+        </HStack>
+        {/* buttons */}
+        <VStack space={2}>
           <Button
-            px={4}
-            py={2}
-            borderRadius={'full'}
-            onPress={() => navigate('registerScreen')}
-            _text={{fontSize: 'md', color: Colors.primaryLighter3}}
-            background={'white'}>
-            Create Account
+            variant={'unstyled'}
+            _text={{
+              fontSize: 'md',
+              fontWeight: 'semibold',
+            }}>
+            Terms & Privacy Policy
           </Button>
           <Button
             px={4}
             py={4}
-            onPress={() => navigate('loginScreen')}
-            variant={'unstyled'}
-            flexDir={'row'}>
-            <HStack alignItems={'center'} space={2}>
-              <Text fontFamily={'body'} color={'white'} fontSize={'md'} mt={-1}>
-                Sign In
-              </Text>
-              {/* <ArrowUpIcon width={25} height={20} /> */}
-            </HStack>
+            borderRadius={'full'}
+            onPress={() => navigate('signInWithNumber')}
+            _text={{fontSize: 'md', color: 'white'}}
+            background={Colors.buttonColor}>
+            Start
           </Button>
-        </HStack>
+        </VStack>
       </VStack>
-    </FBgImage>
+    </VStack>
   );
 };
 
