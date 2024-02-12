@@ -59,10 +59,7 @@ export default function MainHeader({
               }>
               <HStack alignItems={'center'} space={2}>
                 {arrowLeft && <ArrowBackIcon color={Colors.primaryMain} />}
-                <Text
-                  fontSize={'md'}
-                  fontWeight={'700'}
-                  color={Colors.primaryMain}>
+                <Text fontSize={'lg'} fontWeight={'800'} color={'gray.700'}>
                   {title}
                 </Text>
               </HStack>
