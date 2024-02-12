@@ -10,18 +10,22 @@ import {hp, wp} from '@theme/ScreenDimensions';
 
 const WelcomeScreen = () => {
   const navigate = useNavigate();
+  // API
   const data = [
     {
+      id: '1#1',
       title:
         'Schedule your greetings, and Wishme will send them on the scheduled date for you.',
       icon: <WelcomeImage1 size={'100%'} />,
     },
     {
+      id: '2#2',
       title:
         'Effortlessly purchase gift items for your loved ones to commemorate their special day!',
       icon: <WelcomeImage2 size={'100%'} />,
     },
     {
+      id: '3#3',
       title:
         'Easily connect with your family and friends across borders and share greetings!',
       icon: <WelcomeImage3 size={'100%'} />,
@@ -46,9 +50,10 @@ const WelcomeScreen = () => {
           <FlatList
             data={data}
             horizontal
-            renderItem={({item, index}) => {
+            keyExtractor={item => item?.id.toString()}
+            renderItem={({item}) => {
               return (
-                <VStack key={index} space={5} width={wp(100)}>
+                <VStack key={item?.id} space={5} width={wp(100)}>
                   <HStack
                     h={hp(35)}
                     // bg={'#8f1e1e'}

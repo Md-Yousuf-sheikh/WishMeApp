@@ -9,7 +9,6 @@ import {
   Input,
   VStack,
   Text,
-  Image,
   Pressable,
 } from 'native-base';
 import React from 'react';
@@ -84,7 +83,12 @@ const NumberRegister = () => {
       <VStack px={4} flexGrow={1} justifyContent={'space-between'} pb={5}>
         {/* top */}
         <VStack>
-          <AuthTopSection title="Sign Up" />
+          <AuthTopSection
+            titleMt={5}
+            arrowIcon={true}
+            title="Sign "
+            subTitle="Please confirm your country code and enter your phone number"
+          />
 
           {/* form input */}
           <VStack space={4} pt={4}>
@@ -244,7 +248,7 @@ const NumberRegister = () => {
                     onPress={handleImage}
                     justifyContent={'center'}
                     alignItems={'center'}>
-                    {values?.profile_image?._parts?.[0]?.[1]?.uri ? (
+                    {/* {values?.profile_image?._parts?.[0]?.[1]?.uri ? (
                       <Image
                         source={{
                           uri: values?.profile_image?._parts?.[0]?.[1]?.uri,
@@ -255,7 +259,7 @@ const NumberRegister = () => {
                       />
                     ) : (
                       <Text color={'gray.500'}>ADD IMAGE</Text>
-                    )}
+                    )} */}
                   </Pressable>
                   <FormControl.ErrorMessage
                     color="white"

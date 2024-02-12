@@ -1,8 +1,9 @@
+import useNavigate from '@hooks/useNavigate';
 import useShowToastMessage from '@hooks/useShowToastMessage';
 import {useLoginWithPasswordMutation} from '@store/apis/auth';
 import Colors from '@theme/colors';
 import {useFormik} from 'formik';
-import {Button, FormControl, HStack, Input, VStack} from 'native-base';
+import {Button, FormControl, HStack, Input, Text, VStack} from 'native-base';
 import React from 'react';
 import AuthTopSection from 'src/components/common/AuthTopSection';
 import Background from 'src/components/shared/Background';
@@ -21,7 +22,7 @@ const validationSchema = Yup.object().shape({
 
 const LoginScreen = () => {
   // hooks
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const toast = useShowToastMessage();
 
   // APIS
@@ -57,29 +58,32 @@ const LoginScreen = () => {
       <VStack px={4} flexGrow={1} justifyContent={'space-between'} pb={5}>
         {/* top */}
         <VStack>
-          <AuthTopSection title="Sign In with password" />
+          <AuthTopSection
+            titleMt={5}
+            arrowIcon={true}
+            title="Sign In"
+            subTitle="Please confirm your country code and enter your phone number"
+          />
 
           {/* form input */}
           <VStack space={4} pt={4}>
             <FormControl
               isInvalid={Boolean(errors.mobile) && Boolean(touched.mobile)}>
               <Input
-                borderColor={Colors.primaryMain}
-                placeholder="Your phone number"
+                placeholder="Phone Number"
                 rounded={8}
                 placeholderTextColor={'gray.2'}
                 color={'gray.700'}
-                _focus={{bg: 'white', borderColor: Colors.primaryMain}}
+                _focus={{bg: 'white', borderColor: Colors.lightGray1}}
                 onChangeText={handleChange('mobile')}
                 fontWeight={'400'}
                 onBlur={handleBlur('mobile')}
                 value={values.mobile}
-                fontSize={'lg'}
-                keyboardType="number-pad"
                 maxLength={11}
+                keyboardType="number-pad"
                 _input={{
-                  background: '#ffffff',
-                  borderColor: Colors.primaryMain,
+                  background: Colors.lightGray1,
+                  borderColor: Colors.lightGray1,
                 }}
               />
               <FormControl.ErrorMessage
@@ -90,21 +94,18 @@ const LoginScreen = () => {
             <FormControl
               isInvalid={Boolean(errors.password) && Boolean(touched.password)}>
               <Input
-                borderColor={Colors.primaryMain}
                 placeholder="Password"
                 rounded={8}
                 placeholderTextColor={'gray.2'}
                 color={'gray.700'}
-                _focus={{bg: 'white', borderColor: Colors.primaryMain}}
+                _focus={{bg: 'white', borderColor: Colors.lightGray1}}
                 onChangeText={handleChange('password')}
                 fontWeight={'400'}
                 onBlur={handleBlur('password')}
                 value={values.password}
-                fontSize={'lg'}
-                maxLength={25}
                 _input={{
-                  background: '#ffffff',
-                  borderColor: Colors.primaryMain,
+                  background: Colors.lightGray1,
+                  borderColor: Colors.lightGray1,
                 }}
               />
 
@@ -114,18 +115,36 @@ const LoginScreen = () => {
               </FormControl.ErrorMessage>
             </FormControl>
             {/* submit button */}
-            <HStack pt={5} justifyContent={'space-between'}>
-              <Button
-                px={4}
-                py={4}
-                isLoading={isLoading}
-                borderRadius={'full'}
-                onPress={() => handleSubmit()}
-                _text={{fontSize: 'md', color: 'white'}}
-                background={Colors.buttonColor}>
-                Submit
-              </Button>
-            </HStack>
+            <Button
+              px={4}
+              py={3}
+              mt={10}
+              isLoading={isLoading}
+              borderRadius={'full'}
+              onPress={() => handleSubmit()}
+              _text={{fontSize: 'md', color: 'white'}}
+              background={Colors.buttonColor}>
+              Submit
+            </Button>
+            <Button
+              px={4}
+              py={4}
+              variant={'unstyled'}
+              borderRadius={'full'}
+              onPress={() => navigate('registerScreen')}
+              _text={{fontSize: 'md', color: 'gray.800'}}>
+              <HStack>
+                <Text fontSize={'md'} mr={1} color={'gray.800'}>
+                  Have you not
+                </Text>
+                <Text fontSize={'md'} color={Colors.buttonColor}>
+                  Registered
+                </Text>
+                <Text fontSize={'md'} ml={1} color={'gray.800'}>
+                  yet?
+                </Text>
+              </HStack>
+            </Button>
           </VStack>
         </VStack>
         {/* footer */}

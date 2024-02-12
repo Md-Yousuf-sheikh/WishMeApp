@@ -1,9 +1,9 @@
 const Colors = {
-  lightGray: 'rgba(255, 255, 255, 1)',
-  lightGray00: 'rgb(249, 249, 249)',
-  lightGray0: 'rgba(239, 239, 241, 1)',
-  lightGray1: 'rgba(239, 239, 241, 0.72)',
-  lightGray2: 'rgba(121, 121, 121, 1)',
+  lightGray: '#ffffffff',
+  lightGray1: '#F7F7FC',
+  lightGray2: 'rgba(239, 239, 241, 1)',
+  lightGray3: 'rgba(239, 239, 241, 0.72)',
+  lightGray4: 'rgba(121, 121, 121, 1)',
 
   black: 'rgb(0, 0, 0)',
   blackGray: '#242323',

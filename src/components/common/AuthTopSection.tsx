@@ -9,7 +9,9 @@ interface PropsType {
   title?: string;
   navLabel?: string;
   subTitle?: string;
+  titleMt?: any;
   logo?: boolean;
+  arrowIcon?: boolean;
 }
 
 const AuthTopSection = ({
@@ -17,36 +19,44 @@ const AuthTopSection = ({
   subTitle,
   logo = true,
   navLabel,
+  arrowIcon,
+  titleMt,
 }: PropsType) => {
   const {top} = useSafeAreaInsets();
   const navigate = useNavigate();
   return (
     <VStack pt={Platform.OS === 'android' ? 10 : top}>
-      {logo ? (
-        <VStack h={20} alignItems={'center'}>
-          <Image
-            source={require('@assets/images/logo.png')}
-            width={'60%'}
-            h={'100%'}
-            resizeMode="contain"
-          />
-        </VStack>
-      ) : (
-        <Pressable>
+      {arrowIcon && (
+        <Pressable onPress={() => navigate(undefined, undefined, 'goBack')}>
           <HStack alignItems={'center'} pb={10} space={2}>
             <ArrowRightIcon />
             {navLabel && <Text>{navLabel}</Text>}
           </HStack>
         </Pressable>
       )}
+      {logo && (
+        <VStack h={20} alignItems={'center'}>
+          <Image
+            source={require('@assets/images/logo.png')}
+            width={'60%'}
+            h={'100%'}
+            resizeMode="contain"
+            alt="logo"
+          />
+        </VStack>
+      )}
       {title && (
-        <Text fontSize={'2xl'} textAlign={'center'} lineHeight={'sm'}>
+        <Text
+          mt={titleMt}
+          fontSize={'2xl'}
+          textAlign={'center'}
+          lineHeight={'sm'}>
           {title}
         </Text>
       )}
       {subTitle && (
         <Text
-          my={4}
+          my={2}
           fontSize={'sm'}
           maxW={'70%'}
           alignSelf={'center'}

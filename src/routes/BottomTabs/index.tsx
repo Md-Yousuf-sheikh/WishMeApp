@@ -4,18 +4,20 @@ import {
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
 import asRoute from 'src/utils/withRoute';
-import createWishes from '@screens/user-screens/CreateWishes';
 import scheduledWishes from '@screens/user-screens/ScheduledWishes';
-import Colors from '@theme/colors';
 import {
   TabMessageActiveIcon,
-  WishBoxActiveIcon,
-  WishBoxIcon,
   TabMessageIcon,
-  TabBirthCakeIcon,
-  TabBirthCakeActiveIcon,
+  TabProfileActiveIcon,
+  TabProfileIcon,
+  TabCallActiveIcon,
+  TabCallIcon,
+  TabWishBoxIcon,
+  TabWishBoxActiveIcon,
 } from 'src/NativeBaseIcon';
 import {giftShop} from '@screens/user-screens';
+import mobileRecharge from '@screens/user-screens/MobileRecharge';
+import {View} from 'native-base';
 // tab
 const Tab = createBottomTabNavigator();
 
@@ -31,27 +33,35 @@ const taborOptions: TBottomTabNavigationOptions = ({route}) => ({
     switch (route.name) {
       case 'giftShop':
         return focused ? (
-          <WishBoxActiveIcon size={6} />
+          <View mt={2}>
+            <TabWishBoxActiveIcon size={7} />
+          </View>
         ) : (
-          <WishBoxIcon size={6} />
+          <View mt={2}>
+            <TabWishBoxIcon size={7} />
+          </View>
         );
-      case 'createWishes':
+      case 'mobileRecharge':
         return focused ? (
-          <WishBoxActiveIcon size={6} />
+          <TabCallActiveIcon size={5} />
         ) : (
-          <WishBoxIcon size={6} />
+          <TabCallIcon size={5} />
         );
-      case 'birthWishes':
+      case 'account':
         return focused ? (
-          <TabBirthCakeActiveIcon size={6} />
+          <TabProfileActiveIcon size={5} />
         ) : (
-          <TabBirthCakeIcon size={6} />
+          <TabProfileIcon size={5} />
         );
       case 'scheduledWishes':
         return focused ? (
-          <TabMessageActiveIcon size={7} />
+          <View mt={1}>
+            <TabMessageActiveIcon size={5} />
+          </View>
         ) : (
-          <TabMessageIcon size={7} />
+          <View mt={1}>
+            <TabMessageIcon size={5} />
+          </View>
         );
       default:
         return null;
@@ -61,7 +71,7 @@ const taborOptions: TBottomTabNavigationOptions = ({route}) => ({
   tabBarShowLabel: false,
   tabBarHideOnKeyboard: true,
   tabBarStyle: {
-    backgroundColor: Colors.primaryMain,
+    backgroundColor: '#ffff',
     height: 60,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
@@ -85,14 +95,14 @@ function BottomRoutes() {
         component={giftShop?.component}
       />
       <Tab.Screen
-        name="birthWishes"
-        options={giftShop.options as any}
-        component={giftShop?.component}
+        name="mobileRecharge"
+        options={mobileRecharge?.options as any}
+        component={mobileRecharge?.component}
       />
       <Tab.Screen
-        name="createWishes"
-        options={createWishes?.options as any}
-        component={createWishes?.component}
+        name="account"
+        options={giftShop.options as any}
+        component={giftShop?.component}
       />
     </Tab.Navigator>
   );

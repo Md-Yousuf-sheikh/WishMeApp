@@ -1,5 +1,5 @@
 import Colors from '@theme/colors';
-import {HStack, Text, VStack} from 'native-base';
+import {Text, VStack} from 'native-base';
 import React from 'react';
 import {GiftBoxIcon} from 'src/NativeBaseIcon';
 import MainHeader from 'src/components/common/Headers/MainHeader';
@@ -15,29 +15,25 @@ const GiftShopScreen = () => {
       <VStack
         flex={1}
         h={'full'}
-        // justifyContent={'center'}
-        pt={5}
+        justifyContent={'center'}
         alignItems={'center'}
-        space={1}>
+        space={5}>
         <Text
           fontWeight={'800'}
           textAlign={'center'}
           fontSize={'2xl'}
           color={Colors.primaryMain}>
-          Coming Soon!
+          Gift Shop
         </Text>
+        <GiftBoxIcon size={24} />
         <Text
           w={'60%'}
           fontWeight={'800'}
           textAlign={'center'}
           fontSize={'lg'}
           color={Colors.primaryMain}>
-          The Gift Shop! Stay connected for updates.
+          Coming soon: The Gift Shop! Stay connected for updates.
         </Text>
-        {/* list */}
-        <VStack>
-          <HStack></HStack>
-        </VStack>
       </VStack>
     </Background>
   );

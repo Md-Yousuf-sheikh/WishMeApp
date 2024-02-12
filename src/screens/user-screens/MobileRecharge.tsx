@@ -1,12 +1,11 @@
 import Colors from '@theme/colors';
-import {HStack, Text, VStack} from 'native-base';
+import {Text, VStack} from 'native-base';
 import React from 'react';
-import {GiftBoxIcon} from 'src/NativeBaseIcon';
 import MainHeader from 'src/components/common/Headers/MainHeader';
 import Background from 'src/components/shared/Background';
 import asRoute from 'src/utils/withRoute';
 
-const GiftShopScreen = () => {
+const MobileRecharge = () => {
   // const navigation = useNavigation();
 
   return (
@@ -15,10 +14,9 @@ const GiftShopScreen = () => {
       <VStack
         flex={1}
         h={'full'}
-        // justifyContent={'center'}
-        pt={5}
+        justifyContent={'center'}
         alignItems={'center'}
-        space={1}>
+        space={2}>
         <Text
           fontWeight={'800'}
           textAlign={'center'}
@@ -32,20 +30,16 @@ const GiftShopScreen = () => {
           textAlign={'center'}
           fontSize={'lg'}
           color={Colors.primaryMain}>
-          The Gift Shop! Stay connected for updates.
+          Stay connected for updates.
         </Text>
-        {/* list */}
-        <VStack>
-          <HStack></HStack>
-        </VStack>
       </VStack>
     </Background>
   );
 };
 
-const giftShop = asRoute(GiftShopScreen, 'giftShop', {
-  title: 'giftShop',
+const mobileRecharge = asRoute(MobileRecharge, 'mobileRecharge', {
+  title: 'mobileRecharge',
   animation: 'slide_from_right',
 });
 
-export default giftShop;
+export default mobileRecharge;

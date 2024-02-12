@@ -13,9 +13,32 @@ export const authApiSlice = apiSlice.injectEndpoints({
         try {
           const {data: result} = await queryFulfilled;
           const {access_token, ...userInfo} = result?.data;
-          console.log('result', userInfo);
+          if (result.data) {
+            dispatch(
+              login({
+                user: userInfo,
+                accessToken: access_token,
+                refreshToken: access_token,
+              }),
+            );
+          }
 
-    
+          return result;
+        } catch (error: any) {
+          return error;
+        }
+      },
+    }),
+    loginWithOtp: builder.mutation({
+      query: body => ({
+        url: 'auth/sign-in-with-otp',
+        method: 'POST',
+        body,
+      }),
+      async onQueryStarted(args, {dispatch, queryFulfilled}) {
+        try {
+          const {data: result} = await queryFulfilled;
+          const {access_token, ...userInfo} = result?.data;
           if (result.data) {
             dispatch(
               login({
@@ -33,11 +56,11 @@ export const authApiSlice = apiSlice.injectEndpoints({
       },
     }),
     register: builder.mutation({
-      query: body => ({
+      query: ({body, isImage}) => ({
         url: 'auth/sign-up',
         method: 'POST',
         body,
-        headers: {file: true},
+        headers: {file: isImage},
       }),
     }),
     passwordChange: builder.mutation({
@@ -87,4 +110,5 @@ export const {
   useSendOtpNumberMutation,
   useVerifyNumberOtpMutation,
   useLoginWithPasswordMutation,
+  useLoginWithOtpMutation,
 } = authApiSlice;

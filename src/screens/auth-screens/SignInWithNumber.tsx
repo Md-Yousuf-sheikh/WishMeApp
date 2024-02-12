@@ -1,4 +1,7 @@
 import useNavigate from '@hooks/useNavigate';
+import useShowToastMessage from '@hooks/useShowToastMessage';
+import {useSendOtpNumberMutation} from '@store/apis/auth';
+import {hp} from '@theme/ScreenDimensions';
 import Colors from '@theme/colors';
 import {useFormik} from 'formik';
 import {Button, FormControl, HStack, Input, VStack, Text} from 'native-base';
@@ -18,92 +21,104 @@ const validationSchema = Yup.object().shape({
 });
 
 const SignInWithNumber = () => {
+  //  APIS
+  const [SendOtp, {isLoading: isLoadingSendOtp}] = useSendOtpNumberMutation();
+
   // hooks
   const navigate = useNavigate();
+  const toast = useShowToastMessage();
   // form hooks
-
   const formik = useFormik({
     initialValues: {
       mobile: '',
-      password: '',
     },
     validationSchema,
     onSubmit: async values => {
-      console.log('values', values);
-      navigate('numberOtpVerify', values, undefined);
+      try {
+        const res = await SendOtp({
+          mobileNumber: values?.mobile,
+        }).unwrap();
+        console.log('res', res);
+        navigate('numberOtpVerify', {...values, type: 'signIn'}, undefined);
+        toast(res?.message);
+      } catch (error: any) {
+        toast(error?.data?.message || 'Something on the wrong ', 'error');
+      }
     },
   });
 
   const {values, errors, touched, handleChange, handleSubmit, handleBlur} =
     formik;
+  //
 
   return (
     <Background type="scroll">
       <VStack px={4} flexGrow={1} justifyContent={'space-between'} pb={5}>
         {/* top */}
         <VStack>
-          <AuthTopSection title="Your phone number" />
+          <AuthTopSection
+            titleMt={5}
+            arrowIcon={true}
+            title="Enter Your Phone Number"
+            subTitle="Please confirm your country code and enter your phone number"
+          />
 
           {/* form input */}
           <FormControl
             isInvalid={Boolean(errors.mobile) && Boolean(touched.mobile)}>
             <Input
-              borderColor={Colors.primaryMain}
-              placeholder="Mobile"
+              placeholder="Phone Number"
               rounded={8}
               placeholderTextColor={'gray.2'}
               color={'gray.700'}
-              _focus={{bg: 'white', borderColor: Colors.primaryMain}}
+              _focus={{bg: 'white', borderColor: Colors.lightGray1}}
               onChangeText={handleChange('mobile')}
               fontWeight={'400'}
               onBlur={handleBlur('mobile')}
               value={values.mobile}
-              fontSize={'4xl'}
               maxLength={11}
-              mt={5}
+              mt={10}
               keyboardType="number-pad"
               _input={{
-                background: '#ffffff',
-                borderColor: Colors.primaryMain,
+                background: Colors.lightGray1,
+                borderColor: Colors.lightGray1,
               }}
             />
             <FormControl.ErrorMessage
               color="white"
-              _text={{fontSize: 'xs', fontWeight: 500, color: 'white'}}>
+              _text={{fontSize: 'xs', fontWeight: 500, color: '#ef1111'}}>
               {errors.mobile}
             </FormControl.ErrorMessage>
           </FormControl>
         </VStack>
         {/* footer */}
-        <VStack>
-          <HStack justifyContent={'space-between'}>
-            <Button
-              px={4}
-              py={2}
-              borderRadius={'full'}
-              onPress={() => handleSubmit()}
-              _text={{fontSize: 'md', color: 'white'}}
-              background={Colors.buttonColor}>
-              Next
-            </Button>
-            <Button
-              px={4}
-              py={4}
-              onPress={() => navigate('signInWithNumber')}
-              variant={'unstyled'}
-              flexDir={'row'}>
-              <HStack alignItems={'center'} space={2}>
-                <Text
-                  fontFamily={'body'}
-                  color={'black'}
-                  fontSize={'md'}
-                  mt={-1}>
-                  Sign In with password
-                </Text>
-                {/* <ArrowUpIcon width={25} height={20} /> */}
-              </HStack>
-            </Button>
-          </HStack>
+        <VStack mt={hp(10)}>
+          <Button
+            px={4}
+            py={4}
+            isLoading={isLoadingSendOtp}
+            borderRadius={'full'}
+            onPress={() => handleSubmit()}
+            _text={{fontSize: 'md', color: 'white'}}
+            background={Colors.buttonColor}>
+            Continue
+          </Button>
+          <Button
+            px={4}
+            py={4}
+            variant={'unstyled'}
+            borderRadius={'full'}
+            onPress={() => navigate('loginScreen')}
+            _text={{fontSize: 'md', color: 'gray.800'}}>
+            <HStack>
+              <Text fontSize={'md'} mr={1} color={'gray.800'}>
+                Sign in using your
+              </Text>
+              <Text fontSize={'md'} color={Colors.buttonColor}>
+                Password
+              </Text>
+            </HStack>
+          </Button>
         </VStack>
       </VStack>
     </Background>
