@@ -39,19 +39,19 @@ const ProfileScreen = () => {
             size={'lg'}
             bg="amber.500"
             source={{
-              uri: authUser?.avatarLink,
+              uri: authUser?.avatar,
             }}
             _text={{
               textTransform: 'uppercase',
             }}>
-            {authUser?.full_name.slice(0, 1)}
+            {authUser?.fullName ? authUser?.fullName.slice(0, 1) : 'N'}
           </Avatar>
           <Text
             color={Colors.primaryMain}
             fontSize={'4xl'}
             w={'75%'}
             numberOfLines={1}>
-            {authUser?.full_name} hs sjns js
+            {authUser?.fullName}
           </Text>
         </HStack>
         {/* Number */}

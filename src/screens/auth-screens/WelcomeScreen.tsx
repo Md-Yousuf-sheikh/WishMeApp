@@ -83,7 +83,7 @@ const WelcomeScreen = () => {
           </Button>
           <Button
             px={4}
-            py={4}
+            py={3}
             borderRadius={'full'}
             onPress={() => navigate('signInWithNumber')}
             _text={{fontSize: 'md', color: 'white'}}

@@ -1,9 +1,9 @@
 import useNavigate from '@hooks/useNavigate';
-import {hp} from '@theme/ScreenDimensions';
 import Colors from '@theme/colors';
 import {Button, HStack, VStack} from 'native-base';
 import React from 'react';
 import {ChatPlusIcon} from 'src/NativeBaseIcon';
+import WishViewModal from 'src/components/actionSheet/WishViewModal';
 import ScheduledCard from 'src/components/cards/ScheduledCard';
 import Header from 'src/components/headers/Header';
 import Background from 'src/components/shared/Background';
@@ -27,6 +27,8 @@ const category = [
 
 const ScheduledWishes = () => {
   //  State
+  const [isOpenModal, setIsOpenModal] = React.useState<boolean>(false);
+  const [selectedWish, setSelectedWish] = React.useState<any>();
   const [selectCate, setSelectCate] = React.useState<string>(
     category?.[0]?.value,
   );
@@ -53,6 +55,7 @@ const ScheduledWishes = () => {
         shadow={10}
         bottom={5}
         backgroundColor={Colors.primaryMain}
+        onPress={() => navigate('createWishes')}
         variant={'unstyled'}>
         <ChatPlusIcon size={6} />
       </Button>
@@ -85,6 +88,10 @@ const ScheduledWishes = () => {
             <ScheduledCard
               onEditPress={() => navigate('updateWishes')}
               data={item}
+              onPress={() => {
+                setSelectedWish(item);
+                setIsOpenModal(true);
+              }}
             />
           )}
           showsVerticalScrollIndicator={false}
@@ -101,6 +108,12 @@ const ScheduledWishes = () => {
           }}
         />
       </VStack>
+      {/* Modals */}
+      <WishViewModal
+        isOpen={isOpenModal}
+        onClose={() => setIsOpenModal(false)}
+        item={selectedWish}
+      />
     </Background>
   );
 };

@@ -12,7 +12,7 @@ interface IProps {
   item?: any;
 }
 
-export default function WishViewModal({isOpen, onClose}: IProps) {
+export default function SelectWishModal({isOpen, onClose}: IProps) {
   // hooks
   const navigate = useNavigate();
   //  formik

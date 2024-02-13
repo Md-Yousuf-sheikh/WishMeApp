@@ -1,7 +1,7 @@
 import useImageUploader from '@hooks/useImageUploader';
 import useNavigate from '@hooks/useNavigate';
 import useShowToastMessage from '@hooks/useShowToastMessage';
-import {useSendOtpNumberMutation} from '@store/apis/auth';
+import {useUpdateProfileMutation} from '@store/apis/userProfile';
 import Colors from '@theme/colors';
 import {useFormik} from 'formik';
 import {
@@ -17,23 +17,16 @@ import {
 } from 'native-base';
 import React from 'react';
 import {AvatarIcon, PlusIcon} from 'src/NativeBaseIcon';
-import AuthTopSection from 'src/components/common/AuthTopSection';
+import Header from 'src/components/headers/Header';
 import Background from 'src/components/shared/Background';
 import asRoute from 'src/utils/withRoute';
 import * as Yup from 'yup';
 
 const validationSchema = Yup.object().shape({
-  mobile: Yup.string()
-    .matches(
-      /^(\+88|88)?(01[3-9]\d{8})$/,
-      'Please enter a valid Bangladeshi phone number',
-    )
-    .required('Phone number is required'),
   firstName: Yup.string().required('First name is required'),
-  password: Yup.string().required('Password is required'),
 });
 
-const RegisterScreen = () => {
+const UpdateRegInformation = () => {
   // hooks
   const navigate = useNavigate();
   const {handleImagePicker} = useImageUploader();
@@ -41,15 +34,13 @@ const RegisterScreen = () => {
 
   // APIS
   // const [handelSignUp] = useRegisterMutation();
-  const [SendOtp, {isLoading, error}] = useSendOtpNumberMutation();
+  const [updateProfile, {isLoading, error}] = useUpdateProfileMutation();
 
   // form hooks
   const formik = useFormik({
     initialValues: {
       firstName: '',
       lastName: '',
-      mobile: '',
-      password: '',
       profileImage: {} as any,
     },
     validationSchema,
@@ -57,8 +48,6 @@ const RegisterScreen = () => {
       const formData = new FormData();
       formData.append('firstName', values?.firstName);
       formData.append('lastName', values?.lastName);
-      formData.append('password', values?.password);
-      formData.append('mobileNumber', values?.mobile);
       if (values?.profileImage?.fileName) {
         formData.append('avatar', {
           name: values?.profileImage?.fileName,
@@ -71,16 +60,8 @@ const RegisterScreen = () => {
           isImage: values?.profileImage ? true : false,
           body: formData,
         };
-        const res = await SendOtp({
-          mobileNumber: values?.mobile,
-        }).unwrap();
+        const res = await updateProfile(formDataProps).unwrap();
         console.log('res', res);
-        navigate(
-          'numberOtpVerify',
-          {...values, type: 'signUp', formDataProps},
-          undefined,
-        );
-
         toast(res?.message);
       } catch (err: any) {
         toast(err?.data?.message || 'Something on the wrong ', 'error');
@@ -118,13 +99,7 @@ const RegisterScreen = () => {
         pb={5}>
         {/* top */}
         <VStack>
-          <AuthTopSection
-            arrowIcon={true}
-            navLabel={'Registration'}
-            logo={false}
-            title="Register For Access"
-            subTitle="Please enter your name, number, and password. All fields are required."
-          />
+          <Header title="Your Profile" rightContent={false} />
           {/* form input */}
           <VStack space={4} pt={4}>
             <FormControl
@@ -167,32 +142,6 @@ const RegisterScreen = () => {
                   color: Colors.red,
                 }}>
                 {errors.profileImage}
-              </FormControl.ErrorMessage>
-            </FormControl>
-            {/* number */}
-            <FormControl
-              isInvalid={Boolean(errors.mobile) && Boolean(touched.mobile)}>
-              <Input
-                placeholder="Your phone number"
-                rounded={8}
-                placeholderTextColor={'gray.2'}
-                color={'gray.700'}
-                _focus={{bg: 'white', borderColor: Colors.lightGray1}}
-                onChangeText={handleChange('mobile')}
-                fontWeight={'400'}
-                onBlur={handleBlur('mobile')}
-                value={values.mobile}
-                // fontSize={'lg'}
-                keyboardType="number-pad"
-                maxLength={11}
-                _input={{
-                  background: Colors.lightGray1,
-                  borderColor: Colors.lightGray1,
-                }}
-              />
-              <FormControl.ErrorMessage
-                _text={{fontSize: 'xs', fontWeight: 500, color: Colors.red}}>
-                {errors.mobile}
               </FormControl.ErrorMessage>
             </FormControl>
             {/* First */}
@@ -257,37 +206,6 @@ const RegisterScreen = () => {
                 {errors.lastName}
               </FormControl.ErrorMessage>
             </FormControl>
-            {/* password */}
-            <FormControl
-              isInvalid={Boolean(errors.password) && Boolean(touched.password)}>
-              <Input
-                placeholder="Password"
-                rounded={8}
-                placeholderTextColor={'gray.2'}
-                color={'gray.700'}
-                _focus={{bg: 'white', borderColor: Colors.lightGray1}}
-                onChangeText={handleChange('password')}
-                fontWeight={'400'}
-                onBlur={handleBlur('password')}
-                value={values.password}
-                // fontSize={'lg'}
-                type={'password'}
-                maxLength={25}
-                _input={{
-                  background: Colors.lightGray1,
-                  borderColor: Colors.lightGray1,
-                }}
-              />
-
-              <FormControl.ErrorMessage
-                _text={{
-                  fontSize: 'xs',
-                  fontWeight: 500,
-                  color: Colors.red,
-                }}>
-                {errors.password}
-              </FormControl.ErrorMessage>
-            </FormControl>
 
             <VStack mt={4}>
               {/*  Buttons */}
@@ -299,22 +217,7 @@ const RegisterScreen = () => {
                 onPress={() => handleSubmit()}
                 _text={{fontSize: 'md', color: 'white'}}
                 background={Colors.buttonColor}>
-                Sign Up
-              </Button>
-              <Button
-                px={4}
-                variant={'unstyled'}
-                borderRadius={'full'}
-                onPress={() => navigate('loginScreen')}
-                _text={{fontSize: 'md', color: 'gray.800'}}>
-                <HStack>
-                  <Text fontSize={'md'} mr={1} color={'gray.800'}>
-                    If you have an account, please
-                  </Text>
-                  <Text fontSize={'md'} color={Colors.buttonColor}>
-                    Sign In
-                  </Text>
-                </HStack>
+                Save
               </Button>
             </VStack>
           </VStack>
@@ -325,9 +228,14 @@ const RegisterScreen = () => {
   );
 };
 
-const registerScreen = asRoute(RegisterScreen, 'registerScreen', {
-  title: 'RegisterScreen',
-  animation: 'slide_from_right',
-});
+const updateRegInformation = asRoute(
+  UpdateRegInformation,
+  'updateRegInformation',
+  {
+    title: 'updateRegInformation',
+    animation: 'slide_from_right',
+    headerShown: false,
+  },
+);
 
-export default registerScreen;
+export default updateRegInformation;

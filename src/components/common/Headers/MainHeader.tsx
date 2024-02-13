@@ -21,6 +21,7 @@ interface PropsType {
   title?: string;
   type?: string;
   arrowLeft?: boolean;
+  rightContent?: boolean;
   onPressLeft1?: () => void;
   onPressLeft2?: () => void;
 }
@@ -31,6 +32,7 @@ export default function MainHeader({
   onPressLeft1,
   onPressLeft2,
   arrowLeft = true,
+  rightContent = true,
 }: PropsType) {
   // Hooks
   const navigate = useNavigate();
@@ -75,27 +77,29 @@ export default function MainHeader({
           )}
         </VStack>
 
-        <HStack>
-          <Button variant={'unstyled'} onPress={onPressLeft1}>
-            <BellIcon size={6} />
-          </Button>
-          <Button
-            p={0}
-            variant={'unstyled'}
-            onPress={() => navigate('profileScreen')}>
-            <Avatar
-              size={10}
-              bg="amber.500"
-              source={{
-                uri: authUser?.avatarLink,
-              }}
-              _text={{
-                textTransform: 'uppercase',
-              }}>
-              {authUser?.full_name.slice(0, 1)}
-            </Avatar>
-          </Button>
-        </HStack>
+        {rightContent && (
+          <HStack>
+            <Button variant={'unstyled'} onPress={onPressLeft1}>
+              <BellIcon size={6} />
+            </Button>
+            <Button
+              p={0}
+              variant={'unstyled'}
+              onPress={() => navigate('profileScreen')}>
+              <Avatar
+                size={10}
+                bg="amber.500"
+                source={{
+                  uri: authUser?.avatar,
+                }}
+                _text={{
+                  textTransform: 'uppercase',
+                }}>
+                {authUser?.fullName ? authUser?.fullName.slice(0, 1) : 'N'}
+              </Avatar>
+            </Button>
+          </HStack>
+        )}
       </HStack>
     </>
   );

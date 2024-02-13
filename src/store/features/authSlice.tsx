@@ -55,31 +55,10 @@ const authSlice = createSlice({
       if (action.payload.refreshToken)
         state.refreshToken = action.payload.refreshToken;
     },
-    setProfile: (
-      state,
-      action: {
-        payload: {
-          avatar?: string;
-          country?: string;
-          fullName?: string;
-          gender?: string;
-          goal?: string;
-          height?: string;
-          phone?: string;
-        };
-      },
-    ) => {
-      if (action.payload)
-        state.user = {
-          avatar: action.payload?.avatar,
-          country: action.payload?.country,
-          fullName: action.payload?.fullName,
-          gender: action.payload?.gender,
-          goal: action.payload?.goal,
-          height: action.payload?.height,
-          phone: action.payload?.phone,
-          ...state.user,
-        };
+    setProfile: (state, action) => {
+      if (action.payload) {
+        state.user = action.payload;
+      }
     },
     setFcmToken: (state, action: {payload: string}) => {
       if (action.payload) {

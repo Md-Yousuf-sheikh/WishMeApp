@@ -95,7 +95,7 @@ const SignInWithNumber = () => {
         <VStack mt={hp(10)}>
           <Button
             px={4}
-            py={4}
+            py={3}
             isLoading={isLoadingSendOtp}
             borderRadius={'full'}
             onPress={() => handleSubmit()}
@@ -105,7 +105,7 @@ const SignInWithNumber = () => {
           </Button>
           <Button
             px={4}
-            py={4}
+            py={3}
             variant={'unstyled'}
             borderRadius={'full'}
             onPress={() => navigate('loginScreen')}

@@ -35,7 +35,7 @@ const NumberOtpVerify = () => {
   // APIS
   //  APIS
   const [VerifyOtp, {}] = useVerifyNumberOtpMutation();
-  const [loginWithVerifyOtp, {}] = useLoginWithOtpMutation();
+  const [loginWithVerifyOtp, {error}] = useLoginWithOtpMutation();
   const [SendOtp, {}] = useSendOtpNumberMutation();
 
   // form hooks
@@ -52,9 +52,9 @@ const NumberOtpVerify = () => {
             otp: values?.otp,
           }).unwrap();
           toast(res?.message);
-        } catch (error: any) {
+        } catch (err: any) {
           toast(
-            error?.data?.message || 'Something on the wrong sign in',
+            err?.data?.message || 'Something on the wrong sign in',
             'error',
           );
         }
@@ -66,9 +66,9 @@ const NumberOtpVerify = () => {
           }).unwrap();
           handelRegister();
           toast(res?.message);
-        } catch (error: any) {
+        } catch (err: any) {
           toast(
-            error?.data?.message || 'Something on the wrong sign up',
+            err?.data?.message || 'Something on the wrong sign up',
             'error',
           );
         }
@@ -80,9 +80,9 @@ const NumberOtpVerify = () => {
           }).unwrap();
           toast(res?.message);
           navigate('loginScreen');
-        } catch (error: any) {
+        } catch (err: any) {
           toast(
-            error?.data?.message || 'Something on the wrong otp verification ',
+            err?.data?.message || 'Something on the wrong otp verification ',
             'error',
           );
         }
@@ -92,8 +92,7 @@ const NumberOtpVerify = () => {
 
   const {values, errors, touched, handleSubmit, setFieldValue} = formik;
 
-  // console.log('values', values);
-  // console.log('route', route?.formDataProps);
+  console.log('error', error);
   //
   const handleResentCode = async () => {
     // mobileNumber
@@ -103,8 +102,8 @@ const NumberOtpVerify = () => {
       }).unwrap();
       console.log('res', res);
       toast(res?.message);
-    } catch (error: any) {
-      toast(error?.data?.message || 'Something on the wrong ', 'error');
+    } catch (err: any) {
+      toast(err?.data?.message || 'Something on the wrong ', 'error');
     }
   };
   //
@@ -112,9 +111,9 @@ const NumberOtpVerify = () => {
   const handelRegister = async () => {
     try {
       const res = await handelSignUp(route?.formDataProps).unwrap();
-      navigate('loginScreen');
       toast(res?.message);
       // formik.resetForm();
+      navigate('loginScreen');
     } catch (err: any) {
       toast(err?.data?.message || 'Something on the wrong ', 'error');
     }
@@ -208,11 +207,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     borderWidth: 0,
     backgroundColor: '#e1e1e149',
-    // height: 20,
-    // width: 20,
-    maxWidth: 50,
+    height: 50,
+    width: 50,
     color: '#000000',
-    borderRadius: 10,
+    borderRadius: 100,
     textAlign: 'center',
     fontSize: FontSize.XxLl,
   },

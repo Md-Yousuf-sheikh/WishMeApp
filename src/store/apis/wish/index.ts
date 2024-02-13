@@ -5,7 +5,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     getProfile: builder.query({
       query: () => ({
-        url: 'my/information',
+        url: 'wish/types',
       }),
     }),
     getMyWishList: builder.query({

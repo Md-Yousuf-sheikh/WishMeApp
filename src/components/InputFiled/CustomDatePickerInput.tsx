@@ -10,7 +10,6 @@ interface PropsType {
   setValue?: (props: Date | undefined) => void;
   value?: Date | undefined;
   mode?: 'date' | 'time' | 'datetime';
-  bgColor?: sting;
 }
 
 const CustomDatePickerInput = ({
@@ -19,7 +18,6 @@ const CustomDatePickerInput = ({
   setValue,
   value,
   mode,
-  bgColor,
 }: PropsType) => {
   const {showDatePicker, hideDatePicker, selectedDate, datePickerComponent} =
     useDateTimePicker(value, mode);
@@ -39,8 +37,8 @@ const CustomDatePickerInput = ({
           borderRadius={'md'}
           justifyContent={'space-between'}
           alignItems={'center'}
-          borderColor={Colors.primaryMain}
-          backgroundColor={bgColor}
+          borderColor={Colors.lightGray1}
+          backgroundColor={Colors.lightGray1}
           px={4}
           py={3}>
           <Button p={0} variant={'unstyled'}>

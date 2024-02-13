@@ -6,8 +6,10 @@ const baseQuery = fetchBaseQuery({
   baseUrl: API_URL,
   prepareHeaders: (headers, api) => {
     const {auth}: any = api.getState() as RootState;
+    console.log('auth', auth);
+
     if (auth.accessToken) {
-      headers.set('authorization', `Bearer ${auth.accessToken}`);
+      headers.set('authorization', `${auth.accessToken}`);
     }
     if (!headers.get('file')) {
       headers.set('Content-Type', 'application/json');

@@ -6,22 +6,20 @@ import {useFormik} from 'formik';
 import {
   Box,
   Button,
-  CheckIcon,
   FormControl,
   HStack,
   Input,
   Link,
   Radio,
-  Select,
   Text,
   VStack,
 } from 'native-base';
 import React from 'react';
 import {BDFlagIcon, ContactIcon} from 'src/NativeBaseIcon';
 import CustomDatePickerInput from 'src/components/InputFiled/CustomDatePickerInput';
+import CustomWiseSelectPicker from 'src/components/InputFiled/CustomWiseSelectPicker';
 import Header from 'src/components/headers/Header';
 import Background from 'src/components/shared/Background';
-import {wishTypeList} from 'src/data';
 import asRoute from 'src/utils/withRoute';
 import * as Yup from 'yup';
 
@@ -133,7 +131,6 @@ const CreateWishes = () => {
             Boolean(errors.receiver_name) && Boolean(touched.receiver_name)
           }>
           <Input
-            borderColor={Colors.primaryMain}
             placeholder="Receiver name"
             rounded={8}
             placeholderTextColor={'gray.2'}
@@ -144,8 +141,8 @@ const CreateWishes = () => {
             onBlur={handleBlur('receiver_name')}
             value={values.receiver_name}
             _input={{
-              background: 'gray.50',
-              borderColor: Colors.primaryMain,
+              background: Colors.lightGray1,
+              borderColor: Colors.lightGray1,
             }}
           />
           <FormControl.ErrorMessage
@@ -157,7 +154,6 @@ const CreateWishes = () => {
         <FormControl
           isInvalid={Boolean(errors.mobile) && Boolean(touched.mobile)}>
           <Input
-            borderColor={Colors.primaryMain}
             placeholder="Mobile"
             rounded={8}
             placeholderTextColor={'gray.2'}
@@ -170,8 +166,8 @@ const CreateWishes = () => {
             keyboardType="number-pad"
             maxLength={11}
             _input={{
-              background: 'gray.50',
-              borderColor: Colors.primaryMain,
+              background: Colors.lightGray1,
+              borderColor: Colors.lightGray1,
             }}
             leftElement={
               <Box pl={3}>
@@ -189,11 +185,46 @@ const CreateWishes = () => {
             {errors.mobile}
           </FormControl.ErrorMessage>
         </FormControl>
+        {/* wish type */}
+        <FormControl
+          isInvalid={
+            Boolean(errors.wishes_type) && Boolean(touched.wishes_type)
+          }
+          isReadOnly>
+          <CustomWiseSelectPicker />
+          {/* <Select
+            borderColor={Colors.lightGray1}
+            backgroundColor={Colors.lightGray1}
+            selectedValue={values.wishes_type}
+            accessibilityLabel="Select wishes type"
+            placeholder="Choose wish type"
+            _selectedItem={{
+              background: Colors.lightGray1,
+              endIcon: <CheckIcon size="5" />,
+            }}
+            onOpen={() => {
+              console.log('open');
+            }}
+            onClose={() => {
+              console.log('close');
+            }}
+            onValueChange={itemValue =>
+              setFieldValue?.('wishes_type', itemValue)
+            }>
+            {wishTypeList?.map(item => (
+              <Select.Item label={item.label} value={item.label} />
+            ))}
+          </Select> */}
+          <FormControl.ErrorMessage
+            _text={{fontSize: 'xs', fontWeight: 500, color: Colors.red}}>
+            {errors.wishes_type}
+          </FormControl.ErrorMessage>
+        </FormControl>
+
         {/* message */}
         <FormControl
           isInvalid={Boolean(errors.message) && Boolean(touched.message)}>
           <Input
-            borderColor={Colors.primaryMain}
             placeholder="Message"
             rounded={8}
             placeholderTextColor={'gray.2'}
@@ -207,8 +238,8 @@ const CreateWishes = () => {
             pt={3}
             textAlignVertical={'top'}
             _input={{
-              background: 'gray.50',
-              borderColor: Colors.primaryMain,
+              background: Colors.lightGray1,
+              borderColor: Colors.lightGray1,
             }}
           />
           <HStack justifyContent={'flex-end'}>
@@ -222,34 +253,6 @@ const CreateWishes = () => {
             {errors.message}
           </FormControl.ErrorMessage>
         </FormControl>
-        {/* wish type */}
-        <FormControl
-          isInvalid={
-            Boolean(errors.wishes_type) && Boolean(touched.wishes_type)
-          }
-          isReadOnly>
-          <Select
-            borderColor={Colors.primaryMain}
-            backgroundColor={'gray.100'}
-            selectedValue={values.wishes_type}
-            accessibilityLabel="Select wishes type"
-            placeholder="Choose wish type"
-            _selectedItem={{
-              bg: 'white',
-              endIcon: <CheckIcon size="5" />,
-            }}
-            onValueChange={itemValue =>
-              setFieldValue?.('wishes_type', itemValue)
-            }>
-            {wishTypeList?.map(item => (
-              <Select.Item label={item.label} value={item.label} />
-            ))}
-          </Select>
-          <FormControl.ErrorMessage
-            _text={{fontSize: 'xs', fontWeight: 500, color: Colors.red}}>
-            {errors.wishes_type}
-          </FormControl.ErrorMessage>
-        </FormControl>
         {/* Schedule Date  */}
         <FormControl
           isInvalid={
@@ -261,7 +264,6 @@ const CreateWishes = () => {
             Boolean(touched.wishes_type)
           }>
           <CustomDatePickerInput
-            bgColor={'gray.100'}
             placeholder="Schedule date"
             setValue={props => {
               setFieldValue?.('schedule_date', props);

@@ -38,8 +38,8 @@ const LoginScreen = () => {
     onSubmit: async values => {
       try {
         const res = await handelSignIn({
-          password: values?.password,
           mobileNumber: values?.mobile,
+          password: values?.password,
         }).unwrap();
         // console.log('res', res);
         formik.resetForm();
@@ -128,7 +128,7 @@ const LoginScreen = () => {
             </Button>
             <Button
               px={4}
-              py={4}
+              py={3}
               variant={'unstyled'}
               borderRadius={'full'}
               onPress={() => navigate('registerScreen')}

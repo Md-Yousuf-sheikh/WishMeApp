@@ -35,7 +35,7 @@ const NumberRegister = () => {
 
   const formik = useFormik({
     initialValues: {
-      full_name: '',
+      fullName: '',
       mobile: '',
       password: '',
       otp: '',
@@ -178,7 +178,7 @@ const NumberRegister = () => {
                 </Text>
                 <FormControl
                   isInvalid={
-                    Boolean(errors.full_name) && Boolean(touched.full_name)
+                    Boolean(errors.fullName) && Boolean(touched.fullName)
                   }>
                   <Input
                     borderColor={Colors.primaryMain}
@@ -187,11 +187,11 @@ const NumberRegister = () => {
                     placeholderTextColor={'gray.2'}
                     color={'gray.700'}
                     _focus={{bg: 'white', borderColor: Colors.primaryMain}}
-                    onChangeText={handleChange('full_name')}
+                    onChangeText={handleChange('fullName')}
                     fontWeight={'400'}
-                    onBlur={handleBlur('full_name')}
-                    value={values.full_name}
-                    fontSize={'lg'}
+                    onBlur={handleBlur('fullName')}
+                    value={values.fullName}
+                    // fontSize={'lg'}
                     keyboardType="number-pad"
                     _input={{
                       background: '#ffffff',
@@ -202,7 +202,7 @@ const NumberRegister = () => {
                   <FormControl.ErrorMessage
                     color="white"
                     _text={{fontSize: 'xs', fontWeight: 500, color: 'white'}}>
-                    {errors.full_name}
+                    {errors.fullName}
                   </FormControl.ErrorMessage>
                 </FormControl>
                 <FormControl
@@ -220,7 +220,7 @@ const NumberRegister = () => {
                     fontWeight={'400'}
                     onBlur={handleBlur('password')}
                     value={values.password}
-                    fontSize={'lg'}
+                    // fontSize={'lg'}
                     keyboardType="number-pad"
                     _input={{
                       background: '#ffffff',
@@ -271,7 +271,7 @@ const NumberRegister = () => {
                 <HStack pt={5} justifyContent={'space-between'}>
                   <Button
                     px={4}
-                    py={4}
+                    py={3}
                     borderRadius={'full'}
                     onPress={() => handleSubmit()}
                     _text={{fontSize: 'md', color: 'white'}}

@@ -38,13 +38,13 @@ export const authApiSlice = apiSlice.injectEndpoints({
       async onQueryStarted(args, {dispatch, queryFulfilled}) {
         try {
           const {data: result} = await queryFulfilled;
-          const {access_token, ...userInfo} = result?.data;
+          const {accessToken, ...userInfo} = result?.data;
           if (result.data) {
             dispatch(
               login({
                 user: userInfo,
-                accessToken: access_token,
-                refreshToken: access_token,
+                accessToken: accessToken,
+                refreshToken: accessToken,
               }),
             );
           }

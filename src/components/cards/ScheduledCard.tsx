@@ -1,8 +1,6 @@
-import {wp} from '@theme/ScreenDimensions';
 import Colors from '@theme/colors';
-import {Avatar, CircleIcon, HStack, Text, VStack, Pressable} from 'native-base';
+import {Avatar, HStack, Text, VStack, Pressable} from 'native-base';
 import React from 'react';
-import {EditPanIcon} from 'src/NativeBaseIcon';
 
 interface PropsType {
   onPress?: () => void;
