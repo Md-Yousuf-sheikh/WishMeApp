@@ -28,7 +28,7 @@ const ProfileScreen = () => {
     dispatch(logout());
   };
   //
-  console.log('authUser', authUser);
+  //console.log('authUser', authUser);
 
   return (
     <Background type="scroll">

@@ -6,7 +6,7 @@ const baseQuery = fetchBaseQuery({
   baseUrl: API_URL,
   prepareHeaders: (headers, api) => {
     const {auth}: any = api.getState() as RootState;
-    console.log('auth', auth);
+    console.log('auth.accessToken', auth.accessToken);
 
     if (auth.accessToken) {
       headers.set('authorization', `${auth.accessToken}`);
@@ -36,7 +36,7 @@ const baseQueryWithReAuth = async (
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: baseQueryWithReAuth,
-  tagTypes: ['ProfileUpdate'],
+  tagTypes: ['ProfileUpdate', 'Wish'],
   endpoints: () => ({}),
 });
 

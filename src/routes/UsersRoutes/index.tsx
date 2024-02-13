@@ -19,7 +19,7 @@ export default function UserRoutes() {
       />
     );
   });
-  console.log('authUser', authUser);
+  //console.log('authUser', authUser);
 
   return (
     <Stack.Navigator

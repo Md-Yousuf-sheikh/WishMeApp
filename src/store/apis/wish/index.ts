@@ -1,136 +1,31 @@
-import {setProfile} from '@store/features/authSlice';
 import {apiSlice} from '../index';
 
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
-    getProfile: builder.query({
+    getWishCategory: builder.query({
       query: () => ({
         url: 'wish/types',
       }),
     }),
-    getMyWishList: builder.query({
-      query: props => ({
-        url: `my/wish/list?status=${props ?? 'active'}`,
+    getWishWithType: builder.query({
+      query: typeId => ({
+        url: `wish/type/${typeId}/templates?perPage=10`,
       }),
     }),
-    getReferralLinks: builder.query({
-      query: () => ({
-        url: 'referral-links?status=active',
-      }),
-    }),
-    updateAvatar: builder.mutation({
+    createWish: builder.mutation({
       query: body => ({
-        url: 'my/avatar/update',
+        url: 'wish',
         method: 'POST',
         body,
       }),
-      async onQueryStarted(args, {queryFulfilled, dispatch}) {
-        try {
-          const {data: result} = await queryFulfilled;
-          console.log('result', result);
-
-          if (result.data) {
-            dispatch(
-              setProfile({
-                ...result.data,
-              }),
-            );
-          }
-
-          return result;
-        } catch (error: any) {
-          return error;
-        }
-      },
-      invalidatesTags: ['ProfileUpdate'],
-    }),
-    updateProfile: builder.mutation({
-      query: ({body, isImage}) => ({
-        url: 'my/profile/update',
-        method: 'POST',
-        body: body,
-        headers: {file: isImage},
-      }),
-      async onQueryStarted(args, {queryFulfilled, dispatch}) {
-        try {
-          const {data: result} = await queryFulfilled;
-          console.log('result', result);
-
-          if (result.data) {
-            dispatch(
-              setProfile({
-                ...result.data,
-              }),
-            );
-          }
-
-          return result;
-        } catch (error: any) {
-          return error;
-        }
-      },
-      invalidatesTags: ['ProfileUpdate'],
-    }),
-    updateName: builder.mutation({
-      query: body => ({
-        url: 'my/name/update',
-        method: 'PUT',
-        body,
-      }),
-      async onQueryStarted(args, {queryFulfilled}) {
-        try {
-          const {data: result} = await queryFulfilled;
-
-          if (result.data) {
-            // dispatch(
-            //   setProfile({
-            //     ...result.data,
-            //   }),
-            // );
-          }
-
-          return result;
-        } catch (error: any) {
-          return error;
-        }
-      },
-      invalidatesTags: ['ProfileUpdate'],
-    }),
-    updateNumber: builder.mutation({
-      query: body => ({
-        url: 'my/number/update',
-        method: 'PUT',
-        body,
-      }),
-      async onQueryStarted(args, {queryFulfilled}) {
-        try {
-          const {data: result} = await queryFulfilled;
-
-          if (result.data) {
-            // dispatch(
-            //   setProfile({
-            //     ...result.data,
-            //   }),
-            // );
-          }
-
-          return result;
-        } catch (error: any) {
-          return error;
-        }
-      },
-      invalidatesTags: ['ProfileUpdate'],
+      invalidatesTags: ['Wish'],
     }),
   }),
   overrideExisting: true,
 });
 
 export const {
-  useUpdateAvatarMutation,
-  useGetMyWishListQuery,
-  useGetProfileQuery,
-  useGetReferralLinksQuery,
-  useUpdateNameMutation,
-  useUpdateNumberMutation,
-  useUpdateProfileMutation,
+  useCreateWishMutation,
+  useGetWishCategoryQuery,
+  useGetWishWithTypeQuery,
 } = authApiSlice;

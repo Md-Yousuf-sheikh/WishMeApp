@@ -1,27 +1,53 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {Button, HStack, Modal, Pressable, Text, VStack} from 'native-base';
-import {wp} from '@theme/ScreenDimensions';
-import {MessageIcon, SelectArrowIcon} from 'src/NativeBaseIcon';
+import {
+  Button,
+  FlatList,
+  HStack,
+  Modal,
+  Pressable,
+  Text,
+  VStack,
+} from 'native-base';
+import {hp, wp} from '@theme/ScreenDimensions';
+import {SelectArrowIcon} from 'src/NativeBaseIcon';
 import Colors from '@theme/colors';
-import useNavigate from '@hooks/useNavigate';
+import {
+  useGetWishCategoryQuery,
+  useGetWishWithTypeQuery,
+} from '@store/apis/wish';
 
 interface IProps {
-  selectItem?: any;
-  selectCategory?: any;
+  value?: any;
+  setValue?: any;
+}
+interface IWishType {
+  item: {
+    id: string;
+    message: string;
+  };
+  index: any;
+}
+interface IItemType {
+  item: {
+    name: string;
+    id: string;
+  };
+  index: any;
 }
 
-export default function CustomWiseSelectPicker({selectItem}: IProps) {
+export default function CustomWiseSelectPicker({value, setValue}: IProps) {
+  // APIS
+  const {data} = useGetWishCategoryQuery(null);
   // state
   const [isOpen, setIsOpen] = React.useState(false);
+  const [selectedValue, setSelectedValue] = React.useState({
+    wishTypeId: value?.wishTypeId ?? data?.data?.[0]?.id ?? 1,
+    message: null,
+  });
+  // APIS
+  const {data: wishes} = useGetWishWithTypeQuery(selectedValue?.wishTypeId);
   // hooks
-  const navigate = useNavigate();
-  //  formik
-  const handelEditNav = () => {
-    navigate('updateWishes');
-    onClose?.();
-  };
-
   const onClose = () => {
     setIsOpen(false);
   };
@@ -34,8 +60,10 @@ export default function CustomWiseSelectPicker({selectItem}: IProps) {
           alignItems={'center'}
           pl={2}
           rounded={'md'}>
-          <Text color={selectItem ? 'gray.800' : 'gray.400'} fontSize={'xs'}>
-            Hello Hello
+          <Text
+            color={value?.wishTypeId ? 'gray.800' : 'gray.400'}
+            fontSize={'xs'}>
+            {data?.data?.[Number(value?.wishTypeId) - 1]?.name}
           </Text>
           <SelectArrowIcon size={10} />
         </HStack>
@@ -49,7 +77,7 @@ export default function CustomWiseSelectPicker({selectItem}: IProps) {
         justifyContent={'flex-end'}>
         <VStack
           w={wp(100)}
-          minH="50%"
+          h={hp(80)}
           p={3}
           bg={'white'}
           style={{
@@ -62,43 +90,84 @@ export default function CustomWiseSelectPicker({selectItem}: IProps) {
             </Pressable>
           </HStack>
           {/* title */}
-          <Text fontSize={'xl'}>Wish View</Text>
+          <Text fontSize={'xl'}>Select Wish Template</Text>
           <HStack alignItems={'center'} mt={5} space={2}>
-            <MessageIcon size={7} />
-            <Text fontSize={'lg'} color={Colors.primaryMain}>
-              Receiver: +88 01916546547
-            </Text>
+            <FlatList
+              data={data?.data}
+              horizontal
+              renderItem={({item}: IItemType) => {
+                return (
+                  <Button
+                    p={2}
+                    py={1}
+                    mb={1}
+                    onPress={() =>
+                      setSelectedValue({
+                        wishTypeId: item?.id,
+                        message: null,
+                      })
+                    }
+                    // shadow={1}
+                    bgColor={
+                      selectedValue?.wishTypeId === item?.id
+                        ? Colors.primaryMain
+                        : 'white'
+                    }
+                    _text={{
+                      color:
+                        selectedValue?.wishTypeId === item?.id
+                          ? 'gray.200'
+                          : 'gray.400',
+                    }}>
+                    {item?.name}
+                  </Button>
+                );
+              }}
+              showsHorizontalScrollIndicator={false}
+            />
           </HStack>
           {/*  */}
-          <VStack p={2} mt={3} rounded={'md'} bg={Colors.lightBlue}>
-            <Text>
-              Wishing you a day as bright and special as you are! 🌟 Enjoy every
-              moment! 🎁🥳 Wishing you a day as bright and special as you are!
-              🌟 Enjoy every moment! 🎁🥳
-            </Text>
+          <VStack p={2} mt={3} rounded={'md'}>
+            <FlatList
+              data={wishes?.data}
+              renderItem={({item}: IWishType) => {
+                return (
+                  <Button
+                    p={2}
+                    py={1}
+                    onPress={() => {
+                      setSelectedValue((prv): any => ({
+                        wishTypeId: prv?.wishTypeId,
+                        message: item?.message,
+                      }));
+                      setValue?.({
+                        wishTypeId: selectedValue?.wishTypeId,
+                        message: item?.message,
+                      });
+                      onClose();
+                    }}
+                    bgColor={
+                      selectedValue?.message === item?.message
+                        ? Colors.lightBlue
+                        : 'gray.100'
+                    }
+                    _text={{
+                      color:
+                        selectedValue?.message === item?.message
+                          ? 'gray.800'
+                          : 'gray.500',
+                    }}
+                    rounded={'md'}
+                    mb={3}>
+                    {item?.message}
+                  </Button>
+                );
+              }}
+              style={{
+                height: hp(63),
+              }}
+            />
           </VStack>
-          <VStack mt={4}>
-            <Text>Scheduled for September 26, 2024, at 5:30 AM.</Text>
-            <Text>From App Credit</Text>
-            <Text py={3}>Created on February 5, 2023.</Text>
-            {/* button */}
-          </VStack>
-          {/* button */}
-          <Text mt={5} mb={2}>
-            To update this message, please click the update button below.
-          </Text>
-          <Button
-            py={3}
-            bg={Colors.primaryMain}
-            onPress={handelEditNav}
-            _focus={{
-              backgroundColor: Colors.primaryMain,
-            }}
-            _text={{
-              fontSize: 'md',
-            }}>
-            Edit
-          </Button>
         </VStack>
       </Modal>
     </>

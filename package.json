@@ -16,6 +16,7 @@
     "sign:apk": "cd android && ./gradlew signingReport && cd .."
   },
   "dependencies": {
+    "@dsojevic/profanity-list": "^1.0.0",
     "@klarna/react-native-vector-drawable": "^0.4.0",
     "@react-native-async-storage/async-storage": "^1.21.0",
     "@react-native-clipboard/clipboard": "^1.13.2",
@@ -27,6 +28,7 @@
     "@reduxjs/toolkit": "^2.0.1",
     "add": "^2.0.6",
     "babel-plugin-module-resolver": "^5.0.0",
+    "bad-words": "^3.0.4",
     "d3-scale": "^4.0.2",
     "dayjs": "^1.11.10",
     "formik": "^2.4.5",
@@ -64,6 +66,7 @@
     "@react-native/eslint-config": "^0.72.2",
     "@react-native/metro-config": "^0.72.11",
     "@tsconfig/react-native": "^3.0.0",
+    "@types/bad-words": "^3.0.3",
     "@types/d3-scale": "^4.0.8",
     "@types/react": "^18.0.24",
     "@types/react-native-svg-charts": "^5.0.15",

@@ -22,12 +22,21 @@ const CustomDatePickerInput = ({
   const {showDatePicker, hideDatePicker, selectedDate, datePickerComponent} =
     useDateTimePicker(value, mode);
 
+  const inputDate = new Date(selectedDate || '');
+
+  const formattedDate = `${inputDate.getFullYear()}-${String(
+    inputDate.getMonth() + 1,
+  ).padStart(2, '0')}-${String(inputDate.getDate()).padStart(2, '0')} ${String(
+    inputDate.getHours(),
+  ).padStart(2, '0')}:${String(inputDate.getMinutes()).padStart(
+    2,
+    '0',
+  )}:${String(inputDate.getSeconds()).padStart(2, '0')}`;
   React.useEffect(() => {
-    setValue?.(selectedDate); // Invoke the provided setValue function with the selected date
+    setValue?.(formattedDate); // Invoke the provided setValue function with the selected date
     hideDatePicker?.();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDate]);
-
   return (
     <VStack>
       {label && <Text>{label}</Text>}
@@ -43,7 +52,7 @@ const CustomDatePickerInput = ({
           py={3}>
           <Button p={0} variant={'unstyled'}>
             <Text color={selectedDate ? 'gray.800' : 'gray.400'}>
-              {selectedDate ? selectedDate.toDateString() : placeholder}
+              {selectedDate ? formattedDate : placeholder}
             </Text>
           </Button>
           <CalenderIcon size={5} />

@@ -1,6 +1,7 @@
 import useNavigate from '@hooks/useNavigate';
 import useShowToastMessage from '@hooks/useShowToastMessage';
 import useSmsSender from '@hooks/useSmsSender';
+import {useCreateWishMutation} from '@store/apis/wish';
 import Colors from '@theme/colors';
 import {useFormik} from 'formik';
 import {
@@ -21,48 +22,67 @@ import CustomWiseSelectPicker from 'src/components/InputFiled/CustomWiseSelectPi
 import Header from 'src/components/headers/Header';
 import Background from 'src/components/shared/Background';
 import asRoute from 'src/utils/withRoute';
+import BadWords from 'bad-words';
 import * as Yup from 'yup';
 
+const filter = new BadWords();
+
 const validationSchema = Yup.object().shape({
-  mobile: Yup.string()
+  receiverNumber: Yup.string()
     .matches(
       /^(\+88|88)?(01[3-9]\d{8})$/,
       'Please enter a valid Bangladeshi phone number',
     )
     .required('Phone number is required'),
-  receiver_name: Yup.string().required('Receiver name is required'),
+  receiverName: Yup.string().required('Receiver name is required'),
   message: Yup.string()
     .required('Message is required')
+    .test('no-profanity', 'Message contains profanity', value => {
+      // Check if the message contains any profanity words
+      return !filter.isProfane(value);
+    })
     .min(10, 'Message must be at least 10 characters')
     .max(160, 'Message must be at most 160 characters'),
-  wishes_type: Yup.string().required('Wish type is required'),
-  schedule_date: Yup.string().required('Schedule date is required'),
-  sms_type: Yup.string().required('Sms type is required'),
+  wishTypeId: Yup.string().required('Wish type is required'),
+  scheduleDate: Yup.string().required('Schedule date is required'),
+  messageType: Yup.string().required('Sms type is required'),
 });
+
+//  crete wishes
 const CreateWishes = () => {
   // hooks
   const navigate = useNavigate();
-  const {handelSendMessage} = useSmsSender();
+  // const {handelSendMessage} = useSmsSender();
   const toast = useShowToastMessage();
 
+  // APIS
+  const [handelCreate, {isLoading}] = useCreateWishMutation();
   const formik = useFormik({
     initialValues: {
-      mobile: '',
-      receiver_name: '',
+      receiverNumber: '',
+      receiverName: '',
       message: '',
-      schedule_date: '',
-      wishes_type: '',
-      sms_type: '',
+      scheduleDate: '',
+      wishTypeId: '',
+      messageType: 'app',
     },
     validationSchema,
     onSubmit: async values => {
-      console.log('values', values);
-      // navigate('numberOtpVerify', values, undefined);
-      if (values?.sms_type === 'mobile') {
-        const smsRes = await handelSendMessage(values?.mobile, values?.message);
-        console.log('smsRes', smsRes);
-        toast('Send sms successfully');
+      try {
+        const res = await handelCreate(values).unwrap();
+        console.log('res', res);
+        toast(res?.message);
+      } catch (err: any) {
+        toast(err?.data?.message, 'error');
       }
+      // if (values?.messageType === 'mobile') {
+      //   const smsRes = handelSendMessage(
+      //     values?.receiverNumber,
+      //     values?.message,
+      //   );
+      //   console.log('smsRes', smsRes);
+      //   toast('Send sms successfully');
+      // }
     },
   });
   const {
@@ -81,13 +101,16 @@ const CreateWishes = () => {
       <VStack space={4} pt={2} px={4}>
         {/* Type */}
         <FormControl
-          isInvalid={Boolean(errors.sms_type) && Boolean(touched.sms_type)}>
+          isInvalid={
+            Boolean(errors.messageType) && Boolean(touched.messageType)
+          }>
           <Radio.Group
             name="myRadioGroup"
             colorScheme="red"
-            value={values?.sms_type}
+            value={values?.messageType}
             onChange={v => {
-              setFieldValue('sms_type', v);
+              setFieldValue('messageType', v);
+              console.log('v', v);
             }}>
             <HStack justifyContent={'space-between'} space={3}>
               <Radio
@@ -122,13 +145,13 @@ const CreateWishes = () => {
           </Radio.Group>
           <FormControl.ErrorMessage
             _text={{fontSize: 'xs', fontWeight: 500, color: Colors.red}}>
-            {errors.sms_type}
+            {errors.messageType}
           </FormControl.ErrorMessage>
         </FormControl>
         {/* name */}
         <FormControl
           isInvalid={
-            Boolean(errors.receiver_name) && Boolean(touched.receiver_name)
+            Boolean(errors.receiverName) && Boolean(touched.receiverName)
           }>
           <Input
             placeholder="Receiver name"
@@ -136,10 +159,10 @@ const CreateWishes = () => {
             placeholderTextColor={'gray.2'}
             color={'gray.700'}
             _focus={{bg: 'white', borderColor: Colors.primaryMain}}
-            onChangeText={handleChange('receiver_name')}
+            onChangeText={handleChange('receiverName')}
             fontWeight={'400'}
-            onBlur={handleBlur('receiver_name')}
-            value={values.receiver_name}
+            onBlur={handleBlur('receiverName')}
+            value={values.receiverName}
             _input={{
               background: Colors.lightGray1,
               borderColor: Colors.lightGray1,
@@ -147,22 +170,24 @@ const CreateWishes = () => {
           />
           <FormControl.ErrorMessage
             _text={{fontSize: 'xs', fontWeight: 500, color: Colors.red}}>
-            {errors.receiver_name}
+            {errors.receiverName}
           </FormControl.ErrorMessage>
         </FormControl>
         {/* mobile */}
         <FormControl
-          isInvalid={Boolean(errors.mobile) && Boolean(touched.mobile)}>
+          isInvalid={
+            Boolean(errors.receiverNumber) && Boolean(touched.receiverNumber)
+          }>
           <Input
             placeholder="Mobile"
             rounded={8}
             placeholderTextColor={'gray.2'}
             color={'gray.700'}
             _focus={{bg: 'white', borderColor: Colors.primaryMain}}
-            onChangeText={handleChange('mobile')}
+            onChangeText={handleChange('receiverNumber')}
             fontWeight={'400'}
-            onBlur={handleBlur('mobile')}
-            value={values.mobile}
+            onBlur={handleBlur('receiverNumber')}
+            value={values.receiverNumber}
             keyboardType="number-pad"
             maxLength={11}
             _input={{
@@ -182,20 +207,27 @@ const CreateWishes = () => {
           />
           <FormControl.ErrorMessage
             _text={{fontSize: 'xs', fontWeight: 500, color: Colors.red}}>
-            {errors.mobile}
+            {errors.receiverNumber}
           </FormControl.ErrorMessage>
         </FormControl>
         {/* wish type */}
         <FormControl
-          isInvalid={
-            Boolean(errors.wishes_type) && Boolean(touched.wishes_type)
-          }
+          isInvalid={Boolean(errors.wishTypeId) && Boolean(touched.wishTypeId)}
           isReadOnly>
-          <CustomWiseSelectPicker />
+          <CustomWiseSelectPicker
+            setValue={(v: {wishTypeId: string; message: string}) => {
+              setFieldValue('wishTypeId', v?.wishTypeId);
+              setFieldValue('message', v?.message);
+            }}
+            value={{
+              wishTypeId: values?.wishTypeId,
+              message: values?.message,
+            }}
+          />
           {/* <Select
             borderColor={Colors.lightGray1}
             backgroundColor={Colors.lightGray1}
-            selectedValue={values.wishes_type}
+            selectedValue={values.wishTypeId}
             accessibilityLabel="Select wishes type"
             placeholder="Choose wish type"
             _selectedItem={{
@@ -209,7 +241,7 @@ const CreateWishes = () => {
               console.log('close');
             }}
             onValueChange={itemValue =>
-              setFieldValue?.('wishes_type', itemValue)
+              setFieldValue?.('wishTypeId', itemValue)
             }>
             {wishTypeList?.map(item => (
               <Select.Item label={item.label} value={item.label} />
@@ -217,7 +249,7 @@ const CreateWishes = () => {
           </Select> */}
           <FormControl.ErrorMessage
             _text={{fontSize: 'xs', fontWeight: 500, color: Colors.red}}>
-            {errors.wishes_type}
+            {errors.wishTypeId}
           </FormControl.ErrorMessage>
         </FormControl>
 
@@ -237,6 +269,7 @@ const CreateWishes = () => {
             numberOfLines={7}
             pt={3}
             textAlignVertical={'top'}
+            multiline={true}
             _input={{
               background: Colors.lightGray1,
               borderColor: Colors.lightGray1,
@@ -256,22 +289,23 @@ const CreateWishes = () => {
         {/* Schedule Date  */}
         <FormControl
           isInvalid={
-            Boolean(errors.schedule_date) &&
+            Boolean(errors.scheduleDate) &&
             Boolean(touched.message) &&
-            Boolean(touched.mobile) &&
-            Boolean(touched.receiver_name) &&
-            Boolean(touched.sms_type) &&
-            Boolean(touched.wishes_type)
+            Boolean(touched.receiverNumber) &&
+            Boolean(touched.receiverName) &&
+            Boolean(touched.messageType) &&
+            Boolean(touched.wishTypeId)
           }>
           <CustomDatePickerInput
             placeholder="Schedule date"
             setValue={props => {
-              setFieldValue?.('schedule_date', props);
+              setFieldValue?.('scheduleDate', props);
             }}
+            mode="datetime"
           />
           <FormControl.ErrorMessage
             _text={{fontSize: 'xs', fontWeight: 500, color: Colors.red}}>
-            {errors.schedule_date}
+            {errors.scheduleDate}
           </FormControl.ErrorMessage>
         </FormControl>
         {/* Button */}
@@ -279,7 +313,7 @@ const CreateWishes = () => {
           <Button
             px={4}
             py={3}
-            // isLoading={isLoading}
+            isLoading={isLoading}
             borderRadius={'full'}
             onPress={() => handleSubmit()}
             _text={{fontSize: 'md', color: 'white'}}

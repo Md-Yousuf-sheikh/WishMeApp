@@ -12,6 +12,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
       query: props => ({
         url: `my/wish/list?status=${props ?? 'active'}`,
       }),
+      providesTags: ['Wish'],
     }),
     getReferralLinks: builder.query({
       query: () => ({
@@ -77,16 +78,17 @@ export const authApiSlice = apiSlice.injectEndpoints({
         method: 'PUT',
         body,
       }),
-      async onQueryStarted(args, {queryFulfilled}) {
+      async onQueryStarted(args, {queryFulfilled, dispatch}) {
         try {
           const {data: result} = await queryFulfilled;
+          console.log('result', result);
 
           if (result.data) {
-            // dispatch(
-            //   setProfile({
-            //     ...result.data,
-            //   }),
-            // );
+            dispatch(
+              setProfile({
+                ...result.data,
+              }),
+            );
           }
 
           return result;
@@ -102,16 +104,17 @@ export const authApiSlice = apiSlice.injectEndpoints({
         method: 'PUT',
         body,
       }),
-      async onQueryStarted(args, {queryFulfilled}) {
+      async onQueryStarted(args, {queryFulfilled, dispatch}) {
         try {
           const {data: result} = await queryFulfilled;
+          console.log('result', result);
 
           if (result.data) {
-            // dispatch(
-            //   setProfile({
-            //     ...result.data,
-            //   }),
-            // );
+            dispatch(
+              setProfile({
+                ...result.data,
+              }),
+            );
           }
 
           return result;
