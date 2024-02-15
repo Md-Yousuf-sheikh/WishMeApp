@@ -4,6 +4,7 @@ import {Button, HStack, Text, VStack} from 'native-base';
 import React, {useState} from 'react';
 import AddPromoCode from 'src/components/InputFiled/AddPromoCode';
 import SelectPaymentMethod from 'src/components/InputFiled/SelectPaymentMethod';
+import PaymentModal from 'src/components/actionSheet/PaymentModal';
 import SmsPlanCard from 'src/components/cards/SmsPlanCard';
 import MainHeader from 'src/components/common/Headers/MainHeader';
 import Background from 'src/components/shared/Background';
@@ -11,7 +12,7 @@ import {IPropsSmsPlan} from 'src/typedef/navigation.types';
 import asRoute from 'src/utils/withRoute';
 
 const PaymentScreen = () => {
-  const [openPay, setopenPay] = useState<boolean>(false);
+  const [openPay, setOpenPay] = useState<boolean>(false);
   // Hooks
   // const navigate = useNavigate();
   const item = useRoute().params as IPropsSmsPlan;
@@ -64,6 +65,7 @@ const PaymentScreen = () => {
         </VStack>
         {/* Button */}
         <Button
+          onPress={() => setOpenPay(true)}
           backgroundColor={Colors.primaryMain}
           _pressed={{
             bg: 'gray.300',
@@ -75,6 +77,11 @@ const PaymentScreen = () => {
         </Button>
       </VStack>
       {/* Modal */}
+      <PaymentModal
+        item={item}
+        isOpen={openPay}
+        onClose={() => setOpenPay(false)}
+      />
     </Background>
   );
 };
