@@ -54,18 +54,17 @@ export default function CustomWiseSelectPicker({value, setValue}: IProps) {
 
   return (
     <>
-      <Pressable onPress={() => setIsOpen(true)} bg={Colors.lightGray1}>
-        <HStack
-          justifyContent={'space-between'}
-          alignItems={'center'}
-          pl={2}
-          rounded={'md'}>
+      <Pressable
+        onPress={() => setIsOpen(true)}
+        rounded={'md'}
+        bg={Colors.lightGray1}>
+        <HStack justifyContent={'space-between'} alignItems={'center'} pl={2}>
           <Text
             color={value?.wishTypeId ? 'gray.800' : 'gray.400'}
             fontSize={'xs'}>
             {data?.data?.[Number(value?.wishTypeId) - 1]?.name}
           </Text>
-          <SelectArrowIcon size={10} />
+          <SelectArrowIcon size={12} />
         </HStack>
       </Pressable>
 

@@ -15,3 +15,20 @@ export interface IStackNavigationConfig {
   routes: IReactNavigationRoute[];
   screenOptions?: NativeStackNavigationOptions;
 }
+
+export interface IPropsWishItem {
+  createdAt: string;
+  wishId: string;
+  receiver: {
+    name: string;
+    number: string;
+  };
+  scheduleDate: string;
+  status: string;
+  wish: {
+    message: string;
+    messageType: string;
+    typeId: string;
+    type: string;
+  };
+}

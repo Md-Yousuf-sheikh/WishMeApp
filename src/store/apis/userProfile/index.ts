@@ -10,7 +10,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
     }),
     getMyWishList: builder.query({
       query: props => ({
-        url: `my/wish/list?status=${props ?? 'active'}`,
+        url: `my/wish/lists${props}`,
       }),
       providesTags: ['Wish'],
     }),

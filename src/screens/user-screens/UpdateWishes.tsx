@@ -1,71 +1,94 @@
 import useNavigate from '@hooks/useNavigate';
 import useShowToastMessage from '@hooks/useShowToastMessage';
-import useSmsSender from '@hooks/useSmsSender';
+import {useUpdateWishMutation} from '@store/apis/wish';
 import Colors from '@theme/colors';
 import {useFormik} from 'formik';
 import {
   Box,
   Button,
-  CheckIcon,
   FormControl,
   HStack,
   Input,
   Link,
   Radio,
-  Select,
   Text,
   VStack,
 } from 'native-base';
 import React from 'react';
 import {BDFlagIcon, ContactIcon} from 'src/NativeBaseIcon';
 import CustomDatePickerInput from 'src/components/InputFiled/CustomDatePickerInput';
+import CustomWiseSelectPicker from 'src/components/InputFiled/CustomWiseSelectPicker';
 import Header from 'src/components/headers/Header';
 import Background from 'src/components/shared/Background';
-import {wishTypeList} from 'src/data';
 import asRoute from 'src/utils/withRoute';
+import BadWords from 'bad-words';
 import * as Yup from 'yup';
+import {useRoute} from '@react-navigation/native';
+import {IPropsWishItem} from 'src/typedef/navigation.types';
+
+const filter = new BadWords();
 
 const validationSchema = Yup.object().shape({
-  mobile: Yup.string()
+  receiverNumber: Yup.string()
     .matches(
       /^(\+88|88)?(01[3-9]\d{8})$/,
       'Please enter a valid Bangladeshi phone number',
     )
     .required('Phone number is required'),
-  receiver_name: Yup.string().required('Receiver name is required'),
+  receiverName: Yup.string().required('Receiver name is required'),
   message: Yup.string()
     .required('Message is required')
+    .test('no-profanity', 'Message contains profanity', value => {
+      // Check if the message contains any profanity words
+      return !filter.isProfane(value);
+    })
     .min(10, 'Message must be at least 10 characters')
     .max(160, 'Message must be at most 160 characters'),
-  wishes_type: Yup.string().required('Wish type is required'),
-  schedule_date: Yup.string().required('Schedule date is required'),
-  sms_type: Yup.string().required('Sms type is required'),
+  wishTypeId: Yup.string().required('Wish type is required'),
+  scheduleDate: Yup.string().required('Schedule date is required'),
+  messageType: Yup.string().required('Sms type is required'),
 });
-// UpdateWishes
+
+//  crete wishes
 const UpdateWishes = () => {
   // hooks
   const navigate = useNavigate();
-  const {handelSendMessage} = useSmsSender();
+  const item = useRoute().params as IPropsWishItem;
+
+  // const {handelSendMessage} = useSmsSender();
   const toast = useShowToastMessage();
 
+  // APIS
+  const [handelUpdate, {isLoading}] = useUpdateWishMutation();
   const formik = useFormik({
     initialValues: {
-      mobile: '',
-      receiver_name: '',
-      message: '',
-      schedule_date: '',
-      wishes_type: '',
-      sms_type: '',
+      wishId: item?.wishId,
+      receiverNumber: item?.receiver?.number,
+      receiverName: item?.receiver?.name,
+      message: item?.wish?.message,
+      scheduleDate: `${item?.scheduleDate}`,
+      wishTypeId: item?.wish?.typeId,
+      messageType: item?.wish?.messageType,
     },
+    enableReinitialize: true,
     validationSchema,
     onSubmit: async values => {
-      console.log('values', values);
-      // navigate('numberOtpVerify', values, undefined);
-      if (values?.sms_type === 'mobile') {
-        const smsRes = await handelSendMessage(values?.mobile, values?.message);
-        console.log('smsRes', smsRes);
-        toast('Send sms successfully');
+      try {
+        const res = await handelUpdate(values).unwrap();
+        console.log('res', res);
+        toast(res?.message);
+        navigate(undefined, undefined, 'goBack');
+      } catch (err: any) {
+        toast(err?.data?.message, 'error');
       }
+      // if (values?.messageType === 'mobile') {
+      //   const smsRes = handelSendMessage(
+      //     values?.receiverNumber,
+      //     values?.message,
+      //   );
+      //   console.log('smsRes', smsRes);
+      //   toast('Send sms successfully');
+      // }
     },
   });
   const {
@@ -80,17 +103,20 @@ const UpdateWishes = () => {
 
   return (
     <Background type="scroll">
-      <Header title="Update Wishes" />
-      <VStack space={4} px={4}>
+      <Header title="Update wishes" arrowLeft={false} />
+      <VStack space={4} pt={2} px={4}>
         {/* Type */}
         <FormControl
-          isInvalid={Boolean(errors.sms_type) && Boolean(touched.sms_type)}>
+          isInvalid={
+            Boolean(errors.messageType) && Boolean(touched.messageType)
+          }>
           <Radio.Group
             name="myRadioGroup"
             colorScheme="red"
-            value={values?.sms_type}
+            value={values?.messageType}
             onChange={v => {
-              setFieldValue('sms_type', v);
+              setFieldValue('messageType', v);
+              console.log('v', v);
             }}>
             <HStack justifyContent={'space-between'} space={3}>
               <Radio
@@ -125,54 +151,54 @@ const UpdateWishes = () => {
           </Radio.Group>
           <FormControl.ErrorMessage
             _text={{fontSize: 'xs', fontWeight: 500, color: Colors.red}}>
-            {errors.sms_type}
+            {errors.messageType}
           </FormControl.ErrorMessage>
         </FormControl>
         {/* name */}
         <FormControl
           isInvalid={
-            Boolean(errors.receiver_name) && Boolean(touched.receiver_name)
+            Boolean(errors.receiverName) && Boolean(touched.receiverName)
           }>
           <Input
-            borderColor={Colors.primaryMain}
             placeholder="Receiver name"
             rounded={8}
             placeholderTextColor={'gray.2'}
             color={'gray.700'}
             _focus={{bg: 'white', borderColor: Colors.primaryMain}}
-            onChangeText={handleChange('receiver_name')}
+            onChangeText={handleChange('receiverName')}
             fontWeight={'400'}
-            onBlur={handleBlur('receiver_name')}
-            value={values.receiver_name}
+            onBlur={handleBlur('receiverName')}
+            value={values.receiverName}
             _input={{
-              background: 'gray.50',
-              borderColor: Colors.primaryMain,
+              background: Colors.lightGray1,
+              borderColor: Colors.lightGray1,
             }}
           />
           <FormControl.ErrorMessage
             _text={{fontSize: 'xs', fontWeight: 500, color: Colors.red}}>
-            {errors.receiver_name}
+            {errors.receiverName}
           </FormControl.ErrorMessage>
         </FormControl>
         {/* mobile */}
         <FormControl
-          isInvalid={Boolean(errors.mobile) && Boolean(touched.mobile)}>
+          isInvalid={
+            Boolean(errors.receiverNumber) && Boolean(touched.receiverNumber)
+          }>
           <Input
-            borderColor={Colors.primaryMain}
             placeholder="Mobile"
             rounded={8}
             placeholderTextColor={'gray.2'}
             color={'gray.700'}
             _focus={{bg: 'white', borderColor: Colors.primaryMain}}
-            onChangeText={handleChange('mobile')}
+            onChangeText={handleChange('receiverNumber')}
             fontWeight={'400'}
-            onBlur={handleBlur('mobile')}
-            value={values.mobile}
+            onBlur={handleBlur('receiverNumber')}
+            value={values.receiverNumber}
             keyboardType="number-pad"
             maxLength={11}
             _input={{
-              background: 'gray.50',
-              borderColor: Colors.primaryMain,
+              background: Colors.lightGray1,
+              borderColor: Colors.lightGray1,
             }}
             leftElement={
               <Box pl={3}>
@@ -187,14 +213,32 @@ const UpdateWishes = () => {
           />
           <FormControl.ErrorMessage
             _text={{fontSize: 'xs', fontWeight: 500, color: Colors.red}}>
-            {errors.mobile}
+            {errors.receiverNumber}
+          </FormControl.ErrorMessage>
+        </FormControl>
+        {/* wish type */}
+        <FormControl
+          isInvalid={Boolean(errors.wishTypeId) && Boolean(touched.wishTypeId)}
+          isReadOnly>
+          <CustomWiseSelectPicker
+            setValue={(v: {wishTypeId: string; message: string}) => {
+              setFieldValue('wishTypeId', v?.wishTypeId);
+              setFieldValue('message', v?.message);
+            }}
+            value={{
+              wishTypeId: values?.wishTypeId,
+              message: values?.message,
+            }}
+          />
+          <FormControl.ErrorMessage
+            _text={{fontSize: 'xs', fontWeight: 500, color: Colors.red}}>
+            {errors.wishTypeId}
           </FormControl.ErrorMessage>
         </FormControl>
         {/* message */}
         <FormControl
           isInvalid={Boolean(errors.message) && Boolean(touched.message)}>
           <Input
-            borderColor={Colors.primaryMain}
             placeholder="Message"
             rounded={8}
             placeholderTextColor={'gray.2'}
@@ -207,9 +251,10 @@ const UpdateWishes = () => {
             numberOfLines={7}
             pt={3}
             textAlignVertical={'top'}
+            multiline={true}
             _input={{
-              background: 'gray.50',
-              borderColor: Colors.primaryMain,
+              background: Colors.lightGray1,
+              borderColor: Colors.lightGray1,
             }}
           />
           <HStack justifyContent={'flex-end'}>
@@ -223,54 +268,27 @@ const UpdateWishes = () => {
             {errors.message}
           </FormControl.ErrorMessage>
         </FormControl>
-        {/* wish type */}
-        <FormControl
-          isInvalid={
-            Boolean(errors.wishes_type) && Boolean(touched.wishes_type)
-          }
-          isReadOnly>
-          <Select
-            borderColor={Colors.primaryMain}
-            backgroundColor={'gray.100'}
-            selectedValue={values.wishes_type}
-            accessibilityLabel="Select wishes type"
-            placeholder="Choose wish type"
-            _selectedItem={{
-              bg: 'white',
-              endIcon: <CheckIcon size="5" />,
-            }}
-            onValueChange={itemValue =>
-              setFieldValue?.('wishes_type', itemValue)
-            }>
-            {wishTypeList?.map(item => (
-              <Select.Item label={item.label} value={item.label} />
-            ))}
-          </Select>
-          <FormControl.ErrorMessage
-            _text={{fontSize: 'xs', fontWeight: 500, color: Colors.red}}>
-            {errors.wishes_type}
-          </FormControl.ErrorMessage>
-        </FormControl>
         {/* Schedule Date  */}
         <FormControl
           isInvalid={
-            Boolean(errors.schedule_date) &&
+            Boolean(errors.scheduleDate) &&
             Boolean(touched.message) &&
-            Boolean(touched.mobile) &&
-            Boolean(touched.receiver_name) &&
-            Boolean(touched.sms_type) &&
-            Boolean(touched.wishes_type)
+            Boolean(touched.receiverNumber) &&
+            Boolean(touched.receiverName) &&
+            Boolean(touched.messageType) &&
+            Boolean(touched.wishTypeId)
           }>
           <CustomDatePickerInput
-            bgColor={'gray.100'}
             placeholder="Schedule date"
             setValue={props => {
-              setFieldValue?.('schedule_date', props);
+              setFieldValue?.('scheduleDate', props);
             }}
+            value={item?.scheduleDate}
+            mode="datetime"
           />
           <FormControl.ErrorMessage
             _text={{fontSize: 'xs', fontWeight: 500, color: Colors.red}}>
-            {errors.schedule_date}
+            {errors.scheduleDate}
           </FormControl.ErrorMessage>
         </FormControl>
         {/* Button */}
@@ -278,14 +296,14 @@ const UpdateWishes = () => {
           <Button
             px={4}
             py={3}
-            // isLoading={isLoading}
+            isLoading={isLoading}
             borderRadius={'full'}
             onPress={() => handleSubmit()}
             _text={{fontSize: 'md', color: 'white'}}
             background={Colors.buttonColor}>
             Submit
           </Button>
-          <Button
+          {/* <Button
             px={4}
             py={3}
             variant={'unstyled'}
@@ -294,12 +312,13 @@ const UpdateWishes = () => {
             // onPress={() => handleSubmit()}
             _text={{fontSize: 'md', color: '#e62020'}}>
             Delete
-          </Button>
+          </Button> */}
         </HStack>
       </VStack>
     </Background>
   );
 };
+
 const updateWishes = asRoute(UpdateWishes, 'updateWishes', {
   animation: 'slide_from_right',
 });

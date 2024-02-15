@@ -2,12 +2,12 @@ import React, {useState} from 'react';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 const useDateTimePicker = (
-  initialDate: Date | undefined,
+  initialDate: any,
   mode: 'date' | 'time' | 'datetime' = 'date',
 ) => {
   const [openDatePicker, setOpenDatePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(
-    initialDate,
+    new Date(initialDate),
   );
 
   const showDatePicker = () => {

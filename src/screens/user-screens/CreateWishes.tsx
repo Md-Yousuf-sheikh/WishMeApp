@@ -1,6 +1,5 @@
 import useNavigate from '@hooks/useNavigate';
 import useShowToastMessage from '@hooks/useShowToastMessage';
-import useSmsSender from '@hooks/useSmsSender';
 import {useCreateWishMutation} from '@store/apis/wish';
 import Colors from '@theme/colors';
 import {useFormik} from 'formik';
@@ -64,7 +63,7 @@ const CreateWishes = () => {
       message: '',
       scheduleDate: '',
       wishTypeId: '',
-      messageType: 'app',
+      messageType: '',
     },
     validationSchema,
     onSubmit: async values => {
@@ -110,7 +109,6 @@ const CreateWishes = () => {
             value={values?.messageType}
             onChange={v => {
               setFieldValue('messageType', v);
-              console.log('v', v);
             }}>
             <HStack justifyContent={'space-between'} space={3}>
               <Radio
@@ -224,35 +222,11 @@ const CreateWishes = () => {
               message: values?.message,
             }}
           />
-          {/* <Select
-            borderColor={Colors.lightGray1}
-            backgroundColor={Colors.lightGray1}
-            selectedValue={values.wishTypeId}
-            accessibilityLabel="Select wishes type"
-            placeholder="Choose wish type"
-            _selectedItem={{
-              background: Colors.lightGray1,
-              endIcon: <CheckIcon size="5" />,
-            }}
-            onOpen={() => {
-              console.log('open');
-            }}
-            onClose={() => {
-              console.log('close');
-            }}
-            onValueChange={itemValue =>
-              setFieldValue?.('wishTypeId', itemValue)
-            }>
-            {wishTypeList?.map(item => (
-              <Select.Item label={item.label} value={item.label} />
-            ))}
-          </Select> */}
           <FormControl.ErrorMessage
             _text={{fontSize: 'xs', fontWeight: 500, color: Colors.red}}>
             {errors.wishTypeId}
           </FormControl.ErrorMessage>
         </FormControl>
-
         {/* message */}
         <FormControl
           isInvalid={Boolean(errors.message) && Boolean(touched.message)}>
@@ -320,16 +294,6 @@ const CreateWishes = () => {
             background={Colors.buttonColor}>
             Submit
           </Button>
-          {/* <Button
-            px={4}
-            py={3}
-            variant={'unstyled'}
-            // isLoading={isLoading}
-            borderRadius={'full'}
-            // onPress={() => handleSubmit()}
-            _text={{fontSize: 'md', color: '#e62020'}}>
-            Delete
-          </Button> */}
         </HStack>
       </VStack>
     </Background>

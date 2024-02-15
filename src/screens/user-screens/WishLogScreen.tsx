@@ -3,7 +3,6 @@ import {useGetMyWishListQuery} from '@store/apis/userProfile';
 import Colors from '@theme/colors';
 import {Button, HStack, VStack} from 'native-base';
 import React from 'react';
-import {ChatPlusIcon} from 'src/NativeBaseIcon';
 import WishViewModal from 'src/components/actionSheet/WishViewModal';
 import ScheduledCard from 'src/components/cards/ScheduledCard';
 import Header from 'src/components/headers/Header';
@@ -15,19 +14,19 @@ import asRoute from 'src/utils/withRoute';
 const category = [
   {
     value: 'all',
-    title: 'All Wish',
+    title: 'All wish',
   },
   {
     value: 'mobile',
-    title: 'Form Mobile',
+    title: 'Scheduled',
   },
   {
     value: 'app',
-    title: 'Form App',
+    title: 'Send',
   },
 ];
 
-const ScheduledWishes = () => {
+const WishLogScreen = () => {
   //  State
   const [isOpenModal, setIsOpenModal] = React.useState<boolean>(false);
   const [selectedWish, setSelectedWish] = React.useState<any>();
@@ -52,20 +51,7 @@ const ScheduledWishes = () => {
           flex: 1,
         },
       }}>
-      <Header title="Scheduled Wishes" arrowLeft={false} />
-      <Button
-        p={4}
-        zIndex={9999}
-        right={4}
-        position={'absolute'}
-        rounded={'full'}
-        shadow={10}
-        bottom={16}
-        backgroundColor={Colors.primaryMain}
-        onPress={() => navigate('createWishes')}
-        variant={'unstyled'}>
-        <ChatPlusIcon size={6} />
-      </Button>
+      <Header title="Wish Log" />
       <VStack px={3} pt={3} position={'relative'}>
         {/* category */}
         <HStack space={3} pb={4} pt={1}>
@@ -120,14 +106,14 @@ const ScheduledWishes = () => {
         isOpen={isOpenModal}
         onClose={() => setIsOpenModal(false)}
         item={selectedWish}
-        type={'normal'}
+        type={'log'}
       />
     </Background>
   );
 };
 
-const scheduledWishes = asRoute(ScheduledWishes, 'scheduledWishes', {
+const wishLogScreen = asRoute(WishLogScreen, 'wishLog', {
   animation: 'slide_from_right',
 });
 
-export default scheduledWishes;
+export default wishLogScreen;

@@ -6,6 +6,10 @@ import {
   smsPlanScreen,
   numberUpdate,
   createWishes,
+  wishLogScreen,
+  notificationScreen,
+  myReferralScreen,
+  referralSummaryScreen,
 } from '@screens/user-screens';
 
 const userScreens = {
@@ -15,6 +19,10 @@ const userScreens = {
   smsPlanScreen,
   numberUpdate,
   createWishes,
+  wishLogScreen,
+  notificationScreen,
+  myReferralScreen,
+  referralSummaryScreen,
 };
 
 //  ren

@@ -415,7 +415,7 @@ export const ArrowLeftIcon = createIcon({
     <>
       <Path
         d="M7.71309 5.99999L1.70209 -0.0100098L0.288086 1.40399L4.88809 6.00399L0.288086 10.597L1.70209 12.011L7.71309 5.99999Z"
-        fill="#222222"
+        fill="#7d7c7c"
       />
     </>,
   ],
@@ -666,6 +666,81 @@ export const SelectArrowIcon = createIcon({
     </>,
   ],
 });
+//  account icon
+export const AccountIcon = createIcon({
+  viewBox: '0 0 18 20',
+  path: [
+    <>
+      <Path
+        fill="#CB5E98"
+        d="M3 20h13a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h1ZM9 3c1.647 0 3 1.35 3 3a3.013 3.013 0 0 1-3 3C7.353 9 6 7.647 6 6c0-1.65 1.353-3 3-3ZM3 15.25c0-2.219 2.705-4.5 6-4.5s6 2.281 6 4.5V16H3v-.75Z"
+      />
+    </>,
+  ],
+});
+//  NotificationIcon
+export const NotificationIcon = createIcon({
+  viewBox: '0 0 18 20',
+  path: [
+    <>
+      <Path
+        fill="#CB5E98"
+        d="M9 20a2.98 2.98 0 0 0 2.818-2H6.182A2.98 2.98 0 0 0 9 20Zm7-7.414V8c0-3.217-2.185-5.927-5.145-6.742A1.99 1.99 0 0 0 9 0a1.99 1.99 0 0 0-1.855 1.258C4.185 2.074 2 4.783 2 8v4.586L.293 14.293A.996.996 0 0 0 0 15v1a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-1a.995.995 0 0 0-.293-.707L16 12.586Z"
+      />
+    </>,
+  ],
+});
+//  demo
+export const SMSIcon = createIcon({
+  viewBox: '0 0 20 20',
+  path: [
+    <>
+      <Path
+        fill="#CB5E98"
+        d="M10 0C4.486 0 0 3.59 0 8c0 2.908 1.898 5.515 5 6.934V20l5.34-4.005C15.697 15.852 20 12.32 20 8c0-4.41-4.486-8-10-8Z"
+      />
+    </>,
+  ],
+});
+export const AboutIcon = createIcon({
+  viewBox: '0 0 20 20',
+  path: [
+    <>
+      <Path
+        fill="#CB5E98"
+        d="M10 0C4.486 0 0 4.486 0 10s4.486 10 10 10 10-4.486 10-10S15.514 0 10 0Zm1 15H9V9h2v6Zm0-8H9V5h2v2Z"
+      />
+    </>,
+  ],
+});
+export const LockIcon = createIcon({
+  viewBox: '0 0 16 20',
+  path: [
+    <>
+      <Path
+        fill="#CB5E98"
+        d="M8 0C5.243 0 3 2.243 3 5v3H2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1V5c0-2.757-2.243-5-5-5ZM5 5c0-1.654 1.346-3 3-3s3 1.346 3 3v3H5V5Zm4 10.723V18H7v-2.277a1.993 1.993 0 0 1 .567-3.677A2.002 2.002 0 0 1 10 14a1.99 1.99 0 0 1-1 1.723Z"
+      />
+    </>,
+  ],
+});
+//  demo
+export const OrderSummaryIcon = createIcon({
+  viewBox: '0 0 24 24',
+  path: [
+    <>
+      <Path
+        fill="#CB5E98"
+        d="M13 2.051v8.95h8.949c-.47-4.718-4.232-8.48-8.949-8.95Zm4.969 17.953c2.189-1.637 3.694-4.14 3.98-7.004h-8.183l4.203 7.004Z"
+      />
+      <Path
+        fill="#CB5E98"
+        d="M11 12V2.051c-5.046.504-9 4.773-9 9.95 0 5.513 4.486 10 10 10a9.93 9.93 0 0 0 4.255-.965s-5.253-8.915-5.254-9.03L11 12Z"
+      />
+    </>,
+  ],
+});
+
 //  demo
 export const DemoIcon = createIcon({
   viewBox: '0 0 26 28',

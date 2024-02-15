@@ -3,12 +3,13 @@ import {Text, Button, HStack, VStack, Pressable} from 'native-base';
 import useDateTimePicker from '@hooks/useDateTimePicker';
 import {CalenderIcon} from 'src/NativeBaseIcon';
 import Colors from '@theme/colors';
+import moment from 'moment';
 
 interface PropsType {
   label?: string;
   placeholder?: string;
-  setValue?: (props: Date | undefined) => void;
-  value?: Date | undefined;
+  setValue?: (props: any | undefined) => void;
+  value?: any;
   mode?: 'date' | 'time' | 'datetime';
 }
 
@@ -19,19 +20,15 @@ const CustomDatePickerInput = ({
   value,
   mode,
 }: PropsType) => {
+  const initialValues = `${value}`;
+
   const {showDatePicker, hideDatePicker, selectedDate, datePickerComponent} =
-    useDateTimePicker(value, mode);
+    useDateTimePicker(initialValues, mode);
 
   const inputDate = new Date(selectedDate || '');
 
-  const formattedDate = `${inputDate.getFullYear()}-${String(
-    inputDate.getMonth() + 1,
-  ).padStart(2, '0')}-${String(inputDate.getDate()).padStart(2, '0')} ${String(
-    inputDate.getHours(),
-  ).padStart(2, '0')}:${String(inputDate.getMinutes()).padStart(
-    2,
-    '0',
-  )}:${String(inputDate.getSeconds()).padStart(2, '0')}`;
+  const formattedDate = moment(inputDate).format('YYYY-MM-DD HH:mm:ss');
+
   React.useEffect(() => {
     setValue?.(formattedDate); // Invoke the provided setValue function with the selected date
     hideDatePicker?.();

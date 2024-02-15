@@ -20,6 +20,14 @@ export const authApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Wish'],
     }),
+    updateWish: builder.mutation({
+      query: body => ({
+        url: 'my/wish/update',
+        method: 'PUT',
+        body,
+      }),
+      invalidatesTags: ['Wish'],
+    }),
   }),
   overrideExisting: true,
 });
@@ -28,4 +36,5 @@ export const {
   useCreateWishMutation,
   useGetWishCategoryQuery,
   useGetWishWithTypeQuery,
+  useUpdateWishMutation,
 } = authApiSlice;

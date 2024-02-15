@@ -5,19 +5,22 @@ import {wp} from '@theme/ScreenDimensions';
 import {MessageIcon} from 'src/NativeBaseIcon';
 import Colors from '@theme/colors';
 import useNavigate from '@hooks/useNavigate';
+import {IPropsWishItem} from 'src/typedef/navigation.types';
+import moment from 'moment';
 
 interface IProps {
   isOpen: boolean;
+  type: 'log' | 'normal';
   onClose: () => void;
-  item?: any;
+  item: IPropsWishItem;
 }
 
-export default function WishViewModal({isOpen, onClose}: IProps) {
+export default function WishViewModal({isOpen, onClose, item, type}: IProps) {
   // hooks
   const navigate = useNavigate();
   //  formik
   const handelEditNav = () => {
-    navigate('updateWishes');
+    navigate('updateWishes', item);
     onClose();
   };
 
@@ -46,39 +49,48 @@ export default function WishViewModal({isOpen, onClose}: IProps) {
         <HStack alignItems={'center'} mt={5} space={2}>
           <MessageIcon size={7} />
           <Text fontSize={'lg'} color={Colors.primaryMain}>
-            Receiver: +88 01916546547
+            Receiver: +88 {item?.receiver?.number}
           </Text>
         </HStack>
         {/*  */}
         <VStack p={2} mt={3} rounded={'md'} bg={Colors.lightBlue}>
-          <Text>
-            Wishing you a day as bright and special as you are! 🌟 Enjoy every
-            moment! 🎁🥳 Wishing you a day as bright and special as you are! 🌟
-            Enjoy every moment! 🎁🥳
-          </Text>
+          <Text>{item?.wish?.message}</Text>
         </VStack>
         <VStack mt={4}>
-          <Text>Scheduled for September 26, 2024, at 5:30 AM.</Text>
-          <Text>From App Credit</Text>
-          <Text py={3}>Created on February 5, 2023.</Text>
+          <Text>
+            Scheduled for{' '}
+            {moment(item?.scheduleDate).format('MMMM DD, YYYY, [at] h:mm A')}
+          </Text>
+          <Text textTransform={'capitalize'}>
+            From {item?.wish?.messageType} Credit
+          </Text>
+          <Text py={3}>Created on {item?.createdAt}</Text>
           {/* button */}
         </VStack>
         {/* button */}
-        <Text mt={5} mb={2}>
-          To update this message, please click the update button below.
-        </Text>
-        <Button
-          py={3}
-          bg={Colors.primaryMain}
-          onPress={handelEditNav}
-          _focus={{
-            backgroundColor: Colors.primaryMain,
-          }}
-          _text={{
-            fontSize: 'md',
-          }}>
-          Edit
-        </Button>
+        {type !== 'log' && (
+          <>
+            <Text mt={5} fontSize={'xs'} mb={2}>
+              To update this message, please click the update button below.
+            </Text>
+            <Button
+              py={3}
+              bg={Colors.primaryMain}
+              onPress={handelEditNav}
+              rounded={'md'}
+              _focus={{
+                backgroundColor: Colors.primaryMain,
+              }}
+              _pressed={{
+                backgroundColor: Colors.primaryMain,
+              }}
+              _text={{
+                fontSize: 'md',
+              }}>
+              Edit
+            </Button>
+          </>
+        )}
       </VStack>
     </Modal>
   );

@@ -39,7 +39,7 @@ export default function MainHeader({
   const insets = useSafeAreaInsets();
   const authUser = useSelector(selectUser);
 
-  console.log('type', type, onPressLeft2);
+  // console.log('type', type, onPressLeft2);
 
   return (
     <>

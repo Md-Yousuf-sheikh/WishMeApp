@@ -18,6 +18,7 @@ import {
 import {giftShop} from '@screens/user-screens';
 import mobileRecharge from '@screens/user-screens/MobileRecharge';
 import {View} from 'native-base';
+import settings from '@screens/user-screens/Settings';
 // tab
 const Tab = createBottomTabNavigator();
 
@@ -47,7 +48,7 @@ const taborOptions: TBottomTabNavigationOptions = ({route}) => ({
         ) : (
           <TabCallIcon size={5} />
         );
-      case 'account':
+      case 'settings':
         return focused ? (
           <TabProfileActiveIcon size={5} />
         ) : (
@@ -100,9 +101,9 @@ function BottomRoutes() {
         component={mobileRecharge?.component}
       />
       <Tab.Screen
-        name="account"
-        options={giftShop.options as any}
-        component={giftShop?.component}
+        name="settings"
+        options={settings.options as any}
+        component={settings?.component}
       />
     </Tab.Navigator>
   );
