@@ -87,7 +87,7 @@ export default function MainHeader({
               variant={'unstyled'}
               onPress={() => navigate('profileScreen')}>
               <Avatar
-                size={10}
+                size={8}
                 bg="amber.500"
                 source={{
                   uri: authUser?.avatar,

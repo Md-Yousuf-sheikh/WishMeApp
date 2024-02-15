@@ -32,3 +32,13 @@ export interface IPropsWishItem {
     type: string;
   };
 }
+
+export interface IPropsSmsPlan {
+  smsPlanNumber: string;
+  image: string;
+  name: string;
+  quantity: number;
+  regularPrice: string;
+  salePrice: string;
+  summary: string;
+}

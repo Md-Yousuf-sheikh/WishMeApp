@@ -9,3 +9,4 @@ export {default as wishLogScreen} from './WishLogScreen';
 export {default as notificationScreen} from './NotificationScreen';
 export {default as referralSummaryScreen} from './ReferralSummaryScreen';
 export {default as myReferralScreen} from './MyReferralScreen';
+export {default as paymentScreen} from './PaymentScreen';

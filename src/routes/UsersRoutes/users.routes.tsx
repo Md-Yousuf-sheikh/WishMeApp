@@ -10,6 +10,7 @@ import {
   notificationScreen,
   myReferralScreen,
   referralSummaryScreen,
+  paymentScreen,
 } from '@screens/user-screens';
 
 const userScreens = {
@@ -23,6 +24,7 @@ const userScreens = {
   notificationScreen,
   myReferralScreen,
   referralSummaryScreen,
+  paymentScreen,
 };
 
 //  ren

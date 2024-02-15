@@ -1,26 +1,29 @@
 import useNavigate from '@hooks/useNavigate';
+import {useGetSmaPlanQuery} from '@store/apis/sms';
 import {VStack} from 'native-base';
 import React from 'react';
-import ScheduledCard from 'src/components/cards/ScheduledCard';
 import SmsPlanCard from 'src/components/cards/SmsPlanCard';
 import MainHeader from 'src/components/common/Headers/MainHeader';
 import Background from 'src/components/shared/Background';
 import InfiniteFlatList from 'src/components/shared/InfiniteFlatList';
+import {IPropsSmsPlan} from 'src/typedef/navigation.types';
 import asRoute from 'src/utils/withRoute';
 
 const SmsPlanScreen = () => {
   const navigate = useNavigate();
+  // APS
+  const {data} = useGetSmaPlanQuery(undefined);
 
   return (
     <Background type="normal">
-      <MainHeader title="Buy SMS plan" />
-      <VStack px={2} pt={4} >
+      <MainHeader title="Buy SMS" />
+      <VStack px={2} pt={4} pb={10}>
         <InfiniteFlatList
-          data={[{}, {}, {}, {}, {}, {}, {}, {}, {}, {}]}
+          data={data?.data}
           renderItem={({item}) => (
             <SmsPlanCard
-              onEditPress={() => navigate('updateWishes')}
-              data={item}
+              onPress={() => navigate('payment', item)}
+              item={item as IPropsSmsPlan}
             />
           )}
           showsVerticalScrollIndicator={false}
@@ -41,7 +44,7 @@ const SmsPlanScreen = () => {
   );
 };
 
-const smsPlanScreen = asRoute(SmsPlanScreen, 'smsPlanScreen', {
+const smsPlanScreen = asRoute(SmsPlanScreen, 'smsPlan', {
   animation: 'slide_from_right',
 });
 

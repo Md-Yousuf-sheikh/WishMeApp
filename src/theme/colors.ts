@@ -29,7 +29,7 @@ const Colors = {
   purpleDarker1: '#38106A',
   pinkDarker1: '#F0118B',
   pinkLight7: '#ce15683a',
-  lightBlue: '#c2d7f35c',
+  lightBlue: '#E8F1FB',
   blue: 'blue',
 };
 

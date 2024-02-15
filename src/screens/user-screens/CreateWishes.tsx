@@ -132,7 +132,7 @@ const CreateWishes = () => {
                 }}>
                 From App
                 <Link
-                  onPress={() => navigate('buyPlan')}
+                  onPress={() => navigate('smsPlan')}
                   _text={{
                     color: Colors.primaryMain,
                   }}>
