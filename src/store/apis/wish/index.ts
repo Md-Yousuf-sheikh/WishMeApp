@@ -22,16 +22,16 @@ export const authApiSlice = apiSlice.injectEndpoints({
     }),
     updateWish: builder.mutation({
       query: body => ({
-        url: 'my/wish/delete',
-        method: 'DELETE',
+        url: 'my/wish/update',
+        method: 'PUT',
         body,
       }),
       invalidatesTags: ['Wish'],
     }),
     deleteWish: builder.mutation({
       query: body => ({
-        url: 'my/wish/update',
-        method: 'PUT',
+        url: 'my/wish/delete',
+        method: 'DELETE',
         body,
       }),
       invalidatesTags: ['Wish'],

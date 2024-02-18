@@ -24,7 +24,7 @@ export interface IPropsWishItem {
     number: string;
   };
   scheduleDate: string;
-  status: string;
+  status: 'pending' | 'delivered' | 'failed' | 'canceled' | 'inactive';
   wish: {
     message: string;
     messageType: string;

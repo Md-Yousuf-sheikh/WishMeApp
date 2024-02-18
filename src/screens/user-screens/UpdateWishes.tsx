@@ -76,7 +76,6 @@ const UpdateWishes = () => {
     onSubmit: async values => {
       try {
         const res = await handelUpdate(values).unwrap();
-        console.log('res', res);
         toast(res?.message);
         navigate(undefined, undefined, 'goBack');
       } catch (err: any) {
@@ -108,8 +107,8 @@ const UpdateWishes = () => {
     };
     try {
       const res = await deleteWish(props).unwrap();
-      console.log('res', res);
       toast(res?.message);
+      navigate(undefined, undefined, 'goBack');
     } catch (err: any) {
       toast(err?.data?.message, 'error');
     }

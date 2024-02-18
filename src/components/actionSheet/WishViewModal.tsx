@@ -68,7 +68,7 @@ export default function WishViewModal({isOpen, onClose, item, type}: IProps) {
           {/* button */}
         </VStack>
         {/* button */}
-        {type !== 'log' && (
+        {type !== 'log' && item?.status === 'pending' && (
           <>
             <Text mt={5} fontSize={'xs'} mb={2}>
               To update this message, please click the update button below.
