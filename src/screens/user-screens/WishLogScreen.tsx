@@ -8,6 +8,7 @@ import ScheduledCard from 'src/components/cards/ScheduledCard';
 import Header from 'src/components/headers/Header';
 import Background from 'src/components/shared/Background';
 import InfiniteFlatList from 'src/components/shared/InfiniteFlatList';
+import {SkeletonsScheduledCard} from 'src/components/skeletons';
 import {IPropsWishItem} from 'src/typedef/navigation.types';
 import asRoute from 'src/utils/withRoute';
 
@@ -44,7 +45,7 @@ const WishLogScreen = () => {
       ? '?status=pending'
       : '?status=delivered';
 
-  const {data} = useGetMyWishListQuery(props);
+  const {data, isLoading, isFetching} = useGetMyWishListQuery(props);
   // data
 
   return (
@@ -104,6 +105,21 @@ const WishLogScreen = () => {
             rowGap: 2,
             paddingBottom: 100,
           }}
+          ListEmptyComponent={
+            isLoading || isFetching ? (
+              <VStack space={3}>
+                <SkeletonsScheduledCard />
+                <SkeletonsScheduledCard />
+                <SkeletonsScheduledCard />
+                <SkeletonsScheduledCard />
+                <SkeletonsScheduledCard />
+                <SkeletonsScheduledCard />
+                <SkeletonsScheduledCard />
+              </VStack>
+            ) : (
+              <></>
+            )
+          }
         />
       </VStack>
       {/* Modals */}

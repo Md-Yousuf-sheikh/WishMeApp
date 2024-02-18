@@ -51,7 +51,6 @@ const validationSchema = Yup.object().shape({
 const CreateWishes = () => {
   // hooks
   const navigate = useNavigate();
-  // const {handelSendMessage} = useSmsSender();
   const toast = useShowToastMessage();
 
   // APIS
@@ -69,7 +68,7 @@ const CreateWishes = () => {
     onSubmit: async values => {
       try {
         const res = await handelCreate(values).unwrap();
-        console.log('res', res);
+        navigate(undefined, undefined, 'goBack');
         toast(res?.message);
       } catch (err: any) {
         toast(err?.data?.message, 'error');

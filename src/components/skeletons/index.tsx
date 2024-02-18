@@ -1,33 +1,17 @@
-import {Center, HStack, Skeleton, VStack} from 'native-base';
+import React from 'react';
+import {HStack, Skeleton, VStack} from 'native-base';
 
-export const SkeletonsBlogCard = () => {
+export const SkeletonsScheduledCard = () => {
   return (
-    <Center w="100%">
-      <VStack
-        w="90%"
-        maxW="400"
-        borderWidth="1"
-        space={8}
-        rounded="md"
-        _dark={{
-          borderColor: 'coolGray.500',
-        }}
-        _light={{
-          borderColor: 'coolGray.200',
-        }}
-        p="4">
-        <Skeleton flex="1" h="150" rounded="md" startColor="coolGray.100" />
-        <VStack flex="3" space="4">
-          <Skeleton.Text />
-          <HStack space="2" alignItems="center">
-            <Skeleton size="10" rounded="full" />
-            <VStack>
-              <Skeleton h="3" rounded="full" />
-              <Skeleton h="3" rounded="full" />
-            </VStack>
-          </HStack>
-        </VStack>
+    <HStack bg={'gray.50'} w="100%" space={3} p={3} rounded={'lg'}>
+      <Skeleton w={12} h={12} rounded={'full'} />
+      <VStack justifyContent={'space-between'} w="80%">
+        <HStack justifyContent={'space-between'}>
+          <Skeleton.Text w={'60%'} lines={1} />
+          <Skeleton.Text w={'30%'} lines={1} />
+        </HStack>
+        <Skeleton.Text lines={1} />
       </VStack>
-    </Center>
+    </HStack>
   );
 };
