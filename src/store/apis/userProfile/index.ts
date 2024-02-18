@@ -109,13 +109,13 @@ export const authApiSlice = apiSlice.injectEndpoints({
           const {data: result} = await queryFulfilled;
           console.log('result', result);
 
-          if (result.data) {
-            dispatch(
-              setProfile({
-                ...result.data,
-              }),
-            );
-          }
+          // if (result.data) {
+          //   dispatch(
+          //     setProfile({
+          //       ...result.data,
+          //     }),
+          //   );
+          // }
 
           return result;
         } catch (error: any) {

@@ -1,4 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
+import {IUser} from 'src/typedef/navigation.types';
 
 export interface AuthState {
   user?: any;
@@ -85,7 +86,8 @@ export const {
 } = authSlice.actions;
 
 export const selectAuth = (state: {auth: AuthState}) => state.auth;
-export const selectUser = (state: {auth: AuthState}) => state.auth.user;
+export const selectUser = (state: {auth: AuthState}) =>
+  state.auth.user as IUser;
 export const selectAccessToken = (state: {auth: AuthState}) =>
   state.auth.accessToken;
 export const selectRefreshToken = (state: {auth: AuthState}) =>

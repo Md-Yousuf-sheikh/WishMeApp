@@ -42,3 +42,11 @@ export interface IPropsSmsPlan {
   salePrice: string;
   summary: string;
 }
+
+export interface IUser {
+  avatar: string;
+  createdAt: string;
+  fullName: string;
+  mobileNumber: string;
+  welcomeMessageRead: boolean;
+}
