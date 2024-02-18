@@ -37,9 +37,6 @@ const WishLogScreen = () => {
   //  hooks
   const navigate = useNavigate();
   // APIS
-  // delivered
-  // APIS
-
   const props =
     selectCate === 'all'
       ? ''

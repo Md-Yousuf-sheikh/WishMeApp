@@ -1,6 +1,6 @@
 import useNavigate from '@hooks/useNavigate';
 import useShowToastMessage from '@hooks/useShowToastMessage';
-import {useUpdateWishMutation} from '@store/apis/wish';
+import {useDeleteWishMutation, useUpdateWishMutation} from '@store/apis/wish';
 import Colors from '@theme/colors';
 import {useFormik} from 'formik';
 import {
@@ -60,6 +60,7 @@ const UpdateWishes = () => {
 
   // APIS
   const [handelUpdate, {isLoading}] = useUpdateWishMutation();
+  const [deleteWish, {}] = useDeleteWishMutation();
   const formik = useFormik({
     initialValues: {
       wishId: item?.wishId,
@@ -100,7 +101,19 @@ const UpdateWishes = () => {
     handleBlur,
     setFieldValue,
   } = formik;
-
+  //
+  const handleDelete = async () => {
+    const props = {
+      wishId: item?.wishId,
+    };
+    try {
+      const res = await deleteWish(props).unwrap();
+      console.log('res', res);
+      toast(res?.message);
+    } catch (err: any) {
+      toast(err?.data?.message, 'error');
+    }
+  };
   return (
     <Background type="scroll">
       <Header title="Update wishes" arrowLeft={false} />
@@ -303,16 +316,16 @@ const UpdateWishes = () => {
             background={Colors.buttonColor}>
             Submit
           </Button>
-          {/* <Button
+          <Button
             px={4}
             py={3}
             variant={'unstyled'}
             // isLoading={isLoading}
             borderRadius={'full'}
-            // onPress={() => handleSubmit()}
+            onPress={() => handleDelete()}
             _text={{fontSize: 'md', color: '#e62020'}}>
             Delete
-          </Button> */}
+          </Button>
         </HStack>
       </VStack>
     </Background>

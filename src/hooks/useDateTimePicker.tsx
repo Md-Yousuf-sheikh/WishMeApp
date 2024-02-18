@@ -1,13 +1,25 @@
+import moment from 'moment';
 import React, {useState} from 'react';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 const useDateTimePicker = (
-  initialDate?: Date | undefined,
+  initialDate?: Date | string | undefined,
   mode: 'date' | 'time' | 'datetime' = 'date',
 ) => {
   const [openDatePicker, setOpenDatePicker] = useState(true);
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>();
-  console.log('initialDate', initialDate);
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
+    typeof initialDate === 'string'
+      ? moment(initialDate).toDate()
+      : initialDate,
+  );
+
+  React.useEffect(() => {
+    setSelectedDate(
+      typeof initialDate === 'string'
+        ? moment(initialDate).toDate()
+        : initialDate,
+    );
+  }, [initialDate]);
 
   const showDatePicker = () => {
     setOpenDatePicker(true);

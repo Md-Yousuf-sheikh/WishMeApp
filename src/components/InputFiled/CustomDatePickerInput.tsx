@@ -20,14 +20,14 @@ const CustomDatePickerInput = ({
   value,
   mode,
 }: PropsType) => {
-  const initialValues = `${value}`;
-
   const {showDatePicker, hideDatePicker, selectedDate, datePickerComponent} =
-    useDateTimePicker(initialValues, mode);
+    useDateTimePicker(value, mode);
 
   const inputDate = new Date(selectedDate || '');
 
-  const formattedDate = moment(inputDate).format('YYYY-MM-DD HH:mm:ss');
+  const formattedDate = inputDate
+    ? moment(inputDate).format('YYYY-MM-DD HH:mm:ss')
+    : undefined;
 
   React.useEffect(() => {
     setValue?.(formattedDate); // Invoke the provided setValue function with the selected date
