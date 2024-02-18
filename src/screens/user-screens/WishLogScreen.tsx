@@ -17,11 +17,11 @@ const category = [
     title: 'All wish',
   },
   {
-    value: 'mobile',
+    value: 'pending',
     title: 'Scheduled',
   },
   {
-    value: 'app',
+    value: 'delivered',
     title: 'Send',
   },
 ];
@@ -37,8 +37,16 @@ const WishLogScreen = () => {
   //  hooks
   const navigate = useNavigate();
   // APIS
+  // delivered
   // APIS
-  const props = selectCate === 'all' ? '' : `?messageType=${selectCate}`;
+
+  const props =
+    selectCate === 'all'
+      ? ''
+      : selectCate === 'pending'
+      ? '?status=pending'
+      : '?status=delivered';
+
   const {data} = useGetMyWishListQuery(props);
   // data
 

@@ -53,6 +53,11 @@ const navList = [
     icon: AboutIcon,
     nav: '',
   },
+  {
+    title: 'Logout',
+    icon: AboutIcon,
+    nav: 'logout',
+  },
 ];
 
 const Settings = () => {

@@ -13,7 +13,7 @@ export default function SelectPaymentMethod({setFieldValue, value}: Props) {
       <Text fontSize={'lg'}>Select Payment Method</Text>
       <VStack mt={3} space={3}>
         {/* online pay */}
-        <Pressable onPress={() => setFieldValue('online')}>
+        <Pressable opacity={0.5} onPress={() => setFieldValue('online')}>
           <HStack
             px={2}
             minH={10}

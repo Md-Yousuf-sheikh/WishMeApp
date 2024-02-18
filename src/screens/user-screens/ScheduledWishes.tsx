@@ -38,9 +38,11 @@ const ScheduledWishes = () => {
   //  hooks
   const navigate = useNavigate();
   // APIS
-  // APIS
-  const props = selectCate === 'all' ? '' : `?messageType=${selectCate}`;
-  const {data} = useGetMyWishListQuery(props);
+  const props =
+    selectCate === 'all'
+      ? '?status=pending'
+      : `?messageType=${selectCate}&status=pending`;
+  const {data, refetch} = useGetMyWishListQuery(props);
   // data
 
   return (
@@ -90,6 +92,8 @@ const ScheduledWishes = () => {
         </HStack>
         {/* list */}
         <InfiniteFlatList
+          onRefresh={refetch}
+          // isRefreshing={true}
           data={data?.data}
           renderItem={({item}) => (
             <ScheduledCard

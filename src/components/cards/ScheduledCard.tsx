@@ -16,7 +16,7 @@ export default function ScheduledCard({onPress, data}: PropsType) {
       <VStack p={2} rounded={'md'} bg={Colors.lightBlue}>
         <HStack>
           <Avatar bg={'amber.800'} mr={2} size={'md'}>
-            {data?.receiver?.name.slice(0, 2)}
+            {data?.receiver?.fullName?.slice(0, 2)}
           </Avatar>
           <VStack width={'85%'} justifyContent={'space-between'}>
             <HStack
@@ -24,7 +24,7 @@ export default function ScheduledCard({onPress, data}: PropsType) {
               justifyContent={'space-between'}
               space={2}>
               <Text fontWeight={'800'} color={'gray.900'} numberOfLines={1}>
-                {data?.receiver?.name}
+                {data?.receiver?.fullName}
               </Text>
               <Text color={'gray.400'}>
                 {moment(data?.scheduleDate).format('D-MMM-YYYY')}

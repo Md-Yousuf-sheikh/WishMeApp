@@ -20,7 +20,7 @@ export interface IPropsWishItem {
   createdAt: string;
   wishId: string;
   receiver: {
-    name: string;
+    fullName: string;
     number: string;
   };
   scheduleDate: string;

@@ -2,13 +2,12 @@ import React, {useState} from 'react';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 const useDateTimePicker = (
-  initialDate: any,
+  initialDate?: Date | undefined,
   mode: 'date' | 'time' | 'datetime' = 'date',
 ) => {
-  const [openDatePicker, setOpenDatePicker] = useState(false);
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
-    new Date(initialDate),
-  );
+  const [openDatePicker, setOpenDatePicker] = useState(true);
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>();
+  console.log('initialDate', initialDate);
 
   const showDatePicker = () => {
     setOpenDatePicker(true);
@@ -27,6 +26,7 @@ const useDateTimePicker = (
     <DateTimePickerModal
       isVisible={openDatePicker}
       mode={mode}
+      minimumDate={new Date()}
       date={selectedDate || new Date()} // Set default value here
       onConfirm={handleConfirm}
       onCancel={hideDatePicker}

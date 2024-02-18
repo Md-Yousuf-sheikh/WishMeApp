@@ -64,7 +64,7 @@ const UpdateWishes = () => {
     initialValues: {
       wishId: item?.wishId,
       receiverNumber: item?.receiver?.number,
-      receiverName: item?.receiver?.name,
+      receiverName: item?.receiver?.fullName,
       message: item?.wish?.message,
       scheduleDate: `${item?.scheduleDate}`,
       wishTypeId: item?.wish?.typeId,
