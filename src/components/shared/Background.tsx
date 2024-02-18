@@ -51,7 +51,11 @@ const Background = ({
                 onRefresh={handleRefresh}
               />
             }
-            {...scrollViewProps}>
+            {...scrollViewProps}
+            // eslint-disable-next-line react-native/no-inline-styles
+            contentContainerStyle={{
+              flexGrow: 1,
+            }}>
             <>{children}</>
           </ScrollView>
         ) : (

@@ -18,19 +18,25 @@ export interface IStackNavigationConfig {
 
 export interface IPropsWishItem {
   createdAt: string;
-  wishId: string;
   receiver: {
+    avatar: string;
     fullName: string;
     number: string;
   };
   scheduleDate: string;
+  sender: {
+    avatar: string;
+    fullName: string;
+    number: string;
+  };
   status: 'pending' | 'delivered' | 'failed' | 'canceled' | 'inactive';
   wish: {
     message: string;
-    messageType: string;
-    typeId: string;
+    messageType: 'mobile' | 'app';
     type: string;
+    typeId: number;
   };
+  wishId: string;
 }
 
 export interface IPropsSmsPlan {
@@ -47,6 +53,8 @@ export interface IUser {
   avatar: string;
   createdAt: string;
   fullName: string;
+  firstName: string;
+  lastName: string;
   mobileNumber: string;
   welcomeMessageRead: boolean;
 }

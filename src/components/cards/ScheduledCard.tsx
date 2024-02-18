@@ -15,7 +15,13 @@ export default function ScheduledCard({onPress, data}: PropsType) {
     <Pressable mb={3} onPress={onPress}>
       <VStack p={2} rounded={'md'} bg={Colors.lightBlue}>
         <HStack>
-          <Avatar bg={'amber.800'} mr={2} size={'md'}>
+          <Avatar
+            bg={'amber.800'}
+            mr={2}
+            source={{
+              uri: data?.receiver?.avatar,
+            }}
+            size={'md'}>
             {data?.receiver?.fullName?.slice(0, 2)}
           </Avatar>
           <VStack width={'85%'} justifyContent={'space-between'}>

@@ -1,3 +1,4 @@
+import useNavigate from '@hooks/useNavigate';
 import {selectUser} from '@store/features/authSlice';
 import {hp, wp} from '@theme/ScreenDimensions';
 import Colors from '@theme/colors';
@@ -5,6 +6,7 @@ import {Avatar, Box, HStack, Image, Text, VStack} from 'native-base';
 import React from 'react';
 import {useSelector} from 'react-redux';
 import {VerifiedIcon} from 'src/NativeBaseIcon';
+import UpdateName from 'src/components/actionSheet/UpdateName';
 import UpdateNumber from 'src/components/actionSheet/UpdateNumber';
 import Header from 'src/components/headers/Header';
 import Background from 'src/components/shared/Background';
@@ -12,13 +14,16 @@ import asRoute from 'src/utils/withRoute';
 
 const ProfileScreen = () => {
   //  state
+  const navigate = useNavigate();
   const [openNumber, setOpenNumber] = React.useState(false);
+  const [openName, setOpenName] = React.useState(false);
   // hooks
   const authUser = useSelector(selectUser);
 
   return (
     <Background type="scroll">
       <UpdateNumber isOpen={openNumber} onClose={() => setOpenNumber(false)} />
+      <UpdateName isOpen={openName} onClose={() => setOpenName(false)} />
 
       {/* content */}
       <Header />
@@ -64,6 +69,7 @@ const ProfileScreen = () => {
                 source={{
                   uri: authUser?.avatar,
                 }}
+                alt="avatar"
                 size={'md'}
                 bg={'white'}
                 w={'12'}
@@ -79,7 +85,7 @@ const ProfileScreen = () => {
                 {authUser?.fullName}
               </Text>
             </HStack>
-            <Text fontSize={'md'}>
+            <Text onPress={() => setOpenName(true)} fontSize={'md'}>
               Want to update{' '}
               <Text fontSize={'md'} color={Colors.buttonColor}>
                 Name?
@@ -96,6 +102,7 @@ const ProfileScreen = () => {
             bg={Colors.lightBlue}>
             <HStack minH={'16'} space={2} alignItems={'center'}>
               <Image
+                alt="phone"
                 source={require('@assets/images/icons/phone.png')}
                 size={'md'}
                 bg={'white'}
@@ -137,6 +144,7 @@ const ProfileScreen = () => {
             <HStack minH={'16'} space={2} alignItems={'center'}>
               <Box rounded={'full'} bg={'white'}>
                 <Image
+                  alt="sms"
                   source={require('@assets/images/icons/sms.png')}
                   w={'12'}
                   h={'12'}
@@ -160,7 +168,10 @@ const ProfileScreen = () => {
             </HStack>
             <Text fontSize={'md'}>
               Want to update{' '}
-              <Text fontSize={'md'} color={Colors.buttonColor}>
+              <Text
+                onPress={() => navigate('smsPlan')}
+                fontSize={'md'}
+                color={Colors.buttonColor}>
                 Plan?
               </Text>
             </Text>
@@ -176,6 +187,7 @@ const ProfileScreen = () => {
             <HStack minH={'16'} space={2} alignItems={'center'}>
               <Box rounded={'full'} bg={'white'}>
                 <Image
+                  alt="loyalty"
                   source={require('@assets/images/icons/loyalty.png')}
                   w={'12'}
                   h={'12'}

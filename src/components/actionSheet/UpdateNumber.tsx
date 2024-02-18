@@ -14,12 +14,19 @@ import {hp, wp} from '@theme/ScreenDimensions';
 import Colors from '@theme/colors';
 import {Keyboard, KeyboardAvoidingView} from 'react-native';
 import useShowToastMessage from '@hooks/useShowToastMessage';
-import {
-  useSendOtpNumberMutation,
-  useVerifyNumberOtpMutation,
-} from '@store/apis/auth';
+import {useSendOtpNumberMutation} from '@store/apis/auth';
 import {useFormik} from 'formik';
 import {useUpdateNumberMutation} from '@store/apis/userProfile';
+import * as Yup from 'yup';
+const validationSchema = Yup.object().shape({
+  mobile: Yup.string()
+    .matches(
+      /^(\+88|88)?(01[3-9]\d{8})$/,
+      'Please enter a valid Bangladeshi phone number',
+    )
+    .required('Phone number is required'),
+  otp: Yup.string().required('Otp is required'),
+});
 
 interface IProps {
   isOpen: boolean;
@@ -33,7 +40,6 @@ export default function UpdateNumber({isOpen, onClose}: IProps) {
   // APIS
   const [SendOtp, {isLoading: isSendOtpLoad}] = useSendOtpNumberMutation();
   const [UpdatePhoneNumber, {isLoading}] = useUpdateNumberMutation();
-  const [VerifyOtp, {isLoading: isVerifyLoad}] = useVerifyNumberOtpMutation();
 
   // form hooks
   const formik = useFormik({
@@ -43,7 +49,7 @@ export default function UpdateNumber({isOpen, onClose}: IProps) {
       isSendOtp: false,
       isMobileVerify: false,
     },
-    // validationSchema,
+    validationSchema,
     onSubmit: async () => {
       handelUpdateNumber();
     },
@@ -59,20 +65,6 @@ export default function UpdateNumber({isOpen, onClose}: IProps) {
     setFieldValue,
   } = formik;
 
-  // handel verify
-  const handelVerify = async () => {
-    Keyboard.dismiss();
-    try {
-      const res = await VerifyOtp({
-        mobileNumber: values?.mobile,
-        otp: values?.otp,
-      }).unwrap();
-      setFieldValue('isMobileVerify', true);
-      toast(res?.message);
-    } catch (err: any) {
-      toast(err?.data?.message || 'Something on the wrong ', 'error');
-    }
-  };
   // handel verify
   const handelSendOtp = async () => {
     Keyboard.dismiss();
@@ -94,18 +86,25 @@ export default function UpdateNumber({isOpen, onClose}: IProps) {
     try {
       const res = await UpdatePhoneNumber({
         mobileNumber: values?.mobile,
+        otp: values?.otp,
       }).unwrap();
+      formik.resetForm();
       toast(res?.message);
+      handelOnClose();
     } catch (err: any) {
       toast(err?.data?.message || 'Something on the wrong ', 'error');
     }
+  };
+
+  const handelOnClose = () => {
+    onClose();
   };
 
   return (
     <Modal
       zIndex={99}
       isOpen={isOpen}
-      onClose={onClose}
+      onClose={handelOnClose}
       justifyContent={'flex-end'}>
       <>
         <KeyboardAvoidingView behavior="padding" enabled>
@@ -121,7 +120,7 @@ export default function UpdateNumber({isOpen, onClose}: IProps) {
             }}>
             <>
               <HStack justifyContent={'flex-end'}>
-                <Pressable onPress={onClose} pr={1}>
+                <Pressable onPress={handelOnClose} pr={1}>
                   <Text color={'gray.400'}>Close</Text>
                 </Pressable>
               </HStack>
@@ -180,25 +179,26 @@ export default function UpdateNumber({isOpen, onClose}: IProps) {
                 {values?.isSendOtp && (
                   <FormControl
                     isInvalid={Boolean(errors.otp) && Boolean(touched.otp)}>
-                    <HStack justifyContent={'space-between'}>
-                      <Input
-                        placeholder="OTP"
-                        rounded={8}
-                        placeholderTextColor={'gray.2'}
-                        color={'gray.700'}
-                        _focus={{bg: 'white', borderColor: Colors.lightGray1}}
-                        onChangeText={handleChange('otp')}
-                        fontWeight={'400'}
-                        onBlur={handleBlur('otp')}
-                        value={values.otp}
-                        keyboardType="number-pad"
-                        maxLength={5}
-                        w={'60%'}
-                        _input={{
-                          background: Colors.lightGray1,
-                          borderColor: Colors.lightGray1,
-                        }}
-                      />
+                    <Input
+                      placeholder="OTP"
+                      rounded={8}
+                      placeholderTextColor={'gray.2'}
+                      color={'gray.700'}
+                      _focus={{bg: 'white', borderColor: Colors.lightGray1}}
+                      onChangeText={handleChange('otp')}
+                      fontWeight={'400'}
+                      onBlur={handleBlur('otp')}
+                      value={values.otp}
+                      keyboardType="number-pad"
+                      maxLength={5}
+                      // w={'60%'}
+                      _input={{
+                        background: Colors.lightGray1,
+                        borderColor: Colors.lightGray1,
+                      }}
+                    />
+                    {/* <HStack justifyContent={'space-between'}>
+                  
                       <Button
                         onPress={() => handelVerify()}
                         isLoading={isVerifyLoad}
@@ -206,7 +206,7 @@ export default function UpdateNumber({isOpen, onClose}: IProps) {
                         background={Colors.buttonColor}>
                         Verify
                       </Button>
-                    </HStack>
+                    </HStack> */}
                     <FormControl.ErrorMessage
                       _text={{
                         fontSize: 'xs',
@@ -218,7 +218,7 @@ export default function UpdateNumber({isOpen, onClose}: IProps) {
                   </FormControl>
                 )}
                 {/* button */}
-                {values?.isMobileVerify && (
+                {values?.isSendOtp && (
                   <Button
                     py={3}
                     mt={10}
