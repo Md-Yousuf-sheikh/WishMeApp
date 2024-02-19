@@ -1,6 +1,7 @@
+import React, {useRef, useState} from 'react';
 import {FlatList, StatusBar} from 'react-native';
-import React from 'react';
 import {Button, HStack, Text, VStack} from 'native-base';
+import Carousel, {Pagination} from 'react-native-snap-carousel';
 import asRoute from 'src/utils/withRoute';
 import useNavigate from '@hooks/useNavigate';
 import Colors from '@theme/colors';
@@ -10,6 +11,9 @@ import {hp, wp} from '@theme/ScreenDimensions';
 
 const WelcomeScreen = () => {
   const navigate = useNavigate();
+  const carouselRef = useRef<FlatList<any>>(null);
+  const [activeSlide, setActiveSlide] = useState(0);
+
   // API
   const data = [
     {
@@ -31,6 +35,42 @@ const WelcomeScreen = () => {
       icon: <WelcomeImage3 size={'100%'} />,
     },
   ];
+
+  const renderCarouselItem = ({item}: {item: any}) => (
+    <VStack space={5} width={wp(100)}>
+      <HStack h={hp(35)} justifyContent={'center'} overflowY={'hidden'}>
+        {item.icon}
+      </HStack>
+      <Text fontSize={'2xl'} textAlign={'center'} w={'90%'}>
+        {item.title}
+      </Text>
+    </VStack>
+  );
+
+  const renderPagination = () => (
+    <Pagination
+      dotsLength={data.length}
+      activeDotIndex={activeSlide}
+      // containerStyle={{paddingVertical: hp(1)}}
+      // eslint-disable-next-line react-native/no-inline-styles
+      dotStyle={{
+        width: 10,
+        height: 10,
+        borderRadius: 5,
+        backgroundColor: Colors.buttonColor, // Active dot color
+      }}
+      // eslint-disable-next-line react-native/no-inline-styles
+      inactiveDotStyle={{
+        width: 10,
+        height: 10,
+        borderRadius: 5,
+        backgroundColor: '#a1a1a1', // Inactive dot color
+      }}
+      inactiveDotOpacity={0.6}
+      inactiveDotScale={0.8}
+    />
+  );
+
   return (
     <VStack
       flex={1}
@@ -45,32 +85,17 @@ const WelcomeScreen = () => {
         barStyle={'dark-content'}
       />
       <AuthTopSection />
-      <VStack justifyContent={'flex-end'} space={10}>
-        <HStack width={wp(100)}>
-          <FlatList
-            data={data}
-            horizontal
-            keyExtractor={item => item?.id.toString()}
-            renderItem={({item}) => {
-              return (
-                <VStack key={item?.id} space={5} width={wp(100)}>
-                  <HStack
-                    h={hp(35)}
-                    // bg={'#8f1e1e'}
-                    justifyContent={'center'}
-                    overflowY={'hidden'}>
-                    {item?.icon}
-                  </HStack>
-                  <Text fontSize={'2xl'} textAlign={'center'} w={'90%'}>
-                    {item?.title}
-                  </Text>
-                </VStack>
-              );
-            }}
-            pagingEnabled
-            showsHorizontalScrollIndicator={false}
-          />
-        </HStack>
+      <VStack justifyContent={'flex-end'} space={5}>
+        <Carousel
+          ref={carouselRef}
+          data={data}
+          renderItem={renderCarouselItem}
+          sliderWidth={wp(100)}
+          itemWidth={wp(100)}
+          onSnapToItem={(index: any) => setActiveSlide(index)}
+          loop={false}
+        />
+        {renderPagination()}
         {/* buttons */}
         <VStack space={2}>
           <Button
