@@ -89,11 +89,12 @@ const WelcomeScreen = () => {
         <Carousel
           ref={carouselRef}
           data={data}
+          autoplay={true}
           renderItem={renderCarouselItem}
           sliderWidth={wp(100)}
           itemWidth={wp(100)}
           onSnapToItem={(index: any) => setActiveSlide(index)}
-          loop={false}
+          loop={true}
         />
         {renderPagination()}
         {/* buttons */}
