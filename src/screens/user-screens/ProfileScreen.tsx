@@ -53,7 +53,7 @@ const ProfileScreen = () => {
           </Text>
         </VStack>
       </HStack>
-      <VStack alignItems={'center'} py={4}>
+      <VStack alignItems={'center'} w={wp(100)} py={4}>
         {/* List 1 */}
         <HStack space={2}>
           {/* row 1 */}
@@ -72,22 +72,22 @@ const ProfileScreen = () => {
                 alt="avatar"
                 size={'md'}
                 bg={'white'}
-                w={'12'}
-                h={'12'}
+                w={'10'}
+                h={'10'}
                 resizeMode={'center'}
                 rounded={'full'}
               />
               <Text
                 color={'gray.800'}
                 w={wp(25)}
-                fontSize={'lg'}
+                fontSize={'md'}
                 numberOfLines={2}>
                 {authUser?.fullName}
               </Text>
             </HStack>
-            <Text onPress={() => setOpenName(true)} fontSize={'md'}>
+            <Text onPress={() => setOpenName(true)} fontSize={'sm'}>
               Want to update{' '}
-              <Text fontSize={'md'} color={Colors.buttonColor}>
+              <Text fontSize={'sm'} color={Colors.buttonColor}>
                 Name?
               </Text>
             </Text>
@@ -101,31 +101,33 @@ const ProfileScreen = () => {
             rounded={'md'}
             bg={Colors.lightBlue}>
             <HStack minH={'16'} space={2} alignItems={'center'}>
-              <Image
-                alt="phone"
-                source={require('@assets/images/icons/phone.png')}
-                size={'md'}
-                bg={'white'}
-                w={'12'}
-                h={'12'}
-                resizeMode={'center'}
-                rounded={'full'}
-              />
+              <Box rounded={'full'} p={2} bg={'white'}>
+                <Image
+                  alt="phone"
+                  source={require('@assets/images/icons/phone.png')}
+                  size={'md'}
+                  bg={'white'}
+                  w={'6'}
+                  h={'6'}
+                  resizeMode={'center'}
+                  rounded={'full'}
+                />
+              </Box>
               <VStack>
-                <Text color={'gray.800'} fontSize={'lg'} numberOfLines={1}>
+                <Text color={'gray.800'} fontSize={'md'} numberOfLines={1}>
                   {authUser?.mobileNumber}
                 </Text>
                 <HStack alignItems={'center'} space={1}>
-                  <Text color={'green'} fontSize={'lg'} numberOfLines={1}>
+                  <Text color={'green'} fontSize={'sm'} numberOfLines={1}>
                     Verified
                   </Text>
-                  <VerifiedIcon size={5} />
+                  <VerifiedIcon size={4} />
                 </HStack>
               </VStack>
             </HStack>
-            <Text onPress={() => setOpenNumber(true)} fontSize={'md'}>
+            <Text onPress={() => setOpenNumber(true)} fontSize={'sm'}>
               Want to update{' '}
-              <Text fontSize={'md'} color={Colors.buttonColor}>
+              <Text fontSize={'sm'} color={Colors.buttonColor}>
                 Number?
               </Text>
             </Text>
@@ -142,35 +144,35 @@ const ProfileScreen = () => {
             rounded={'md'}
             bg={'gray.100'}>
             <HStack minH={'16'} space={2} alignItems={'center'}>
-              <Box rounded={'full'} bg={'white'}>
+              <Box rounded={'full'} p={2} bg={'white'}>
                 <Image
                   alt="sms"
                   source={require('@assets/images/icons/sms.png')}
-                  w={'12'}
-                  h={'12'}
+                  w={'6'}
+                  h={'6'}
                   resizeMode={'center'}
                 />
               </Box>
 
               <VStack>
-                <Text color={'gray.800'} fontSize={'lg'} numberOfLines={1}>
+                <Text color={'gray.800'} fontSize={'md'} numberOfLines={1}>
                   SMS Plan
                 </Text>
                 <HStack alignItems={'center'} space={1}>
                   <Text
                     color={Colors.primaryMain}
-                    fontSize={'lg'}
+                    fontSize={'md'}
                     numberOfLines={1}>
                     WishMe Lite
                   </Text>
                 </HStack>
               </VStack>
             </HStack>
-            <Text fontSize={'md'}>
+            <Text fontSize={'sm'}>
               Want to update{' '}
               <Text
                 onPress={() => navigate('smsPlan')}
-                fontSize={'md'}
+                fontSize={'sm'}
                 color={Colors.buttonColor}>
                 Plan?
               </Text>
@@ -185,24 +187,24 @@ const ProfileScreen = () => {
             rounded={'md'}
             bg={'gray.100'}>
             <HStack minH={'16'} space={2} alignItems={'center'}>
-              <Box rounded={'full'} bg={'white'}>
+              <Box rounded={'full'} p={2} bg={'white'}>
                 <Image
                   alt="loyalty"
                   source={require('@assets/images/icons/loyalty.png')}
-                  w={'12'}
-                  h={'12'}
+                  w={'6'}
+                  h={'6'}
                   resizeMode={'center'}
                 />
               </Box>
               <VStack>
-                <Text color={'gray.800'} fontSize={'lg'} numberOfLines={1}>
+                <Text color={'gray.800'} fontSize={'md'} numberOfLines={1}>
                   Loyalty Point
                 </Text>
               </VStack>
             </HStack>
-            <Text fontSize={'md'}>
+            <Text fontSize={'sm'}>
               You have{' '}
-              <Text fontSize={'md'} color={Colors.buttonColor}>
+              <Text fontSize={'sm'} color={Colors.buttonColor}>
                 100 Points.
               </Text>
             </Text>

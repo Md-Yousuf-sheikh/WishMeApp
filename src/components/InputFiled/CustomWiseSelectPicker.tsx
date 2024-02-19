@@ -38,11 +38,11 @@ interface IItemType {
 
 export default function CustomWiseSelectPicker({value, setValue}: IProps) {
   // APIS
-  const {data} = useGetWishCategoryQuery(null);
+  const {data, isSuccess} = useGetWishCategoryQuery(null);
   // state
   const [isOpen, setIsOpen] = React.useState(false);
   const [selectedValue, setSelectedValue] = React.useState({
-    wishTypeId: value?.wishTypeId ?? data?.data?.[0]?.id ?? 1,
+    wishTypeId: value?.wishTypeId || data?.data?.[0]?.id,
     message: null,
   });
   // APIS
@@ -51,6 +51,15 @@ export default function CustomWiseSelectPicker({value, setValue}: IProps) {
   const onClose = () => {
     setIsOpen(false);
   };
+
+  React.useEffect(() => {
+    if (!selectedValue?.wishTypeId) {
+      setSelectedValue({
+        wishTypeId: data?.data?.[0]?.id,
+        message: null,
+      });
+    }
+  }, [isSuccess, data?.data, selectedValue?.wishTypeId]);
 
   return (
     <>

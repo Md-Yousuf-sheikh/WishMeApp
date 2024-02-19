@@ -28,9 +28,7 @@ interface PropsType {
 
 export default function MainHeader({
   title,
-  type,
   onPressLeft1,
-  onPressLeft2,
   arrowLeft = true,
   rightContent = true,
 }: PropsType) {
@@ -67,13 +65,15 @@ export default function MainHeader({
               </HStack>
             </Pressable>
           ) : (
-            <Image
-              source={require('@assets/images/logo.png')}
-              alt="logo"
-              height={'10'}
-              width={'24'}
-              resizeMode="contain"
-            />
+            <Pressable onPress={() => navigate('scheduledWishes')}>
+              <Image
+                source={require('@assets/images/logo.png')}
+                alt="logo"
+                height={'10'}
+                width={'24'}
+                resizeMode="contain"
+              />
+            </Pressable>
           )}
         </VStack>
 

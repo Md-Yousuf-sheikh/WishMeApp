@@ -41,9 +41,10 @@ const ReferralSummaryScreen = () => {
       ? ''
       : selectCate === 'pending'
       ? '?status=pending'
-      : '?status=delivered';
+      : '?status=active';
 
   const {data, isLoading, isFetching} = useGetReferralQuery(props);
+  console.log('data', data);
 
   return (
     <Background
