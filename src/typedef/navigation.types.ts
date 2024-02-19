@@ -39,6 +39,15 @@ export interface IPropsWishItem {
   wishId: string;
 }
 
+export interface IPropsReferralItem {
+  createdAt: string;
+  fullName: string;
+  link: string;
+  status: string;
+  use: string;
+  image: string;
+}
+
 export interface IPropsSmsPlan {
   smsPlanNumber: string;
   image: string;

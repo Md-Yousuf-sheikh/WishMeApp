@@ -3,6 +3,12 @@ import {apiSlice} from '../index';
 
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
+    getReferral: builder.query({
+      query: props => ({
+        url: `my/referral-links${props}`,
+      }),
+      providesTags: ['Referral'],
+    }),
     getProfile: builder.query({
       query: () => ({
         url: 'my/information',
@@ -126,6 +132,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
         body,
       }),
+      invalidatesTags: ['Referral'],
     }),
   }),
   overrideExisting: true,
@@ -140,4 +147,5 @@ export const {
   useUpdateNumberMutation,
   useUpdateProfileMutation,
   useCreateReferralMutation,
+  useGetReferralQuery,
 } = authApiSlice;
