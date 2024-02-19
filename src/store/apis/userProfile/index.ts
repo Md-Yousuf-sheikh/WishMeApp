@@ -120,6 +120,13 @@ export const authApiSlice = apiSlice.injectEndpoints({
       },
       invalidatesTags: ['ProfileUpdate'],
     }),
+    createReferral: builder.mutation({
+      query: body => ({
+        url: 'referral-links/create',
+        method: 'POST',
+        body,
+      }),
+    }),
   }),
   overrideExisting: true,
 });
@@ -132,4 +139,5 @@ export const {
   useUpdateNameMutation,
   useUpdateNumberMutation,
   useUpdateProfileMutation,
+  useCreateReferralMutation,
 } = authApiSlice;

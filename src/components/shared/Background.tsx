@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import {ScrollView, VStack, useColorMode} from 'native-base';
+import {VStack, useColorMode} from 'native-base';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {
   StatusBar,
   StatusBarProps,
@@ -44,7 +45,10 @@ const Background = ({
       />
       <VStack bg="#ffffff" flexGrow={1} {...vStackProps}>
         {type === 'scroll' ? (
-          <ScrollView
+          <KeyboardAwareScrollView
+            scrollEnabled
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
             refreshControl={
               <RefreshControl
                 refreshing={isRefreshing}
@@ -57,7 +61,7 @@ const Background = ({
               flexGrow: 1,
             }}>
             <>{children}</>
-          </ScrollView>
+          </KeyboardAwareScrollView>
         ) : (
           children
         )}

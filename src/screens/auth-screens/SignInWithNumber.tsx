@@ -41,15 +41,14 @@ const SignInWithNumber = () => {
         console.log('res', res);
         navigate('numberOtpVerify', {...values, type: 'signIn'}, undefined);
         toast(res?.message);
-      } catch (error: any) {
-        toast(error?.data?.message || 'Something on the wrong ', 'error');
+      } catch (err: any) {
+        toast(err?.data?.message || 'Something on the wrong ', 'error');
       }
     },
   });
 
   const {values, errors, touched, handleChange, handleSubmit, handleBlur} =
     formik;
-  //
 
   return (
     <Background type="scroll">
