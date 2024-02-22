@@ -1,7 +1,6 @@
 import Colors from '@theme/colors';
-import {HStack, Text, VStack} from 'native-base';
+import {Box, HStack, Image, Text, VStack} from 'native-base';
 import React from 'react';
-import {GiftBoxIcon} from 'src/NativeBaseIcon';
 import MainHeader from 'src/components/common/Headers/MainHeader';
 import Background from 'src/components/shared/Background';
 import asRoute from 'src/utils/withRoute';
@@ -35,8 +34,84 @@ const GiftShopScreen = () => {
           The Gift Shop! Stay connected for updates.
         </Text>
         {/* list */}
-        <VStack>
-          <HStack></HStack>
+        <VStack pt={10} space={3}>
+          <HStack justifyContent={'space-around'}>
+            <Box
+              w={'48%'}
+              // minH={'40'}
+              py={3}
+              rounded={'md'}
+              bg={'#FAEFF5'}
+              justifyContent={'center'}
+              alignItems={'center'}>
+              <Image
+                alt="icon1"
+                source={require('@assets/images/gift/icon1.png')}
+                w={'20'}
+                h={'20'}
+              />
+              <Text fontSize={'md'} color={'#CB5E98'}>
+                Flowers
+              </Text>
+            </Box>
+            <Box
+              w={'48%'}
+              // minH={'40'}
+              py={3}
+              rounded={'md'}
+              bg={'#FAEFF5'}
+              justifyContent={'center'}
+              alignItems={'center'}>
+              <Image
+                alt="icon2"
+                source={require('@assets/images/gift/icon2.png')}
+                w={'20'}
+                h={'20'}
+              />
+              <Text fontSize={'md'} color={'#CB5E98'}>
+                Cake
+              </Text>
+            </Box>
+          </HStack>
+          {/*  */}
+          <HStack justifyContent={'space-around'}>
+            <Box
+              w={'48%'}
+              // minH={'40'}
+              py={3}
+              rounded={'md'}
+              bg={'#FAEFF5'}
+              justifyContent={'center'}
+              alignItems={'center'}>
+              <Image
+                alt="icon3"
+                source={require('@assets/images/gift/icon3.png')}
+                w={'20'}
+                h={'20'}
+              />
+              <Text fontSize={'md'} color={'#CB5E98'}>
+                Shopping
+              </Text>
+            </Box>
+            <Box
+              w={'48%'}
+              // minH={'40'}
+              py={3}
+              rounded={'md'}
+              bg={'#FAEFF5'}
+              justifyContent={'center'}
+              alignItems={'center'}>
+              <Image
+                alt="icon4"
+                source={require('@assets/images/gift/icon4.png')}
+                w={'20'}
+                h={'20'}
+              />
+              <Text fontSize={'md'} color={'#CB5E98'}>
+                Book
+              </Text>
+            </Box>
+          </HStack>
         </VStack>
       </VStack>
     </Background>
