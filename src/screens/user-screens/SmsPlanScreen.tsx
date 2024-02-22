@@ -6,20 +6,40 @@ import SmsPlanCard from 'src/components/cards/SmsPlanCard';
 import MainHeader from 'src/components/common/Headers/MainHeader';
 import Background from 'src/components/shared/Background';
 import InfiniteFlatList from 'src/components/shared/InfiniteFlatList';
+import {SkeletonsScheduledCard} from 'src/components/skeletons';
 import {IPropsSmsPlan} from 'src/typedef/navigation.types';
 import asRoute from 'src/utils/withRoute';
 
 const SmsPlanScreen = () => {
   const navigate = useNavigate();
+  // State
+  const [pageIndex, setPageIndex] = React.useState<number>(1);
+  const [dataNew, setDataNew] = React.useState([]);
   // APS
-  const {data} = useGetSmaPlanQuery(undefined);
+  const props = `?page=${pageIndex}`;
+  const {data, refetch, isLoading, isFetching} = useGetSmaPlanQuery(props);
+  //  pageIndex set
+  React.useEffect(() => {
+    if (data) {
+      if (data?.pagination?.current_page === 1) {
+        setDataNew(data.data);
+      } else {
+        setDataNew((prevData): any => [...prevData, ...data.data]);
+      }
+    }
+  }, [data, pageIndex]);
 
   return (
     <Background type="normal">
       <MainHeader title="Buy SMS" />
       <VStack px={2} pt={4} pb={10}>
         <InfiniteFlatList
-          data={data?.data}
+          data={dataNew}
+          listData={dataNew}
+          onRefresh={() => {
+            refetch();
+            setPageIndex(1);
+          }}
           renderItem={({item}) => (
             <SmsPlanCard
               onPress={() => navigate('payment', item)}
@@ -27,17 +47,31 @@ const SmsPlanScreen = () => {
             />
           )}
           showsVerticalScrollIndicator={false}
-          // inverted
           onLoadMore={() => {
-            // Implement your logic to load more data
+            if (data?.pagination?.current_page < data?.pagination.last_page) {
+              setPageIndex(data?.pagination?.current_page + 1);
+            }
           }}
-          isFetching={false} // Set this to true when you are fetching data to prevent multiple requests
-          // eslint-disable-next-line react-native/no-inline-styles
+          isOnLoadMore={true}
+          isFetching={isFetching} // eslint-disable-next-line react-native/no-inline-styles
           contentContainerStyle={{
-            justifyContent: 'flex-end',
-            rowGap: 2,
-            paddingBottom: 100,
+            paddingBottom: 200,
           }}
+          ListEmptyComponent={
+            isLoading || isFetching ? (
+              <VStack space={3}>
+                <SkeletonsScheduledCard />
+                <SkeletonsScheduledCard />
+                <SkeletonsScheduledCard />
+                <SkeletonsScheduledCard />
+                <SkeletonsScheduledCard />
+                <SkeletonsScheduledCard />
+                <SkeletonsScheduledCard />
+              </VStack>
+            ) : (
+              <></>
+            )
+          }
         />
       </VStack>
     </Background>

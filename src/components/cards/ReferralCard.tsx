@@ -22,6 +22,7 @@ export default function ReferralCard({onPress, data}: PropsType) {
               }}
               w={'7'}
               h={'7'}
+              alt="22"
             />
           </Box>
           <VStack width={'85%'} justifyContent={'space-between'}>

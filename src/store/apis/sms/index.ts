@@ -3,8 +3,8 @@ import {apiSlice} from '../index';
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     getSmaPlan: builder.query({
-      query: () => ({
-        url: 'sms-plans',
+      query: props => ({
+        url: `sms-plans${props}`,
       }),
     }),
     orderSmsPlan: builder.mutation({

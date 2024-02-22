@@ -28,6 +28,8 @@ const category = [
 
 const ReferralSummaryScreen = () => {
   //  State
+  const [pageIndex, setPageIndex] = React.useState<number>(1);
+  const [dataNew, setDataNew] = React.useState([]);
   const [isOpenModal, setIsOpenModal] = React.useState<boolean>(false);
   const [selectedWish, setSelectedWish] = React.useState<any>();
   const [selectCate, setSelectCate] = React.useState<string>(
@@ -38,13 +40,30 @@ const ReferralSummaryScreen = () => {
   // APIS
   const props =
     selectCate === 'all'
-      ? ''
+      ? `?page=${pageIndex}`
       : selectCate === 'pending'
-      ? '?status=pending'
-      : '?status=active';
+      ? `?status=pending&page=${pageIndex}`
+      : `?status=active&page=${pageIndex}`;
 
-  const {data, isLoading, isFetching} = useGetReferralQuery(props);
-  console.log('data', data);
+  const {data, isLoading, isFetching, refetch} = useGetReferralQuery(props);
+
+  //  pageIndex set
+  React.useEffect(() => {
+    if (data) {
+      if (data?.pagination?.current_page === 1) {
+        setDataNew(data.data);
+      } else {
+        setDataNew((prevData): any => [...prevData, ...data.data]);
+      }
+    }
+  }, [data, pageIndex]);
+
+  // setSelectCate(item?.value)
+  const onSelectCategory = (item: string) => {
+    setDataNew([]);
+    setPageIndex(1);
+    setSelectCate(item);
+  };
 
   return (
     <Background
@@ -65,7 +84,7 @@ const ReferralSummaryScreen = () => {
                 key={index}
                 p={2}
                 py={1}
-                onPress={() => setSelectCate(item?.value)}
+                onPress={() => onSelectCategory(item?.value)}
                 shadow={1}
                 bgColor={
                   selectCate === item?.value ? Colors.primaryMain : 'white'
@@ -80,7 +99,12 @@ const ReferralSummaryScreen = () => {
         </HStack>
         {/* list */}
         <InfiniteFlatList
-          data={data?.data}
+          data={dataNew}
+          listData={dataNew}
+          onRefresh={() => {
+            refetch();
+            setPageIndex(1);
+          }}
           renderItem={({item}) => (
             <ReferralCard
               data={item as IPropsReferralItem}
@@ -91,16 +115,15 @@ const ReferralSummaryScreen = () => {
             />
           )}
           showsVerticalScrollIndicator={false}
-          // inverted
           onLoadMore={() => {
-            // Implement your logic to load more data
+            if (data?.pagination?.current_page < data?.pagination.last_page) {
+              setPageIndex(data?.pagination?.current_page + 1);
+            }
           }}
-          isFetching={false} // Set this to true when you are fetching data to prevent multiple requests
-          // eslint-disable-next-line react-native/no-inline-styles
+          isOnLoadMore={true}
+          isFetching={isFetching} // eslint-disable-next-line react-native/no-inline-styles
           contentContainerStyle={{
-            justifyContent: 'flex-end',
-            rowGap: 2,
-            paddingBottom: 100,
+            paddingBottom: 130,
           }}
           ListEmptyComponent={
             isLoading || isFetching ? (
