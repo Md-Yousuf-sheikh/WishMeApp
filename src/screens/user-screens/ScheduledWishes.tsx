@@ -30,8 +30,11 @@ const category = [
 
 const ScheduledWishes = () => {
   //  State
+
+  const [pageIndex, setPageIndex] = React.useState<number>(1);
   const [isOpenModal, setIsOpenModal] = React.useState<boolean>(false);
   const [selectedWish, setSelectedWish] = React.useState<any>();
+  const [dataNew, setDataNew] = React.useState([]);
   const [selectCate, setSelectCate] = React.useState<string>(
     category?.[0]?.value,
   );
@@ -41,10 +44,28 @@ const ScheduledWishes = () => {
   // APIS
   const props =
     selectCate === 'all'
-      ? '?status=pending'
-      : `?messageType=${selectCate}&status=pending`;
+      ? `?status=pending&page=${pageIndex}`
+      : `?messageType=${selectCate}&status=pending&page=${pageIndex}`;
+  //
   const {data, refetch, isLoading, isFetching} = useGetMyWishListQuery(props);
-  // data
+
+  //  pageIndex set
+  React.useEffect(() => {
+    if (data) {
+      if (data?.pagination?.current_page === 1) {
+        setDataNew(data.data);
+      } else {
+        setDataNew((prevData): any => [...prevData, ...data.data]);
+      }
+    }
+  }, [data, pageIndex]);
+
+  // setSelectCate(item?.value)
+  const onSelectCategory = (item: string) => {
+    setDataNew([]);
+    setPageIndex(1);
+    setSelectCate(item);
+  };
 
   return (
     <Background
@@ -78,7 +99,7 @@ const ScheduledWishes = () => {
                 key={index}
                 p={2}
                 py={1}
-                onPress={() => setSelectCate(item?.value)}
+                onPress={() => onSelectCategory(item?.value)}
                 shadow={1}
                 bgColor={
                   selectCate === item?.value ? Colors.primaryMain : 'white'
@@ -93,9 +114,14 @@ const ScheduledWishes = () => {
         </HStack>
         {/* list */}
         <InfiniteFlatList
-          onRefresh={refetch}
-          // isRefreshing={true}
-          data={data?.data}
+          key={selectCate}
+          onRefresh={() => {
+            refetch();
+            setPageIndex(1);
+          }}
+          perPage={10}
+          data={dataNew}
+          listData={dataNew}
           renderItem={({item}) => (
             <ScheduledCard
               onEditPress={() => navigate('updateWishes')}
@@ -109,14 +135,15 @@ const ScheduledWishes = () => {
           showsVerticalScrollIndicator={false}
           // inverted
           onLoadMore={() => {
-            // Implement your logic to load more data
+            if (data?.pagination?.current_page < data?.pagination.last_page) {
+              setPageIndex(data?.pagination?.current_page + 1);
+            }
           }}
-          isFetching={false} // Set this to true when you are fetching data to prevent multiple requests
+          isOnLoadMore={true}
+          isFetching={isFetching}
           // eslint-disable-next-line react-native/no-inline-styles
           contentContainerStyle={{
-            justifyContent: 'flex-end',
-            rowGap: 2,
-            paddingBottom: 100,
+            paddingBottom: 130,
           }}
           ListEmptyComponent={
             isLoading || isFetching ? (
