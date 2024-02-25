@@ -10,6 +10,7 @@ import {
   HStack,
   Input,
   Link,
+  Pressable,
   Radio,
   Text,
   VStack,
@@ -92,6 +93,7 @@ const CreateWishes = () => {
     handleBlur,
     setFieldValue,
   } = formik;
+  // react-native-contacts
 
   return (
     <Background type="scroll">
@@ -197,9 +199,14 @@ const CreateWishes = () => {
               </Box>
             }
             rightElement={
-              <Box pr={3}>
-                <ContactIcon size={6} />
-              </Box>
+              <Pressable
+                onPress={() => {
+                  // console.log('ljksdnfjnskfjnskjdfn');
+                }}>
+                <Box pr={3}>
+                  <ContactIcon size={6} />
+                </Box>
+              </Pressable>
             }
           />
           <FormControl.ErrorMessage

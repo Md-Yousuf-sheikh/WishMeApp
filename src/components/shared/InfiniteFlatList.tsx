@@ -32,7 +32,7 @@ function InfiniteFlatList<ItemT>({
     if (!isFetching && listData && listData?.length >= perPage) {
       onLoadMore?.();
     }
-    console.log('on onEndReached');
+    // console.log('on onEndReached');
   }, [isFetching, listData, onLoadMore, perPage]);
 
   const handleRefresh = useCallback(() => {

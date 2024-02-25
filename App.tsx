@@ -7,6 +7,7 @@ import SplashScreen from 'react-native-splash-screen';
 import store from '@store/index';
 import RootRoutes from '@routes/LayoutRoute';
 import {Platform} from 'react-native';
+import BackgroundService from 'src/utils/BackgroundService';
 
 export default function App() {
   React.useEffect(() => {
@@ -23,6 +24,7 @@ export default function App() {
             <RootRoutes />
           </NativeBaseProvider>
         </NavigationContainer>
+        <BackgroundService />
       </Provider>
     </>
   );

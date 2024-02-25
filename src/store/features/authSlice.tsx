@@ -30,17 +30,20 @@ const authSlice = createSlice({
           user: any;
           accessToken?: string;
           refreshToken?: string;
+          showWelcome?: boolean;
         };
       },
     ) => {
       state.user = action.payload.user;
       state.accessToken = action.payload.accessToken;
       state.refreshToken = action.payload.refreshToken;
+      state.showWelcome = action.payload.showWelcome;
     },
     logout: state => {
       state.user = null;
       state.accessToken = null;
       state.refreshToken = null;
+      state.showWelcome = false;
     },
     updateToken: (
       state,

@@ -12,13 +12,14 @@ export const authApiSlice = apiSlice.injectEndpoints({
       async onQueryStarted(args, {dispatch, queryFulfilled}) {
         try {
           const {data: result} = await queryFulfilled;
-          const {access_token, ...userInfo} = result?.data;
+          const {accessToken, ...userInfo} = result?.data;
           if (result.data) {
             dispatch(
               login({
                 user: userInfo,
-                accessToken: access_token,
-                refreshToken: access_token,
+                accessToken: accessToken,
+                refreshToken: accessToken,
+                showWelcome: true,
               }),
             );
           }
@@ -39,18 +40,16 @@ export const authApiSlice = apiSlice.injectEndpoints({
         try {
           const {data: result} = await queryFulfilled;
           const {accessToken, ...userInfo} = result?.data;
-          // console.log('result?.data', result?.data);
-
           if (result.data) {
             dispatch(
               login({
                 user: userInfo,
                 accessToken: accessToken,
                 refreshToken: accessToken,
+                showWelcome: true,
               }),
             );
           }
-
           return result;
         } catch (error: any) {
           return error;
