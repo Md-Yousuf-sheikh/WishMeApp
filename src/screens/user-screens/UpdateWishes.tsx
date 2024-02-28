@@ -10,6 +10,7 @@ import {
   HStack,
   Input,
   Link,
+  Pressable,
   Radio,
   Text,
   VStack,
@@ -25,6 +26,7 @@ import BadWords from 'bad-words';
 import * as Yup from 'yup';
 import {useRoute} from '@react-navigation/native';
 import {IPropsWishItem} from 'src/typedef/navigation.types';
+import ContactsListModal from 'src/components/actionSheet/ContactsListModal';
 
 const filter = new BadWords();
 
@@ -51,6 +53,8 @@ const validationSchema = Yup.object().shape({
 
 //  crete wishes
 const UpdateWishes = () => {
+  // state
+  const [isOpenContact, setIsOpenContact] = React.useState<boolean>(false);
   // hooks
   const navigate = useNavigate();
   const item = useRoute().params as IPropsWishItem;
@@ -218,9 +222,14 @@ const UpdateWishes = () => {
               </Box>
             }
             rightElement={
-              <Box pr={3}>
-                <ContactIcon size={6} />
-              </Box>
+              <Pressable
+                onPress={() => {
+                  setIsOpenContact(true);
+                }}>
+                <Box pr={3}>
+                  <ContactIcon size={6} />
+                </Box>
+              </Pressable>
             }
           />
           <FormControl.ErrorMessage
@@ -326,6 +335,12 @@ const UpdateWishes = () => {
             Delete
           </Button>
         </HStack>
+        {/* d */}
+        <ContactsListModal
+          isOpen={isOpenContact}
+          onClose={() => setIsOpenContact(false)}
+          setValue={number => setFieldValue('receiverNumber', number)}
+        />
       </VStack>
     </Background>
   );
