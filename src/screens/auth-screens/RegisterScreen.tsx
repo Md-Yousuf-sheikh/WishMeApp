@@ -1,6 +1,7 @@
 import useImageUploader from '@hooks/useImageUploader';
 import useNavigate from '@hooks/useNavigate';
 import useShowToastMessage from '@hooks/useShowToastMessage';
+import {useRoute} from '@react-navigation/native';
 import {useSendOtpNumberMutation} from '@store/apis/auth';
 import Colors from '@theme/colors';
 import {useFormik} from 'formik';
@@ -38,10 +39,12 @@ const RegisterScreen = () => {
   const navigate = useNavigate();
   const {handleImagePicker} = useImageUploader();
   const toast = useShowToastMessage();
+  const route = useRoute()?.params;
+  console.log('route', route);
 
   // APIS
   // const [handelSignUp] = useRegisterMutation();
-  const [SendOtp, {isLoading, error}] = useSendOtpNumberMutation();
+  const [SendOtp, {isLoading}] = useSendOtpNumberMutation();
 
   // form hooks
   const formik = useFormik({
@@ -87,7 +90,6 @@ const RegisterScreen = () => {
       }
     },
   });
-  console.log('error', error);
 
   const {
     values,

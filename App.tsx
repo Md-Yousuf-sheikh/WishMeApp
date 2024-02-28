@@ -15,11 +15,50 @@ export default function App() {
       SplashScreen?.hide();
     }
   }, []);
+  //
+
+  const prefixes = ['wishme://', 'https://wishme.doubletree.xyz/'];
+
+  const config = {
+    screens: {
+      AuthRoute: {
+        screens: {
+          registerScreen: 'sign-up/:code',
+          welcomeScreen: 'welcome',
+          forgotPassword: 'forgot-password',
+          numberOtpVerificationCode: 'number-otp-verification',
+          resetPassword: 'reset-password',
+          signInWithNumber: 'sign-in-with-number',
+          numberRegister: 'number-register',
+          loginScreen: 'login',
+        },
+      },
+      UserRoute: {
+        screens: {
+          updateWishes: 'update-wishes',
+          profileScreen: 'profile',
+          smsPlanScreen: 'sms-plan',
+          numberUpdate: 'number-update',
+          createWishes: 'create-wishes',
+          wishLogScreen: 'wish-log',
+          notificationScreen: 'notification',
+          myReferralScreen: 'my-referral',
+          referralSummaryScreen: 'referral-summary',
+          paymentScreen: 'payment',
+        },
+      },
+    },
+  };
+
+  const linking = {
+    prefixes,
+    config,
+  };
 
   return (
     <>
       <Provider store={store}>
-        <NavigationContainer>
+        <NavigationContainer linking={linking}>
           <NativeBaseProvider theme={theme}>
             <RootRoutes />
           </NativeBaseProvider>
