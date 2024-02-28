@@ -24,6 +24,7 @@ import Background from 'src/components/shared/Background';
 import asRoute from 'src/utils/withRoute';
 import BadWords from 'bad-words';
 import * as Yup from 'yup';
+import ContactsListModal from 'src/components/actionSheet/ContactsListModal';
 
 const filter = new BadWords();
 
@@ -50,6 +51,8 @@ const validationSchema = Yup.object().shape({
 
 //  crete wishes
 const CreateWishes = () => {
+  // state
+  const [isOpenContact, setIsOpenContact] = React.useState<boolean>(false);
   // hooks
   const navigate = useNavigate();
   const toast = useShowToastMessage();
@@ -201,7 +204,7 @@ const CreateWishes = () => {
             rightElement={
               <Pressable
                 onPress={() => {
-                  // console.log('ljksdnfjnskfjnskjdfn');
+                  setIsOpenContact(true);
                 }}>
                 <Box pr={3}>
                   <ContactIcon size={6} />
@@ -302,6 +305,12 @@ const CreateWishes = () => {
           </Button>
         </HStack>
       </VStack>
+      {/* Modal list */}
+      <ContactsListModal
+        isOpen={isOpenContact}
+        onClose={() => setIsOpenContact(false)}
+        setValue={number => setFieldValue('receiverNumber', number)}
+      />
     </Background>
   );
 };
