@@ -1,13 +1,34 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import {userRoutes} from './users.routes';
-import {selectUser} from '@store/features/authSlice';
+import {selectFcmToken, selectUser} from '@store/features/authSlice';
 import {useSelector} from 'react-redux';
 import {updateRegInformation} from '@screens/user-screens';
+import {useAddFcmTokenMutation} from '@store/apis/fcm';
 
 export default function UserRoutes() {
   const Stack = createNativeStackNavigator();
   const authUser = useSelector(selectUser);
+  const fcmToken = useSelector(selectFcmToken);
+  // const showWelComeScreen = useSelector(selectShowWelcome);
+  const [fcmAdd, {}] = useAddFcmTokenMutation();
+
+  React.useEffect(() => {
+    const fcmAddFcmToken = async () => {
+      try {
+        const props = {};
+        const res = await fcmAdd(props).unwrap();
+        console.log('res', res);
+      } catch (error) {}
+    };
+
+    if (fcmToken) {
+      fcmAddFcmToken();
+    }
+
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const routes = userRoutes?.routes.map(screen => {
     return (
@@ -19,8 +40,6 @@ export default function UserRoutes() {
       />
     );
   });
-  //console.log('authUser', authUser);
-
   return (
     <Stack.Navigator
       screenOptions={userRoutes.screenOptions}

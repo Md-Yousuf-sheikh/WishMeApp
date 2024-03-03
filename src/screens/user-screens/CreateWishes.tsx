@@ -25,6 +25,7 @@ import asRoute from 'src/utils/withRoute';
 import BadWords from 'bad-words';
 import * as Yup from 'yup';
 import ContactsListModal from 'src/components/actionSheet/ContactsListModal';
+import {useGetMySmaPlanQuery} from '@store/apis/userProfile';
 
 const filter = new BadWords();
 
@@ -58,6 +59,7 @@ const CreateWishes = () => {
   const toast = useShowToastMessage();
 
   // APIS
+  const {data: smaHave} = useGetMySmaPlanQuery(undefined);
   const [handelCreate, {isLoading}] = useCreateWishMutation();
   const formik = useFormik({
     initialValues: {
@@ -96,7 +98,6 @@ const CreateWishes = () => {
     handleBlur,
     setFieldValue,
   } = formik;
-  // react-native-contacts
 
   return (
     <Background type="scroll">
@@ -135,13 +136,17 @@ const CreateWishes = () => {
                   borderColor: Colors.primaryMain,
                 }}>
                 From App
-                <Link
-                  onPress={() => navigate('smsPlan')}
-                  _text={{
-                    color: Colors.primaryMain,
-                  }}>
-                  (Buy plan)
-                </Link>
+                {smaHave?.available ? (
+                  `(${smaHave?.available} SMS available)`
+                ) : (
+                  <Link
+                    onPress={() => navigate('smsPlan')}
+                    _text={{
+                      color: Colors.primaryMain,
+                    }}>
+                    (Buy plan)
+                  </Link>
+                )}
               </Radio>
             </HStack>
           </Radio.Group>

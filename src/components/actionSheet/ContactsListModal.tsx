@@ -72,7 +72,17 @@ export default function ContactsListModal({isOpen, onClose, setValue}: IProps) {
           </Pressable>
         </HStack>
         {/* List */}
-        <FlatList data={contacts} renderItem={renderItem} />
+        <FlatList
+          data={contacts}
+          renderItem={renderItem}
+          ListEmptyComponent={
+            <VStack pt={20} alignItems={'center'} justifyContent={'center'}>
+              <Text fontSize={'2xl'} color={'gray.400'}>
+                No Contacts Available
+              </Text>
+            </VStack>
+          }
+        />
       </VStack>
     </Modal>
   );

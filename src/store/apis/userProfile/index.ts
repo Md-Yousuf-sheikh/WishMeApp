@@ -20,6 +20,14 @@ export const authApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ['Wish'],
     }),
+    getMySmaPlan: builder.query({
+      query: () => ({
+        url: 'my/sms-plan',
+      }),
+      transformResponse: response => {
+        return response.data;
+      },
+    }),
     getReferralLinks: builder.query({
       query: () => ({
         url: 'referral-links?status=active',
@@ -148,4 +156,5 @@ export const {
   useUpdateProfileMutation,
   useCreateReferralMutation,
   useGetReferralQuery,
+  useGetMySmaPlanQuery,
 } = authApiSlice;

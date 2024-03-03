@@ -16,6 +16,13 @@ export default function App() {
     }
   }, []);
   //
+  // React.useEffect(() => {
+  //   messaging().onMessage(onMessageReceived);
+  // }, []);
+
+  // useEffect(() => {
+  //   notifee.onForegroundEvent(handleNotification);
+  // }, []);
 
   const prefixes = ['wishme://', 'https://wishme.doubletree.xyz/'];
 
